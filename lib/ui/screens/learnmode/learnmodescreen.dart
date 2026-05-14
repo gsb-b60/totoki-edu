@@ -295,7 +295,7 @@ class LearnModeCard extends StatelessWidget {
             if (aPath != "")
               Align(
                 alignment: AlignmentGeometry.center,
-                child: Container(width: 160, child: Image.asset(aPath)),
+                child: SizedBox(width: 160, child: Image.asset(aPath)),
               ),
             Align(
               alignment: AlignmentGeometry.bottomCenter,

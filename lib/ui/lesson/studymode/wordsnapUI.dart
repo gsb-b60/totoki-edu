@@ -61,7 +61,7 @@ class _WordSnapUIState extends State<WordSnapUI> {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: 150,
                 width: 650,
                 child: Center(
@@ -75,7 +75,7 @@ class _WordSnapUIState extends State<WordSnapUI> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 120,
                 width: 750,
                 child: Row(

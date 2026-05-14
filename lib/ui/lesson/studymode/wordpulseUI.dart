@@ -78,7 +78,7 @@ class _WordPulseUIState extends State<WordPulseUI> {
                         child: Image.file(File(path), fit: BoxFit.cover),
                       ),
                     ),
-                  Container(
+                  SizedBox(
                     height: 270,
                     width: 350,
                     child: Column(

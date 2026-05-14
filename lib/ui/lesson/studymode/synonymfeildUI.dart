@@ -82,7 +82,7 @@ class _SynonymfeildUIState extends State<SynonymfeildUI> {
                         ),
                       ),
                     ),
-                  Container(
+                  SizedBox(
                     height: 270,
                     width: 350,
                     child: Column(

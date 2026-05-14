@@ -89,7 +89,7 @@ class _EchoFuseUIState extends State<EchoFuseUI> {
                         // ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       height: 150,
                       width: 750,
                       child: Row(

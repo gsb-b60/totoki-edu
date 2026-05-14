@@ -82,7 +82,7 @@ class _NeuroPickUIState extends State<NeuroPickUI> {
                         ),
                       ),
                     ),
-                  Container(
+                  SizedBox(
                     height: 270,
                     width: 350,
                     child: Column(

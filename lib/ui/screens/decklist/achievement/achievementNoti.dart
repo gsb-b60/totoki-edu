@@ -3,7 +3,7 @@ import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'package:totoki_extract/data/database_helper.dart';
 class Achievementnoti extends ChangeNotifier{
   static final _dbhelper = DatabaseHelper.instance;
-  List<Flashcard> _card=[];
+  final List<Flashcard> _card=[];
   
   bool isLoading=false;
   Future<void> fetchCard()async{

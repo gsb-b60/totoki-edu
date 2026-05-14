@@ -81,7 +81,7 @@ class _SynonympickUIState extends State<SynonympickUI> {
                         ),
                       ),
                     ),
-                  Container(
+                  SizedBox(
                     height: 270,
                     width: 350,
                     child: Column(

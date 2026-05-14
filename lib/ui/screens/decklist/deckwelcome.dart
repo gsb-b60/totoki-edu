@@ -151,7 +151,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
 }
 
 class ButtomNav extends StatelessWidget {
-  ButtomNav({
+  const ButtomNav({
     super.key,
     required this.value,
     required this.ico,

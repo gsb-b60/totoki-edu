@@ -310,7 +310,7 @@ class IPAandWord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 75,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

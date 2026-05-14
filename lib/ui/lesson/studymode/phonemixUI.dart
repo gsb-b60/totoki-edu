@@ -61,7 +61,7 @@ class _PhoneMixUIState extends State<PhoneMixUI> {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: 125,
                 width: 750,
                 child: Row(
@@ -87,7 +87,7 @@ class _PhoneMixUIState extends State<PhoneMixUI> {
                 ),
               ),
               SizedBox(width: 50),
-              Container(
+              SizedBox(
                 height: 125,
                 width: 750,
                 child: Row(

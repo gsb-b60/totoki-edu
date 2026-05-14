@@ -109,9 +109,9 @@ class NeuroPickNoti extends ChangeNotifier {
   }
   String getImagePath()
   {
-    if(File(PathService.getFilePath(media, _cards[currentCardIdx].img ?? "")).existsSync())
+    if(File(PathService.getFilePath(media!, _cards[currentCardIdx].img ?? "")).existsSync())
     {
-      return PathService.getFilePath(media, _cards[currentCardIdx].img ?? "");
+      return PathService.getFilePath(media!, _cards[currentCardIdx].img ?? "");
     }
     return "";
   }

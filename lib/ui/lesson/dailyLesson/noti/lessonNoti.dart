@@ -21,7 +21,7 @@ enum ButtonState { normal, selected, done, wrong }
 class LessonNoti extends ChangeNotifier {
   //data
   static final _dbhelper = DatabaseHelper.instance;
-  List<Flashcard> _cards = [];
+  final List<Flashcard> _cards = [];
   bool isLoading = false;
   int currentCardIdx = 0;
   String media = "";
@@ -117,9 +117,9 @@ class LessonNoti extends ChangeNotifier {
       totalRep++;
       haper();
       inARow++;
-      print("suc ${_acc} rep :${totalRep}");
+      print("suc $_acc rep :$totalRep");
     } else {
-      print("false ${_acc} rep :${totalRep}");
+      print("false $_acc rep :$totalRep");
       _acc++;
       totalLapse++;
     }
@@ -129,7 +129,7 @@ class LessonNoti extends ChangeNotifier {
   Future<void> getFlashcardList(LearnMode fetchMode) async {
     isLoading = true;
     notifyListeners();
-    var data;
+    List<Flashcard> data;
     switch (fetchMode) {
       case LearnMode.sm:
         how = LearnMode.sm;
@@ -166,9 +166,9 @@ class LessonNoti extends ChangeNotifier {
     _cards.clear();
     _cards.addAll(data);
     mode = SetUpLessonList[currentLessIdx]["mode"];
-    _cards.forEach((c) {
+    for (var c in _cards) {
       print("${c.word} - ${c.due}");
-    });
+    }
     await fetchMedia();
     createRateCard();
     isLoading = false;
@@ -178,14 +178,14 @@ class LessonNoti extends ChangeNotifier {
   Future<void> getByLevel(int level) async {
     isLoading = true;
     notifyListeners();
-    var data;
+    List<Flashcard> data;
     how = LearnMode.daily;
     data = await _dbhelper.getCardByLevel(level, 15);
     _cards.clear();
     _cards.addAll(data);
-    _cards.forEach((c) {
+    for (var c in _cards) {
       print("${c.word} - ${c.due}");
-    });
+    }
     await fetchMedia();
     mode = SetUpLessonList[currentLessIdx]["mode"];
     isLoading = false;
@@ -196,14 +196,14 @@ class LessonNoti extends ChangeNotifier {
   Future<void> getByMode(StudyMode st) async {
     isLoading = true;
     notifyListeners();
-    var data;
+    List<Flashcard> data;
     how = LearnMode.all;
     data = await _dbhelper.getDueCardLimit(15);
     _cards.clear();
     _cards.addAll(data);
-    _cards.forEach((c) {
+    for (var c in _cards) {
       print("${c.word} - ${c.due}");
-    });
+    }
     await fetchMedia();
     SetUpLessonList = lessonNotiHelper.createListForLevel(14, st);
     mode = SetUpLessonList[currentLessIdx]["mode"];
@@ -266,7 +266,7 @@ class LessonNoti extends ChangeNotifier {
 
   List<String> genOptionsShuffle() {
     List<String> re = lessonNotiHelper.genOptionsShuffleHelp(_cards, cardIdx);
-    statesBool = List.generate(re!.length, (_) => false);
+    statesBool = List.generate(re.length, (_) => false);
     return re;
   }
 
@@ -442,14 +442,14 @@ class LessonNoti extends ChangeNotifier {
 
   Future<String> fetchMedia() async {
     try {
-      int deck_id = _cards[cardIdx].deckId;
-      if (mediaMap.containsKey(deck_id)) {
-        media = mediaMap[deck_id] ?? "";
-        return mediaMap[deck_id]!;
+      int deckId = _cards[cardIdx].deckId;
+      if (mediaMap.containsKey(deckId)) {
+        media = mediaMap[deckId] ?? "";
+        return mediaMap[deckId]!;
       } else {
-        String md = await _dbhelper.getMediaFile(deck_id) ?? "";
-        mediaMap[deck_id] = md;
-        media = mediaMap[deck_id] ?? "";
+        String md = await _dbhelper.getMediaFile(deckId) ?? "";
+        mediaMap[deckId] = md;
+        media = mediaMap[deckId] ?? "";
         return md;
       }
     } catch (e) {
@@ -466,14 +466,14 @@ class LessonNoti extends ChangeNotifier {
   List<WordIPA> getOptionListPhone() {
     List<WordIPA> list = [];
     List<Flashcard> listCard = _cards.take(4).toList();
-    listCard.forEach((c) {
+    for (var c in listCard) {
       final currentCard = c;
       String ipaCheck = c.ipa!;
       if (!ipaCheck.contains('/')) {
         ipaCheck = "/$ipaCheck/";
       }
       list.add(WordIPA(word: currentCard.word ?? "", ipa: ipaCheck));
-    });
+    }
     list.shuffle();
     return list;
   }
@@ -693,9 +693,9 @@ class LessonNoti extends ChangeNotifier {
   }
 
   String get correctspeak {
-    String str = "right is: ${answer}";
+    String str = "right is: $answer";
     if (re != "") {
-      str += "  you said: ${re}";
+      str += "  you said: $re";
     }
     return str;
   }
@@ -716,10 +716,10 @@ class LessonNoti extends ChangeNotifier {
   //sm2
   void updateCard() {
     SMNoti n = SMNoti();
-    RateCard.forEach((c) {
+    for (var c in RateCard) {
       int rate = (c["rate"] ?? 3).clamp(0, 5);
       n.updateCardAfterReview(_cards[c["idx"] ?? 0], rate);
-    });
+    }
   }
 
   List<Map<String, int>> RateCard = [

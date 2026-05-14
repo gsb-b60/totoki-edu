@@ -28,16 +28,16 @@ class EchoMatchNoti extends ChangeNotifier {
   bool get checkable => selectedIndex != null;
   String get answer => _cards[currentCardIdx].word!;
 
-  Future<void> getFlashcardList(int deck_id) async {
+  Future<void> getFlashcardList(int deckId) async {
     isLoading = true;
     notifyListeners();
-    if (deck_id== 0) {
+    if (deckId== 0) {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
       
     } else {
-      final data = await DatabaseHelper.instance.getCardForDeck(deck_id);
+      final data = await DatabaseHelper.instance.getCardForDeck(deckId);
       _cards.clear();
       _cards.addAll(data);
       _cards = _cards

@@ -111,9 +111,9 @@ class SynonympickNoti extends ChangeNotifier {
   }
   String getImagePath()
   {
-    if(File(PathService.getFilePath(media, _cards[currentCardIdx].synonyms ?? "")).existsSync())
+    if(File(PathService.getFilePath(media!, _cards[currentCardIdx].synonyms ?? "")).existsSync())
     {
-      return PathService.getFilePath(media, _cards[currentCardIdx].synonyms ?? "");
+      return PathService.getFilePath(media!, _cards[currentCardIdx].synonyms ?? "");
     }
     return "";
   }

@@ -98,7 +98,7 @@ class inforRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(width: 150),
-        Container(
+        SizedBox(
           width: 130,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

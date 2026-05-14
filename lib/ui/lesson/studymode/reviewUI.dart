@@ -88,7 +88,7 @@ class _ReviewUIState extends State<ReviewUI> {
                   back: Card(
                     color: AppTheme.darkBase,
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                         width: 400,
                         child: Text(
                           list[index].meaning??"",

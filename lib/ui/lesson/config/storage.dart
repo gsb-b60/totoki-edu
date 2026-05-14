@@ -52,13 +52,13 @@ class lessonNotiHelper {
   }
 
   static List<String> genOptionsShuffleHelp(
-    List<Flashcard> _cards,
+    List<Flashcard> cards,
     int cardIdx,
   ) {
     List<String> re = [];
-    final answer = _cards[cardIdx].word!;
+    final answer = cards[cardIdx].word!;
 
-    final otherCards = _cards.where((c) => c.word != answer).toList()
+    final otherCards = cards.where((c) => c.word != answer).toList()
       ..shuffle();
 
     re = [answer];

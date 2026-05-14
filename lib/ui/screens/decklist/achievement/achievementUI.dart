@@ -49,7 +49,7 @@ class _AchievementState extends State<AchievementUI> {
         itemBuilder: (context, index) {
           final card = flashcards[index];
           final due = card.due ?? DateTime.now();
-          final levelColor;
+          final Color levelColor;
           final level = card.complexity ?? 1;
           bool Learned = card.reps != null && card.reps! > 0;
           final reps = (card.reps != null && card.reps! >= 0 && card.reps! <= 5)
@@ -131,7 +131,7 @@ class _AchievementState extends State<AchievementUI> {
                   ),
                 ),
                 trailing: Text(
-                  "Level: ${level}",
+                  "Level: $level",
                   style: TextStyle(
                     color: levelColor,
                     fontWeight: FontWeight.bold,
@@ -215,7 +215,7 @@ class _CardInforScreenState extends State<CardInforScreen> {
                   color: AppTheme.lightText,
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 600,
                 child: Text(
                   widget.card.meaning ?? "",
@@ -240,7 +240,7 @@ class _CardInforScreenState extends State<CardInforScreen> {
                   color: AppTheme.lightText,
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 600,
                 child: Text(
                   widget.card.example ?? "",

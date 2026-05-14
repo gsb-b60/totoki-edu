@@ -61,7 +61,7 @@ class _MindFeildUIState extends State<MindFeildUI> {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: 150,
                 width: 650,
                 child: Center(
@@ -75,7 +75,7 @@ class _MindFeildUIState extends State<MindFeildUI> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 120,
                 width: 750,
                 child: Row(

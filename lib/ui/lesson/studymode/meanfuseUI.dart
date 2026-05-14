@@ -55,7 +55,7 @@ class MeanfuseUI extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 width: 675,
                 child: Center(
                   child: Text(

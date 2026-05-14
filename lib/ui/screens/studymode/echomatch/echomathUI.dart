@@ -91,7 +91,7 @@ class _EchoMatchUIState extends State<EchoMatchUI> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       height: 150,
                       width: 750,
                       child: Row(

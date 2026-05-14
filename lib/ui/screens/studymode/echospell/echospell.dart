@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class Echospell extends StatefulWidget {
   final int deck_id;
-  Echospell({super.key, required this.deck_id});
+  const Echospell({super.key, required this.deck_id});
 
   @override
   State<Echospell> createState() => _EchospellState();

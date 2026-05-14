@@ -35,7 +35,7 @@ class AppTheme{
   static const bluePrimary = Color.fromRGBO(33, 152, 215, 1);
 
   static const yellowPrimary = Color.fromRGBO(255, 201, 4, 1);
-  static const yellowAccent = const Color.fromARGB(255, 214, 183, 9);
+  static const yellowAccent = Color.fromARGB(255, 214, 183, 9);
   
   static const bronze = Color(0xFFCD7F32);
   static const silver = Color(0xFFC0C0C0);
