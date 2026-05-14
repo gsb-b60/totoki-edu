@@ -110,13 +110,57 @@ class _CardListScreenState extends State<CardListScreen> {
             ],
           ),
           if (menu)
+            GestureDetector(
+              onTap: () => setState(() => menu = false),
+              child: Container(
+                color: Colors.black54,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+          if (menu)
             Align(
               alignment: Alignment.centerRight,
               child: Container(
-                width: 300,
+                width: MediaQuery.of(context).size.width * 0.75,
                 height: double.infinity,
-                color: AppTheme.darkSurface,
-                child: LearnMode(deckID: widget.deckId!),
+                decoration: const BoxDecoration(
+                  color: AppTheme.darkSurface,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black54,
+                      blurRadius: 15,
+                      offset: Offset(-5, 0),
+                    ),
+                  ],
+                ),
+                child: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Study Modes",
+                              style: AppTheme.bodyLargeStyle,
+                            ),
+                            IconButton(
+                              onPressed: () => setState(() => menu = false),
+                              icon: const Icon(Icons.close, color: AppTheme.lightText),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(color: AppTheme.darkCard, height: 1),
+                      Expanded(
+                        child: LearnMode(deckID: widget.deckId!),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
         ],
@@ -132,108 +176,151 @@ class LearnMode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          NavPageBtn(
-            label: "review",
-            screenBuilder: () => Newwayreview(deckId: deckID),
-          ),
-          NavPageBtn(
-            label: "blank word",
-            screenBuilder: () => BlankWordScreen(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Mind Field",
-            screenBuilder: () => MindFeild(deckID: deckID),
-          ),
-          NavPageBtn(
-            label: "Word Snap",
-            screenBuilder: () => WordSnap(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Phoneme Mix",
-            screenBuilder: () => PhoneMix(deckID: deckID),
-          ),
-          NavPageBtn(
-            label: "Synonym Feild",
-            screenBuilder: () => Synonymfield(deckID: deckID),
-          ),
-          NavPageBtn(
-            label: "Echo Spell",
-            screenBuilder: () => Echospell(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Echo Match",
-            screenBuilder: () => EchoMatch(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Echo Fuse",
-            screenBuilder: () => EchoFuse(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Sound - Sight",
-            screenBuilder: () => SoundNSight(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Neuro Pick",
-            screenBuilder: () => NeuroPick(deckID: deckID),
-          ),
-
-          NavPageBtn(
-            label: "Word Pulse",
-            screenBuilder: () => WordPulse(deck_id: deckID),
-          ),
-          NavPageBtn(
-            label: "Synonym Pick",
-            screenBuilder: () => Synonympick(deckID: deckID),
-          ),
-          NavPageBtn(
-            label: "Speech Word",
-            screenBuilder: () => Speechword(deck_id: deckID),
-          ),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      children: [
+        NavPageBtn(
+          label: "SRS Review",
+          icon: Icons.rate_review,
+          color: AppTheme.primaryTeal,
+          screenBuilder: () => Newwayreview(deckId: deckID),
+        ),
+        NavPageBtn(
+          label: "Blank Word",
+          icon: Icons.text_fields,
+          color: AppTheme.meanFuse,
+          screenBuilder: () => BlankWordScreen(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Mind Field",
+          icon: Icons.psychology,
+          color: AppTheme.mindField,
+          screenBuilder: () => MindFeild(deckID: deckID),
+        ),
+        NavPageBtn(
+          label: "Word Snap",
+          icon: Icons.touch_app,
+          color: AppTheme.wordSnap,
+          screenBuilder: () => WordSnap(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Phoneme Mix",
+          icon: Icons.graphic_eq,
+          color: AppTheme.phoneMix,
+          screenBuilder: () => PhoneMix(deckID: deckID),
+        ),
+        NavPageBtn(
+          label: "Synonym Field",
+          icon: Icons.compare_arrows,
+          color: AppTheme.meanFuse,
+          screenBuilder: () => Synonymfield(deckID: deckID),
+        ),
+        NavPageBtn(
+          label: "Echo Spell",
+          icon: Icons.hearing,
+          color: AppTheme.echoSpell,
+          screenBuilder: () => Echospell(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Echo Match",
+          icon: Icons.extension,
+          color: AppTheme.echoMatch,
+          screenBuilder: () => EchoMatch(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Echo Fuse",
+          icon: Icons.merge_type,
+          color: AppTheme.echoFuse,
+          screenBuilder: () => EchoFuse(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Sound - Sight",
+          icon: Icons.visibility,
+          color: AppTheme.soundSight,
+          screenBuilder: () => SoundNSight(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Neuro Pick",
+          icon: Icons.image_search,
+          color: AppTheme.neuroPick,
+          screenBuilder: () => NeuroPick(deckID: deckID),
+        ),
+        NavPageBtn(
+          label: "Word Pulse",
+          icon: Icons.favorite,
+          color: AppTheme.wordPulse,
+          screenBuilder: () => WordPulse(deck_id: deckID),
+        ),
+        NavPageBtn(
+          label: "Synonym Pick",
+          icon: Icons.low_priority,
+          color: AppTheme.meanFuse,
+          screenBuilder: () => Synonympick(deckID: deckID),
+        ),
+        NavPageBtn(
+          label: "Speech Word",
+          icon: Icons.mic,
+          color: AppTheme.primaryRed,
+          screenBuilder: () => Speechword(deck_id: deckID),
+        ),
+      ],
     );
   }
 }
 
 class NavPageBtn extends StatelessWidget {
   final String label;
+  final IconData icon;
+  final Color color;
   final Widget Function() screenBuilder;
 
   const NavPageBtn({
     super.key,
     required this.label,
+    required this.icon,
+    required this.color,
     required this.screenBuilder,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        final cardModel = Provider.of<Cardmodel>(context, listen: false);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<Cardmodel>.value(
-              value: cardModel,
-              child: screenBuilder(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: InkWell(
+        onTap: () {
+          final cardModel = Provider.of<Cardmodel>(context, listen: false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider<Cardmodel>.value(
+                value: cardModel,
+                child: screenBuilder(),
+              ),
             ),
+          );
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppTheme.darkCard.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: color.withOpacity(0.3), width: 1),
           ),
-        );
-      },
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: AppTheme.lightText,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
+          child: Row(
+            children: [
+              Icon(icon, color: color, size: 28),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTheme.bodyMediumStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Icon(Icons.chevron_right, color: AppTheme.lightText.withOpacity(0.3)),
+            ],
           ),
         ),
       ),
