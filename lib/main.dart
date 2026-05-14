@@ -8,6 +8,7 @@ import 'package:totoki_extract/ui/screens/decklist/deckwelcome.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PathService.init();
+
   runApp(
     MultiProvider(
       providers: [

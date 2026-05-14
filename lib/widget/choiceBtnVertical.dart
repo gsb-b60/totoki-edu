@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 
 class ChoiceBtnVertical extends StatelessWidget {
-  String value;
-  bool isSelected;
-  VoidCallback? onPressed;
-  ChoiceBtnVertical({
+  final String value;
+  final bool isSelected;
+  final VoidCallback? onPressed;
+  const ChoiceBtnVertical({
     super.key,
     required this.isSelected,
     required this.value,
@@ -15,30 +15,32 @@ class ChoiceBtnVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(3.0),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: SizedBox(
-        width: 240,
+        width: double.infinity,
         height: 60,
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
+            elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
             ),
             side: BorderSide(
-              color: isSelected ? AppTheme.greenMuted : AppTheme.darkCard,
-              width: 4,
+              color: isSelected ? AppTheme.greenPrimary : AppTheme.darkBorder,
+              width: 2,
             ),
             backgroundColor: isSelected
-                ? AppTheme.darkSurface
-                : AppTheme.darkBase,
+                ? AppTheme.darkCard
+                : AppTheme.darkSurface,
           ),
           child: Text(
             value,
-            style: TextStyle(
-              color: isSelected ? AppTheme.greenMuted : Colors.white,
-              fontSize: 28,
+            style: AppTheme.bodyLargeStyle.copyWith(
+              color: isSelected ? AppTheme.greenPrimary : AppTheme.lightText,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 
 class ReviewScreen extends StatelessWidget {
-  ReviewScreen({
+  const ReviewScreen({
     super.key,
     required this.right,
     required this.onPressed,
@@ -10,116 +10,90 @@ class ReviewScreen extends StatelessWidget {
   });
   final bool right;
   final String answer;
+  final VoidCallback onPressed;
 
-  VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: SizedBox(
+      child: Container(
         width: double.infinity,
-        height: right ? 250 : 350,
-        child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        decoration: BoxDecoration(
           color: AppTheme.darkSurface,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                children: [
-                  SizedBox(width: 30),
-                  Icon(
-                    right ? Icons.check_circle_rounded : Icons.cancel,
-                    color: right ? AppTheme.greenBright : AppTheme.redPrimary,
-                    size: 40,
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    right ? "Great job!" : "Incorrect",
-                    style: TextStyle(
-                      color: right ? AppTheme.greenBright : AppTheme.redPrimary,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
-              if (!right)
-                Row(
-                  children: [
-                    SizedBox(width: 40),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Correct answer:",
-                          style: TextStyle(
-                            color: AppTheme.redPrimary,
-                            fontSize: 34,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          answer,
-                          style: TextStyle(
-                            color: AppTheme.redAccent,
-                            fontSize: 34,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            )
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  right ? Icons.check_circle_rounded : Icons.cancel,
+                  color: right ? AppTheme.greenPrimary : AppTheme.redPrimary,
+                  size: 32,
                 ),
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 650,
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        onPressed.call();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: right ? 10 : 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        backgroundColor: right
-                            ? AppTheme.greenPrimary
-                            : AppTheme.redBright,
-                      ),
-                      child: Text(
-                        right ? "CONTINUE" : "GOT IT",
-                        style: TextStyle(
-                          color: AppTheme.darkBase,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
+                const SizedBox(width: 12),
+                Text(
+                  right ? "Great job!" : "Incorrect",
+                  style: AppTheme.sectionHeaderStyle.copyWith(
+                    color: right ? AppTheme.greenPrimary : AppTheme.redPrimary,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border(
-                            bottom: BorderSide(
-                              color: right
-                                  ? AppTheme.greenAccent
-                                  : AppTheme.redMuted,
-                              width: 6,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+              ],
+            ),
+            if (!right) ...[
+              const SizedBox(height: 16),
+              Text(
+                "Correct answer:",
+                style: AppTheme.bodyMediumStyle.copyWith(
+                  color: AppTheme.lightText.withOpacity(0.7),
+                ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 4),
+              Text(
+                answer,
+                style: AppTheme.bodyLargeStyle.copyWith(
+                  color: AppTheme.redAccent,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
-          ),
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: onPressed,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  backgroundColor: right
+                      ? AppTheme.greenPrimary
+                      : AppTheme.redPrimary,
+                ),
+                child: Text(
+                  right ? "CONTINUE" : "GOT IT",
+                  style: AppTheme.bodyLargeStyle.copyWith(
+                    color: AppTheme.darkBase,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
