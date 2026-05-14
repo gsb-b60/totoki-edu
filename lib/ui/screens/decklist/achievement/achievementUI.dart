@@ -20,28 +20,19 @@ class _AchievementState extends State<AchievementUI> {
       backgroundColor: AppTheme.darkSurface,
       appBar: AppBar(
         backgroundColor: AppTheme.darkSurface,
-        title: Text(
+        title: const Text(
           "Achievement",
-          style: TextStyle(
-            color: AppTheme.lightText,
-            fontWeight: FontWeight.bold,
-            fontSize: 38,
-          ),
+          style: AppTheme.screenTitleStyle,
         ),
-        leading: Row(
-          children: [
-            SizedBox(width: 8),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: AppTheme.darkBorder,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.darkBorder,
+            size: 24,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: ListView.builder(
@@ -51,45 +42,31 @@ class _AchievementState extends State<AchievementUI> {
           final due = card.due ?? DateTime.now();
           final Color levelColor;
           final level = card.complexity ?? 1;
-          bool Learned = card.reps != null && card.reps! > 0;
+          bool learned = card.reps != null && card.reps! > 0;
           final reps = (card.reps != null && card.reps! >= 0 && card.reps! <= 5)
               ? card.reps
               : 0;
           final path = 'assets/rep/rep$reps.png';
 
           switch (card.complexity) {
-            case 1:
-              levelColor = AppTheme.bronze;
-              break;
-            case 2:
-              levelColor = AppTheme.silver;
-              break;
-            case 3:
-              levelColor = AppTheme.amberRank;
-              break;
-            case 4:
-              levelColor = AppTheme.platinum;
-              break;
-            case 5:
-              levelColor = AppTheme.diamond;
-              break;
-            case 6:
-              levelColor = AppTheme.master;
-              break;
-            case 7:
-              levelColor = AppTheme.challenger;
-              break;
-            default:
-              levelColor = Colors.grey;
+            case 1: levelColor = AppTheme.bronze; break;
+            case 2: levelColor = AppTheme.silver; break;
+            case 3: levelColor = AppTheme.amberRank; break;
+            case 4: levelColor = AppTheme.platinum; break;
+            case 5: levelColor = AppTheme.diamond; break;
+            case 6: levelColor = AppTheme.master; break;
+            case 7: levelColor = AppTheme.challenger; break;
+            default: levelColor = Colors.grey;
           }
-          //final levelColor=flashcards[index]
+
           return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 42, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              border: Border.all(color: AppTheme.darkCard, width: 4),
-              borderRadius: BorderRadius.circular(10),
+              color: AppTheme.darkBase,
+              border: Border.all(color: AppTheme.darkCard, width: 2),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: GestureDetector(
+            child: ListTile(
               onTap: () {
                 Navigator.push(
                   context,
@@ -98,52 +75,27 @@ class _AchievementState extends State<AchievementUI> {
                   ),
                 );
               },
-              child: ListTile(
-                leading: Image.asset(path, width: 30, height: 30),
-                title: Text(
-                  card.word!,
-                  style: TextStyle(
-                    color: Learned ? levelColor : AppTheme.darkSurface,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                    shadows: [
-                      Shadow(
-                        color: levelColor.withOpacity(0.8),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: levelColor.withOpacity(0.6),
-                        blurRadius: 20,
-                      ),
-                      Shadow(
-                        color: levelColor.withOpacity(0.4),
-                        blurRadius: 30,
-                      ),
-                    ],
-                  ),
+              leading: Image.asset(path, width: 32, height: 32),
+              title: Text(
+                card.word!,
+                style: AppTheme.sectionHeaderStyle.copyWith(
+                  color: learned ? levelColor : AppTheme.darkCard,
+                  shadows: learned ? [
+                    Shadow(color: levelColor.withOpacity(0.5), blurRadius: 8),
+                  ] : [],
                 ),
-                subtitle: Text(
-                  'Due Day: ${due.day}/${due.month}/${due.year}',
-                  style: TextStyle(
-                    color: AppTheme.lightText.withOpacity(0.7),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                  ),
+              ),
+              subtitle: Text(
+                'Due Day: ${due.day}/${due.month}/${due.year}',
+                style: AppTheme.captionStyle.copyWith(
+                  color: AppTheme.lightText.withOpacity(0.6),
                 ),
-                trailing: Text(
-                  "Level: $level",
-                  style: TextStyle(
-                    color: levelColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                    shadows: [
-                      Shadow(
-                        color: levelColor.withOpacity(0.80),
-                        blurRadius: 52,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
+              ),
+              trailing: Text(
+                "Lvl $level",
+                style: AppTheme.bodyLargeStyle.copyWith(
+                  color: levelColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -154,106 +106,82 @@ class _AchievementState extends State<AchievementUI> {
   }
 }
 
-class CardInforScreen extends StatefulWidget {
-  CardInforScreen({super.key, required this.card});
-  Flashcard card;
-  @override
-  State<CardInforScreen> createState() => _CardInforScreenState();
-}
+class CardInforScreen extends StatelessWidget {
+  const CardInforScreen({super.key, required this.card});
+  final Flashcard card;
 
-class _CardInforScreenState extends State<CardInforScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.darkSurface,
-
         leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder),
         ),
       ),
       backgroundColor: AppTheme.darkSurface,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                widget.card.word ?? '',
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.lightText,
-                ),
-                overflow: TextOverflow.fade,
-              ),
-              if (widget.card.ipa != null)
-                Text(
-                  "/${widget.card.ipa!}/",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontStyle: FontStyle.italic,
-                    overflow: TextOverflow.ellipsis,
-                    color: AppTheme.lightText,
-                    fontFamily: "roboto",
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: Text(
+                    card.word ?? '',
+                    style: AppTheme.heroStyle,
                   ),
                 ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "MEANING:",
-                style: TextStyle(
-                  fontSize: 32,
-                  overflow: TextOverflow.ellipsis,
-                  color: AppTheme.lightText,
-                ),
-              ),
-              SizedBox(
-                width: 600,
-                child: Text(
-                  widget.card.meaning ?? "",
-                  style: TextStyle(
-                    fontSize: 27,
-                    // overflow: TextOverflow.ellipsis,
-                    color: AppTheme.lightText,
+                if (card.ipa != null)
+                  Text(
+                    "/${card.ipa!}/",
+                    style: AppTheme.sectionHeaderStyle.copyWith(
+                      fontStyle: FontStyle.italic,
+                      color: AppTheme.lightText.withOpacity(0.7),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Example:",
-                style: TextStyle(
-                  fontSize: 32,
-                  overflow: TextOverflow.ellipsis,
-                  color: AppTheme.lightText,
-                ),
-              ),
-              SizedBox(
-                width: 600,
-                child: Text(
-                  widget.card.example ?? "",
-                  style: TextStyle(
-                    fontSize: 27,
-                    color: AppTheme.lightText,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(height: 32),
+            _InfoSection(label: "MEANING", value: card.meaning ?? "No meaning provided."),
+            const SizedBox(height: 24),
+            _InfoSection(label: "EXAMPLE", value: card.example ?? "No example provided."),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _InfoSection extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _InfoSection({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTheme.bodyLargeStyle.copyWith(
+            color: AppTheme.primaryTeal,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: AppTheme.bodyMediumStyle,
+        ),
+      ],
     );
   }
 }

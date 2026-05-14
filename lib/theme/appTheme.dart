@@ -60,6 +60,44 @@ class AppTheme{
   static const soundSight = Color(0xFF2E8B57); // sea green
 
   static const phoneMix = Color(0xFF364958); // dark steel blue
+
+  // --- Typography Scale ---
+  static const TextStyle heroStyle = TextStyle(
+    fontSize: 42,
+    fontWeight: FontWeight.bold,
+    color: lightText,
+  );
+
+  static const TextStyle screenTitleStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: lightText,
+  );
+
+  static const TextStyle sectionHeaderStyle = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w600,
+    color: lightText,
+  );
+
+  static const TextStyle bodyLargeStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.normal,
+    color: lightText,
+  );
+
+  static const TextStyle bodyMediumStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: lightText,
+  );
+
+  static const TextStyle captionStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w300,
+    fontStyle: FontStyle.italic,
+    color: lightText,
+  );
 }
 
 extension FlashcardTheme on AppTheme {

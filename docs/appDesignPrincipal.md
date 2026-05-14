@@ -39,10 +39,21 @@ Each study mode has a distinct color identity. Use `FlashcardTheme.getStudyModeC
 *   **Choice Buttons**: High-contrast text on `darkSurface` or `darkCard`. Status changes (correct/wrong) should animate the background color.
 *   **Vertical Alignment**: Use `lib/widget/choiceBtnVertical.dart` for multiple-choice lists.
 
-### 3.2 Typography
-*   **Headings**: Bold, `AppTheme.lightText`, usually 20px-24px.
-*   **Flashcard Word**: High prominence, center-aligned, 32px+.
-*   **IPA/Example**: `AppTheme.lightText` with reduced opacity (0.7) or slightly smaller font size for hierarchy.
+### 3.2 Typography Scale
+Use a consistent hierarchy to guide the user's eye.
+
+| Level | Size Range | Weight | Usage |
+| :--- | :--- | :--- | :--- |
+| **Flashcard Hero** | 36px - 48px | Bold | Primary word/prompt in study mode. |
+| **Screen Title** | 28px - 32px | Bold | Main app bar or header titles. |
+| **Section Header** | 20px - 24px | Semibold | Sub-titles (e.g., Deck names in list). |
+| **Body (Large)** | 16px - 18px | Regular | Important descriptions, primary button text. |
+| **Body (Medium)** | 14px - 16px | Regular | Standard readable text (meanings, examples). |
+| **Small/Caption** | 12px | Light/Italic | IPA, metadata (Due dates, intervals). |
+
+*   **Color**: Use `AppTheme.lightText` as the base.
+*   **Opacity**: Reduce opacity (0.7) for metadata or secondary info to create visual depth.
+*   **Font**: Prefer Material 3 default or "Roboto" for IPA symbols.
 
 ## 4. UI Architecture (Rules for Agents)
 
