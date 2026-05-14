@@ -6,16 +6,7 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnLevel.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 
-import 'package:totoki_extract/ui/screens/studymode/echofuse/echofuse.dart';
-import 'package:totoki_extract/ui/screens/studymode/echomatch/echomath.dart';
-import 'package:totoki_extract/ui/screens/studymode/echospell/echospell.dart';
-import 'package:totoki_extract/ui/screens/studymode/meanfuse/meanfuse.dart';
-import 'package:totoki_extract/ui/screens/studymode/mindfield/mindfeild.dart';
-import 'package:totoki_extract/ui/screens/studymode/neuropick/neuropick.dart';
-import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemix.dart';
-import 'package:totoki_extract/ui/screens/studymode/sound&sight/sound&sight.dart';
-import 'package:totoki_extract/ui/screens/studymode/wordpulse/wordpulse.dart';
-import 'package:totoki_extract/ui/screens/studymode/wordsnap/wordsnap.dart';
+
 
 class LearnModeScreen extends StatefulWidget {
   const LearnModeScreen({super.key});
@@ -26,55 +17,56 @@ class LearnModeScreen extends StatefulWidget {
 
 class _LearnModeScreenState extends State<LearnModeScreen> {
   int index = 0;
-  List<Widget> Screens = [
-    DailyLearnScreenNav(),
-
-    LevelLearnScreenNav(),
-    LearnByMode(),
+  final List<Widget> _screens = [
+    const DailyLearnScreenNav(),
+    const LevelLearnScreenNav(),
+    const LearnByMode(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         backgroundColor: AppTheme.darkBase,
+        elevation: 0,
         leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
+        ),
+        title: Text(
+          index == 0 ? "Daily Training" : index == 1 ? "Levels" : "Study Modes",
+          style: AppTheme.screenTitleStyle,
         ),
       ),
-      body: Screens[index],
-      backgroundColor: AppTheme.darkBase,
+      body: _screens[index],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          splashFactory: NoSplash.splashFactory,
         ),
         child: BottomNavigationBar(
           currentIndex: index,
           onTap: (i) => setState(() => index = i),
-          iconSize: 30,
-          unselectedItemColor: AppTheme.lightText,
-          backgroundColor: AppTheme.darkBase,
-          selectedFontSize: 20,
-          unselectedFontSize: 20,
+          iconSize: 28,
+          unselectedItemColor: AppTheme.lightText.withOpacity(0.5),
+          backgroundColor: AppTheme.darkSurface,
+          selectedFontSize: 14,
+          unselectedFontSize: 12,
           selectedItemColor: AppTheme.greenPrimary,
-          enableFeedback: true,
-          elevation: 12,
-          items: <BottomNavigationBarItem>[
+          type: BottomNavigationBarType.fixed,
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.assignment_turned_in),
-              label: 'Daily Learn',
+              label: 'Daily',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.military_tech),
-              label: 'Learn By Levels',
+              label: 'Levels',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.quiz),
-              label: 'Learn By Mode',
+              label: 'Modes',
             ),
           ],
         ),
@@ -83,137 +75,105 @@ class _LearnModeScreenState extends State<LearnModeScreen> {
   }
 }
 
-class LearnByMode extends StatefulWidget {
+class LearnByMode extends StatelessWidget {
   const LearnByMode({super.key});
 
   @override
-  State<LearnByMode> createState() => _LearnByModeState();
-}
-class _LearnByModeState extends State<LearnByMode> {
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.meanFuse,
-            line: "Mean Fuse", // meaning - fuse
-            screenBuilder: () => LessLearnMode(st:StudyMode.meanfuse),
-            aPath: "assets/illumode/fitness-1-44.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.wordSnap,
-            line: "Word Snap", // meaning - other letters
-            screenBuilder: () => LessLearnMode(st:StudyMode.wordsnap),
-            aPath: "assets/illumode/surfing-91.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.mindField,
-            line: "Mind Field", // meaning - shuffle word
-            screenBuilder: () => LessLearnMode(st:StudyMode.mindField),
-            aPath: "assets/illumode/baseball-22.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.echoSpell,
-            line: "Echo Spell", // ipa+sound - fuse
-            screenBuilder: () => LessLearnMode(st:StudyMode.echoSpell),
-            aPath: "assets/illumode/coach-82.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.echoMatch,
-            line: "Echo Match", // ipa+sound - shuffle word
-            screenBuilder: () => LessLearnMode(st:StudyMode.echoMatch),
-            aPath: "assets/illumode/diving-71.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.echoFuse,
-            line: "Echo Fuse", // ipa+sound - other letters
-            screenBuilder: () => LessLearnMode(st:StudyMode.echofuse),
-            aPath: "assets/illumode/soccer-64.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.neuroPick,
-            line: "Neuro Pick", // picture - fuse
-            screenBuilder: () => LessLearnMode(st:StudyMode.neuropick),
-            aPath: "assets/illumode/parachute-11.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.wordPulse,
-            line: "Word Pulse", // picture - shuffle word
-            screenBuilder: () => LessLearnMode(st:StudyMode.wordpulse),
-            aPath: "assets/illumode/video-call-1-72.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.soundSight,
-            line: "Sound and Sight", // picture - arrange letters
-            screenBuilder: () => LessLearnMode(st:StudyMode.soundAndSight),
-            aPath: "assets/illumode/fitness-99.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.phoneMix,
-            line: "Phonemix", // 4 ipa
-            screenBuilder: () => LessLearnMode(st:StudyMode.phonemix),
-            aPath: "assets/illumode/rocket-launch-59.png",
-          ),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      children: [
+        LearnModeCard(
+          co: AppTheme.meanFuse,
+          line: "Mean Fuse",
+          screenBuilder: () => LessLearnMode(st: StudyMode.meanfuse),
+          aPath: "assets/illumode/fitness-1-44.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.wordSnap,
+          line: "Word Snap",
+          screenBuilder: () => LessLearnMode(st: StudyMode.wordsnap),
+          aPath: "assets/illumode/surfing-91.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.mindField,
+          line: "Mind Field",
+          screenBuilder: () => LessLearnMode(st: StudyMode.mindField),
+          aPath: "assets/illumode/baseball-22.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.echoSpell,
+          line: "Echo Spell",
+          screenBuilder: () => LessLearnMode(st: StudyMode.echoSpell),
+          aPath: "assets/illumode/coach-82.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.echoMatch,
+          line: "Echo Match",
+          screenBuilder: () => LessLearnMode(st: StudyMode.echoMatch),
+          aPath: "assets/illumode/diving-71.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.echoFuse,
+          line: "Echo Fuse",
+          screenBuilder: () => LessLearnMode(st: StudyMode.echofuse),
+          aPath: "assets/illumode/soccer-64.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.neuroPick,
+          line: "Neuro Pick",
+          screenBuilder: () => LessLearnMode(st: StudyMode.neuropick),
+          aPath: "assets/illumode/parachute-11.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.wordPulse,
+          line: "Word Pulse",
+          screenBuilder: () => LessLearnMode(st: StudyMode.wordpulse),
+          aPath: "assets/illumode/video-call-1-72.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.soundSight,
+          line: "Sound and Sight",
+          screenBuilder: () => LessLearnMode(st: StudyMode.soundAndSight),
+          aPath: "assets/illumode/fitness-99.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.phoneMix,
+          line: "Phonemix",
+          screenBuilder: () => LessLearnMode(st: StudyMode.phonemix),
+          aPath: "assets/illumode/rocket-launch-59.png",
+        ),
+      ],
     );
   }
 }
 
-class LevelLearnScreenNav extends StatefulWidget {
+class LevelLearnScreenNav extends StatelessWidget {
   const LevelLearnScreenNav({super.key});
 
-  @override
-  State<LevelLearnScreenNav> createState() => _LevelLearnScreenNavState();
-}
-
-class _LevelLearnScreenNavState extends State<LevelLearnScreenNav> {
-  List<Map<String, dynamic>> listLevel = [
-    {"level": 1, "co": Color(0xFF7A4A21) ,"path":"assets/illumode/global-warming-68.png"} ,
-    {"level": 2, "co": Color.fromARGB(255, 109, 109, 187),"path":"assets/illumode/global-warming-2-100.png"},
-    {"level": 3, "co": Color(0xFFAA7A13),"path":"assets/illumode/global-warming-4.png"},
-    {"level": 4, "co": Color.fromARGB(255, 112, 148, 255),"path":"assets/illumode/global-warming-2-30.png"},
-    {"level": 5, "co": Color(0xFF0F6F82),"path":"assets/illumode/global-warming-1-5.png"},
-    {"level": 6, "co": Color(0xFFA01717),"path":"assets/illumode/global-warming-2-50.png"},
-    {"level": 7, "co": Color(0xFF351A6E),"path":"assets/illumode/global-warming-76.png"},
+  static const List<Map<String, dynamic>> _levels = [
+    {"level": 1, "co": Color(0xFF7A4A21), "path": "assets/illumode/global-warming-68.png"},
+    {"level": 2, "co": Color(0xFF4D4DBB), "path": "assets/illumode/global-warming-2-100.png"},
+    {"level": 3, "co": Color(0xFFAA7A13), "path": "assets/illumode/global-warming-4.png"},
+    {"level": 4, "co": Color(0xFF7094FF), "path": "assets/illumode/global-warming-2-30.png"},
+    {"level": 5, "co": Color(0xFF0F6F82), "path": "assets/illumode/global-warming-1-5.png"},
+    {"level": 6, "co": Color(0xFFA01717), "path": "assets/illumode/global-warming-2-50.png"},
+    {"level": 7, "co": Color(0xFF351A6E), "path": "assets/illumode/global-warming-76.png"},
   ];
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          SizedBox(width: 20),
-          ...List.generate(
-            listLevel.length,
-            (i) => Row(
-              children: [
-                LearnModeCard(
-                  co: listLevel[i]["co"],
-                  line: "level ${listLevel[i]["level"].toString()}",
-                  screenBuilder: () => Learnlevel(level: listLevel[i]["level"]),
-                  aPath: listLevel[i]["path"],
-                ),
-                SizedBox(width: 20),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      itemCount: _levels.length,
+      itemBuilder: (context, i) {
+        return LearnModeCard(
+          co: _levels[i]["co"],
+          line: "Level ${_levels[i]["level"]}",
+          screenBuilder: () => Learnlevel(level: _levels[i]["level"]),
+          aPath: _levels[i]["path"],
+        );
+      },
     );
   }
 }
@@ -223,93 +183,115 @@ class DailyLearnScreenNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.greenAccent,
-            line: "DAILY LEARN",
-            screenBuilder: () => LessonScreen(fetchMode: LearnMode.daily),
-            aPath: "assets/illumode/school-75.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.yellowAccent,
-            line: "Super Memmo 2",
-            screenBuilder: () => LessonScreen(fetchMode: LearnMode.sm),
-            aPath: "assets/illumode/team-brainstorming-5-1.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.pinkPrimary,
-            line: "ALL MODE",
-            screenBuilder: () => LessonScreen(fetchMode: LearnMode.all),
-            aPath: "assets/illumode/super-dad-28.png",
-          ),
-          SizedBox(width: 20),
-          LearnModeCard(
-            co: AppTheme.bluePrimary,
-            line: "SHUFFLE MODE",
-            screenBuilder: () => LessonScreen(fetchMode: LearnMode.shuffle),
-            aPath: "assets/illumode/twitter-66.png",
-          ),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      children: [
+        LearnModeCard(
+          co: AppTheme.greenAccent,
+          line: "DAILY LEARN",
+          screenBuilder: () => LessonScreen(fetchMode: LearnMode.daily),
+          aPath: "assets/illumode/school-75.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.yellowAccent,
+          line: "Super Memo 2",
+          screenBuilder: () => LessonScreen(fetchMode: LearnMode.sm),
+          aPath: "assets/illumode/team-brainstorming-5-1.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.pinkPrimary,
+          line: "ALL MODE",
+          screenBuilder: () => LessonScreen(fetchMode: LearnMode.all),
+          aPath: "assets/illumode/super-dad-28.png",
+        ),
+        LearnModeCard(
+          co: AppTheme.bluePrimary,
+          line: "SHUFFLE MODE",
+          screenBuilder: () => LessonScreen(fetchMode: LearnMode.shuffle),
+          aPath: "assets/illumode/twitter-66.png",
+        ),
+      ],
     );
   }
 }
 
 class LearnModeCard extends StatelessWidget {
-  LearnModeCard({
+  const LearnModeCard({
     super.key,
     required this.co,
     required this.line,
     required this.screenBuilder,
     required this.aPath,
   });
-  Color co;
-  String line;
-  Widget Function() screenBuilder;
-  String aPath;
+
+  final Color co;
+  final String line;
+  final Widget Function() screenBuilder;
+  final String aPath;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => screenBuilder()),
-        ),
-      },
-      child: Container(
-        width: 175,
-        decoration: BoxDecoration(
-          color: co,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Stack(
-          children: [
-            if (aPath != "")
-              Align(
-                alignment: AlignmentGeometry.center,
-                child: SizedBox(width: 160, child: Image.asset(aPath)),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      height: 120,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screenBuilder()),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: co,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
               ),
-            Align(
-              alignment: AlignmentGeometry.bottomCenter,
-              child: Text(
-                line,
-                style: TextStyle(
-                  color: AppTheme.lightText,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+            ],
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Stack(
+            children: [
+              if (aPath.isNotEmpty)
+                Positioned(
+                  right: -20,
+                  top: -20,
+                  bottom: -20,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Image.asset(
+                      aPath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    line.toUpperCase(),
+                    style: AppTheme.sectionHeaderStyle.copyWith(
+                      color: AppTheme.lightText,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.5,
+                      shadows: [
+                        const Shadow(
+                          color: Colors.black45,
+                          blurRadius: 4,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
