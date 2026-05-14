@@ -27,10 +27,29 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.dark,
         scaffoldBackgroundColor: AppTheme.darkBase,
+        primaryColor: AppTheme.primaryTeal,
+        cardColor: AppTheme.darkSurface,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppTheme.darkBase,
+          elevation: 0,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: AppTheme.lightText,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppTheme.primaryTeal,
           brightness: Brightness.dark,
+          surface: AppTheme.darkSurface,
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: AppTheme.lightText),
+          bodyMedium: TextStyle(color: AppTheme.lightText),
+          titleLarge: TextStyle(color: AppTheme.lightText, fontWeight: FontWeight.bold),
         ),
       ),
       home: const DeckListScreen(),

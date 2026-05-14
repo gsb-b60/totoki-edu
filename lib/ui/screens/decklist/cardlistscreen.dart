@@ -262,7 +262,7 @@ class FlashCardItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                IPAandWord(card: card),
+                Expanded(child: IPAandWord(card: card)),
                 SoundTitle(
                   title: "sound",
                   value: (dir != null && card.sound != null)
@@ -274,11 +274,12 @@ class FlashCardItem extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [CardInformation(card: card, dir: dir)],
+                Expanded(
+                  child: CardInformation(card: card, dir: dir),
                 ),
-                SizedBox(width: 20,),
+                const SizedBox(width: 20),
                 PictureHolder(
                   w: 140,
                   h: 120,
@@ -288,7 +289,7 @@ class FlashCardItem extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20),
             PictureHolder(
               w: double.infinity,
               h: 160,
@@ -314,6 +315,7 @@ class IPAandWord extends StatelessWidget {
       height: 75,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             card.word ?? '',
@@ -322,12 +324,12 @@ class IPAandWord extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: AppTheme.lightText,
             ),
-            overflow: TextOverflow.fade,
+            overflow: TextOverflow.ellipsis,
           ),
           if (card.ipa != null)
             Text(
               "/${card.ipa!}/",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontStyle: FontStyle.italic,
                 overflow: TextOverflow.ellipsis,
@@ -349,79 +351,69 @@ class CardInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 4),
-                TitleAndValue(title: "Meaning", value: card.meaning ?? ''),
-                TitleAndValue(title: "Example", value: card.example ?? ''),
-                TitleAndValue(title: "Image", value: card.img ?? ''),
-                TitleAndValue(title: "Sound", value: card.sound ?? ''),
-                TitleAndValue(
-                  title: "Definition Sound",
-                  value: card.defSound ?? '',
-                ),
-                TitleAndValue(
-                  title: "Usage Sound",
-                  value: card.usageSound ?? '',
-                ),
-                if (card.due != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6),
-                    child: Text(
-                      'Due: ${DateFormat('MM/dd').format(card.due!)}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppTheme.pinkPrimary,
-                      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 4),
+              TitleAndValue(title: "Meaning", value: card.meaning ?? ''),
+              TitleAndValue(title: "Example", value: card.example ?? ''),
+              if (card.due != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 6, top: 4),
+                  child: Text(
+                    'Due: ${DateFormat('MM/dd').format(card.due!)}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppTheme.pinkPrimary,
                     ),
                   ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ChipTitle(
-                      title: "Interval",
-                      value: card.interval.toString(),
-                      color: AppTheme.greenDeep,
-                    ),
-                    ChipTitle(
-                      title: "Reps",
-                      value: card.reps.toString(),
-                      color: AppTheme.greenDeep,
-                    ),
-                    Complexity(card: card),
-                  ],
                 ),
-              ],
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SoundTitle(
-                title: "u sound",
-                value: (dir != null && card.usageSound != null)
-                    ? '$dir/${card.usageSound}'
-                    : '',
-                icon: const Icon(Icons.volume_up),
-              ),
-              SoundTitle(
-                title: "def sound",
-                value: (dir != null && card.defSound != null)
-                    ? '$dir/${card.defSound}'
-                    : '',
-                icon: const Icon(Icons.volume_up),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  ChipTitle(
+                    title: "Interval",
+                    value: card.interval.toString(),
+                    color: AppTheme.greenDeep,
+                  ),
+                  ChipTitle(
+                    title: "Reps",
+                    value: card.reps.toString(),
+                    color: AppTheme.greenDeep,
+                  ),
+                  Complexity(card: card),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SoundTitle(
+              title: "u sound",
+              value: (dir != null && card.usageSound != null)
+                  ? '$dir/${card.usageSound}'
+                  : '',
+              icon: const Icon(Icons.volume_up),
+            ),
+            SoundTitle(
+              title: "def sound",
+              value: (dir != null && card.defSound != null)
+                  ? '$dir/${card.defSound}'
+                  : '',
+              icon: const Icon(Icons.volume_up),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
