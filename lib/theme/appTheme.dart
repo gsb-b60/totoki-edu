@@ -61,3 +61,29 @@ class AppTheme{
 
   static const phoneMix = Color(0xFF364958); // dark steel blue
 }
+
+extension FlashcardTheme on AppTheme {
+  // Semantic mappings for Flashcard module
+  static const Color correct = AppTheme.greenPrimary;
+  static const Color wrong = AppTheme.redPrimary;
+  static const Color pending = AppTheme.yellowPrimary;
+  
+  static const Color cardBackground = AppTheme.darkSurface;
+  static const Color cardText = AppTheme.lightText;
+  
+  static Color getStudyModeColor(String mode) {
+    switch (mode.toLowerCase()) {
+      case 'meanfuse': return AppTheme.meanFuse;
+      case 'wordsnap': return AppTheme.wordSnap;
+      case 'mindfield': return AppTheme.mindField;
+      case 'echospell': return AppTheme.echoSpell;
+      case 'echomatch': return AppTheme.echoMatch;
+      case 'echofuse': return AppTheme.echoFuse;
+      case 'neuropick': return AppTheme.neuroPick;
+      case 'wordpulse': return AppTheme.wordPulse;
+      case 'soundsight': return AppTheme.soundSight;
+      case 'phonemix': return AppTheme.phoneMix;
+      default: return AppTheme.primaryTeal;
+    }
+  }
+}
