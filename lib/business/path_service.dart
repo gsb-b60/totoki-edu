@@ -30,3 +30,4 @@ class PathService {
     return p.join(ankiPath, folderName, fileName);
   }
 }
+

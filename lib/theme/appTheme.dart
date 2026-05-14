@@ -39,7 +39,7 @@ class AppTheme{
   
   static const bronze = Color(0xFFCD7F32);
   static const silver = Color(0xFFC0C0C0);
-  static const gold = Color(0xFFFFD700);
+  static const amberRank = Color(0xFFFFD700);
   static const platinum = Color(0xFFE5E4E2);
   static const diamond = Color(0xFFB9F2FF);
   static const master = Color(0xFFFF4500); // tùy chọn
@@ -87,3 +87,4 @@ extension FlashcardTheme on AppTheme {
     }
   }
 }
+

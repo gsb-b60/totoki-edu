@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
+import 'package:provider/provider.dart';
+import 'package:totoki_extract/business/flashcard/Deck.dart';
+import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/ui/screens/decklist/deckwelcome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PathService.init();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Deckmodel()..fetchDecks()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,19 +23,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text(
-            'Hello World',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppTheme.darkBase,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppTheme.primaryTeal,
+          brightness: Brightness.dark,
         ),
       ),
+      home: const DeckListScreen(),
     );
   }
 }
