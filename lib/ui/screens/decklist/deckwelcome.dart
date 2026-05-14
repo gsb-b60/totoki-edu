@@ -81,16 +81,6 @@ class _DeckListScreenState extends State<DeckListScreen> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              Provider.of<Deckmodel>(context, listen: false).filePicker();
-            },
-            icon: const Icon(
-              Icons.assignment_returned_rounded,
-              color: Colors.white,
-            ),
-          ),
-          
           Padding(
             padding: const EdgeInsets.only(right: 60),
             child: IconButton(
