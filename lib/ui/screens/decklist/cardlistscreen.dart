@@ -27,7 +27,6 @@ class CardListScreen extends StatefulWidget {
 }
 
 class _CardListScreenState extends State<CardListScreen> {
-  bool menu = false;
   @override
   void initState() {
     super.initState();
@@ -44,16 +43,42 @@ class _CardListScreenState extends State<CardListScreen> {
     super.dispose();
   }
 
-  Widget _NavBar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: LearnMode(deckID: widget.deckId!),
+  void _showStudyModes(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.darkSurface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Study Modes",
+                style: AppTheme.sectionHeaderStyle,
+              ),
+              SizedBox(height: 16),
+              LearnMode(deckID: widget.deckId!),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final cardModel = Provider.of<Cardmodel>(context);
+
+    String displayName = widget.deckName ?? "My Deck";
+    RegExp regExp = RegExp(r':\s*(.*)');
+    Match? match = regExp.firstMatch(displayName);
+    if (match != null) {
+      displayName = match.group(1)!;
+    }
 
     final List<Widget> cardWidgets = cardModel.card.map((card) {
       return FlashCardItem(card: card, media: cardModel.media);
@@ -68,92 +93,29 @@ class _CardListScreenState extends State<CardListScreen> {
           icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
         ),
         title: Text(
-          widget.deckName ?? "My Deck",
-          style: TextStyle(color: AppTheme.lightText, fontSize: 27),
+          displayName,
+          style: AppTheme.screenTitleStyle,
         ),
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {
-                menu = !menu;
-              });
+              _showStudyModes(context);
             },
             icon: Icon(Icons.menu, color: AppTheme.greenPrimary),
           ),
         ],
         backgroundColor: AppTheme.darkSurface,
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cardWidgets.length,
-                  itemBuilder: (context, index) {
-                    return cardWidgets[index];
-                  },
-                ),
-              ),
-              //_NavBar(context),
-            ],
+          Expanded(
+            child: ListView.builder(
+              itemCount: cardWidgets.length,
+              itemBuilder: (context, index) {
+                return cardWidgets[index];
+              },
+            ),
           ),
-          if (menu)
-            GestureDetector(
-              onTap: () => setState(() => menu = false),
-              child: Container(
-                color: Colors.black54,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
-          if (menu)
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.75,
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  color: AppTheme.darkSurface,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black54,
-                      blurRadius: 15,
-                      offset: Offset(-5, 0),
-                    ),
-                  ],
-                ),
-                child: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Study Modes",
-                              style: AppTheme.bodyMediumStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () => setState(() => menu = false),
-                              icon: const Icon(Icons.close, color: AppTheme.lightText),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(color: AppTheme.darkCard, height: 1),
-                      Expanded(
-                        child: LearnMode(deckID: widget.deckId!),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );
@@ -197,9 +159,9 @@ class NavPageBtn extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.darkCard.withOpacity(0.5),
+            color: AppTheme.darkCard.withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: color.withOpacity(0.3), width: 1),
+            border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
           ),
           child: Row(
             children: [
@@ -213,7 +175,7 @@ class NavPageBtn extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(Icons.chevron_right, color: AppTheme.lightText.withOpacity(0.3)),
+              Icon(Icons.chevron_right, color: AppTheme.lightText.withValues(alpha: 0.3)),
             ],
           ),
         ),
@@ -232,54 +194,92 @@ class FlashCardItem extends StatelessWidget {
     final String? dir = (media != null && media!.isNotEmpty)
         ? PathService.getDeckMediaPath(media!)
         : null;
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: AppTheme.darkerCard,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(child: IPAandWord(card: card)),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: AppTheme.darkCard,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IPAandWord(card: card),
+          if (card.sound != null && dir != null)
+            SoundTitle(
+              title: "sound",
+              value: '$dir/${card.sound}',
+              icon: const Icon(Icons.volume_up),
+            ),
+          TitleAndValue(title: "Meaning", value: card.meaning ?? ''),
+          TitleAndValue(title: "Example", value: card.example ?? ''),
+          if (card.due != null)
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Text(
+                'Due: ${DateFormat('MM/dd').format(card.due!)}',
+                style: AppTheme.captionStyle.copyWith(color: AppTheme.pinkPrimary),
+              ),
+            ),
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: [
+              ChipTitle(
+                title: "Interval",
+                value: card.interval.toString(),
+                color: AppTheme.greenDeep,
+              ),
+              ChipTitle(
+                title: "Reps",
+                value: card.reps.toString(),
+                color: AppTheme.greenDeep,
+              ),
+              Complexity(card: card),
+            ],
+          ),
+          Column(
+            children: [
+              if (card.usageSound != null && dir != null)
                 SoundTitle(
-                  title: "sound",
-                  value: (dir != null && card.sound != null)
-                      ? '$dir/${card.sound}'
-                      : '',
+                  title: "u sound",
+                  value: '$dir/${card.usageSound}',
                   icon: const Icon(Icons.volume_up),
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: CardInformation(card: card, dir: dir),
+              if (card.defSound != null && dir != null)
+                SoundTitle(
+                  title: "def sound",
+                  value: '$dir/${card.defSound}',
+                  icon: const Icon(Icons.volume_up),
                 ),
-                const SizedBox(width: 20),
-                PictureHolder(
-                  w: 140,
-                  h: 120,
-                  path: (dir != null && card.img != null)
-                      ? '$dir/${card.img}'
-                      : null,
-                ),
-              ],
+            ],
+          ),
+          if (card.img != null && dir != null)
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: PictureHolder(
+                w: double.infinity,
+                h: 120,
+                path: '$dir/${card.img}',
+              ),
             ),
-            const SizedBox(height: 20),
-            PictureHolder(
-              w: double.infinity,
-              h: 160,
-              path: (dir != null && card.synonyms != null)
-                  ? '$dir/${card.synonyms}'
-                  : null,
+          if (card.synonyms != null && dir != null)
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: PictureHolder(
+                w: double.infinity,
+                h: 160,
+                path: '$dir/${card.synonyms}',
+              ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -292,34 +292,20 @@ class IPAandWord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 75,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          card.word ?? '',
+          style: AppTheme.heroStyle,
+          overflow: TextOverflow.ellipsis,
+        ),
+        if (card.ipa != null)
           Text(
-            card.word ?? '',
-            style: const TextStyle(
-              fontSize: 33,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.lightText,
-            ),
-            overflow: TextOverflow.ellipsis,
+            "/${card.ipa!}/",
+            style: AppTheme.captionStyle,
           ),
-          if (card.ipa != null)
-            Text(
-              "/${card.ipa!}/",
-              style: const TextStyle(
-                fontSize: 14,
-                fontStyle: FontStyle.italic,
-                overflow: TextOverflow.ellipsis,
-                color: AppTheme.lightText,
-                fontFamily: "roboto",
-              ),
-            ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -332,51 +318,49 @@ class CardInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 4),
-              TitleAndValue(title: "Meaning", value: card.meaning ?? ''),
-              TitleAndValue(title: "Example", value: card.example ?? ''),
-              if (card.due != null)
-                Padding(
-                  padding: const EdgeInsets.only(left: 6, top: 4),
-                  child: Text(
-                    'Due: ${DateFormat('MM/dd').format(card.due!)}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppTheme.pinkPrimary,
-                    ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4),
+            TitleAndValue(title: "Meaning", value: card.meaning ?? ''),
+            TitleAndValue(title: "Example", value: card.example ?? ''),
+            if (card.due != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 6, top: 4),
+                child: Text(
+                  'Due: ${DateFormat('MM/dd').format(card.due!)}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppTheme.pinkPrimary,
                   ),
                 ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 4,
-                children: [
-                  ChipTitle(
-                    title: "Interval",
-                    value: card.interval.toString(),
-                    color: AppTheme.greenDeep,
-                  ),
-                  ChipTitle(
-                    title: "Reps",
-                    value: card.reps.toString(),
-                    color: AppTheme.greenDeep,
-                  ),
-                  Complexity(card: card),
-                ],
               ),
-            ],
-          ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                ChipTitle(
+                  title: "Interval",
+                  value: card.interval.toString(),
+                  color: AppTheme.greenDeep,
+                ),
+                ChipTitle(
+                  title: "Reps",
+                  value: card.reps.toString(),
+                  color: AppTheme.greenDeep,
+                ),
+                Complexity(card: card),
+              ],
+            ),
+          ],
         ),
+        const SizedBox(height: 16),
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SoundTitle(
               title: "u sound",
@@ -476,7 +460,7 @@ class ChipTitle extends StatelessWidget {
     return Chip(
       label: Text(
         '$title: $value',
-        style: TextStyle(
+        style: AppTheme.bodyMediumStyle.copyWith(
           color: AppTheme.lightText,
           fontWeight: FontWeight.bold,
         ),
@@ -496,22 +480,21 @@ class TitleAndValue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (value != '') {
-      return SizedBox(
-        width: double.infinity,
+      return Padding(
+        padding: EdgeInsets.only(top: 8),
         child: Text.rich(
           TextSpan(
             children: [
               TextSpan(
                 text: '$title: ',
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTheme.bodyMediumStyle.copyWith(
+                  color: AppTheme.primaryTeal,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
                 ),
               ),
               TextSpan(
                 text: value,
-                style: const TextStyle(fontSize: 15, color: AppTheme.lightText),
+                style: AppTheme.bodyMediumStyle,
               ),
             ],
           ),
@@ -555,6 +538,3 @@ class Complexity extends StatelessWidget {
     );
   }
 }
-
-
-
