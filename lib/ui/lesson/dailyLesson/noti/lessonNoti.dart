@@ -161,6 +161,11 @@ class LessonNoti extends ChangeNotifier {
         // ghép lại
         SetUpLessonList = [start, ...middle, end];
         break;
+      case LearnMode.devMode:
+        how = LearnMode.devMode;
+        data = await _dbhelper.getDueCardLimit(10);
+        SetUpLessonList = lessonNotiHelper.setUpDevLessonList;
+        break;
     }
 
     _cards.clear();
@@ -635,8 +640,8 @@ class LessonNoti extends ChangeNotifier {
   String re = "";
   final SpeechToText stt = SpeechToText();
 
-  bool hasFinal = false; 
-  Timer? timeoutTimer; 
+  bool hasFinal = false;
+  Timer? timeoutTimer;
   Future<void> startListening() async {
     re = "";
     hasFinal = false;
@@ -649,7 +654,7 @@ class LessonNoti extends ChangeNotifier {
           hasFinal = true;
 
           timeoutTimer?.cancel();
-          stt.stop(); 
+          stt.stop();
           CheckAnswerSpeech(re);
         }
       },
@@ -710,6 +715,9 @@ class LessonNoti extends ChangeNotifier {
         return _cards.take(3).toList();
       case LearnMode.sm:
         return _cards.take(5).toList();
+
+      case LearnMode.devMode:
+        return _cards.take(5).toList();
     }
   }
 
@@ -741,6 +749,10 @@ class LessonNoti extends ChangeNotifier {
       case LearnMode.sm:
         count = 5;
         break;
+
+      case LearnMode.devMode:
+        count = 5;
+        break;
     }
 
     RateCard = List.generate(count, (i) => {"idx": i, "rate": 3});
@@ -763,7 +775,3 @@ class LessonNoti extends ChangeNotifier {
     }
   }
 }
-
-
-
-

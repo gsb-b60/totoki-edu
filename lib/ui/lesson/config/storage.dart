@@ -34,7 +34,7 @@ class WordIPA {
   WordIPA({required this.word, required this.ipa});
 }
 
-enum LearnMode { daily, all, sm, shuffle }
+enum LearnMode { daily, all, sm, shuffle, devMode }
 
 class lessonNotiHelper {
   static String getAccLine(int acc) {
@@ -97,6 +97,11 @@ class lessonNotiHelper {
     {"cIdx": 3, "mode": StudyMode.meanfuse},
     {"cIdx": 4, "mode": StudyMode.phonemix},
     {"cIdx": 4, "mode": StudyMode.EndScreen},
+  ];
+
+  static List<Map<String, dynamic>> setUpDevLessonList = [
+
+    {"cIdx": 0, "mode": StudyMode.EndScreen},
   ];
   static List<Map<String, dynamic>> allMode = [
     {"cIdx": 0, "mode": StudyMode.StartScreen},

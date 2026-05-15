@@ -210,6 +210,12 @@ class DailyLearnScreenNav extends StatelessWidget {
           screenBuilder: () => LessonScreen(fetchMode: LearnMode.shuffle),
           aPath: "assets/illumode/twitter-66.png",
         ),
+        LearnModeCard(
+          co: AppTheme.bluePrimary,
+          line: "Dev mode",
+          screenBuilder: () => LessonScreen(fetchMode: LearnMode.devMode),
+          aPath: "assets/illumode/twitter-66.png",
+        ),
       ],
     );
   }

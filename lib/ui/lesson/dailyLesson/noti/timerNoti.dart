@@ -17,7 +17,7 @@ class TimerNoti extends ChangeNotifier {
 
   Duration get time => elapse ?? Duration(seconds: 180);
   String get formatted =>
-      "${elapse!.inMinutes}:${(elapse!.inSeconds % 60).toString().padLeft(2, '0')}";
+      "${time.inMinutes}:${(time.inSeconds % 60).toString().padLeft(2, '0')}";
 
   String get getThresholdString {
     Duration elapsed = elapse ?? Duration(seconds: 180);
