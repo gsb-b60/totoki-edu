@@ -13,6 +13,14 @@ class AchievementUI extends StatefulWidget {
 
 class _AchievementState extends State<AchievementUI> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<Achievementnoti>(context, listen: false).fetchCard();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = context.watch<Achievementnoti>();
     final flashcards = provider.getCard();

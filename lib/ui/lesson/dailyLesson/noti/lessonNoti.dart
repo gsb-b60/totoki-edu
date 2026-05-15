@@ -327,7 +327,7 @@ class LessonNoti extends ChangeNotifier {
   }
 
   List<String> SetUpList() {
-    if (list == null) {
+    if (list == null && _cards.isNotEmpty) {
       list = _cards[cardIdx].word?.split("");
       trueList = _cards[cardIdx].word!.split("");
 

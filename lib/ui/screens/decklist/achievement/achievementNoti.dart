@@ -17,11 +17,7 @@ class Achievementnoti extends ChangeNotifier{
   }
   List<Flashcard> getCard()
   {
-    if(_card.isEmpty){
-      fetchCard();
-    }
-    return _card; 
-  }
-}
+    return _card;
+  }}
 
 

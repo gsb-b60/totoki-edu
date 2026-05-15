@@ -74,10 +74,15 @@ class _DeckListScreenState extends State<DeckListScreen> {
     return Scaffold(
       backgroundColor: AppTheme.darkSurface,
       appBar: AppBar(
-        leading: const Icon(Icons.menu_book, color: Colors.white),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.upload_file, color: Colors.white),
+        ),
         backgroundColor: AppTheme.darkSurface,
         title: const Text(
-          "All Deck Card",
+          "All Decks",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
@@ -249,7 +254,9 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: AppTheme.primaryTeal.withOpacity(0.5)),
+                      borderSide: BorderSide(
+                        color: AppTheme.primaryTeal.withOpacity(0.5),
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -275,7 +282,10 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.primaryTeal,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -289,5 +299,3 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
     );
   }
 }
-
-

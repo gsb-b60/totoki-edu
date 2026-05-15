@@ -28,6 +28,7 @@ class _EndScreenState extends State<EndScreen> {
       lesson.updateCard();
     });
   }
+  
 
   @override
   Widget build(BuildContext context) {
