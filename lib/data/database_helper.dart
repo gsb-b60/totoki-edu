@@ -90,7 +90,8 @@ class DatabaseHelper {
       'usageSound': 'ALTER TABLE cards ADD COLUMN usageSound TEXT',
       'last_review': 'ALTER TABLE cards ADD COLUMN last_review INTEGER',
       'lapses': 'ALTER TABLE cards ADD COLUMN lapses INTEGER DEFAULT 0',
-      'ease_factor': 'ALTER TABLE cards ADD COLUMN ease_factor REAL DEFAULT 2.5',
+      'ease_factor':
+          'ALTER TABLE cards ADD COLUMN ease_factor REAL DEFAULT 2.5',
     };
 
     for (final entry in expected.entries) {
@@ -110,7 +111,11 @@ class DatabaseHelper {
     final row = deck.toMap();
     row['created_at'] ??= now;
     row['updated_at'] ??= now;
-    return db.insert('decks', row, conflictAlgorithm: ConflictAlgorithm.replace);
+    return db.insert(
+      'decks',
+      row,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<List<Deck>> getDecks() async {
@@ -143,7 +148,8 @@ class DatabaseHelper {
 
   Future<List<Flashcard>> getCardLimit(int limit) async {
     final db = await database;
-    final maps = await db.rawQuery('''
+    final maps = await db.rawQuery(
+      '''
       SELECT *
       FROM cards
       WHERE sound IS NOT NULL
@@ -153,13 +159,16 @@ class DatabaseHelper {
         AND img IS NOT NULL
         AND meaning IS NOT NULL
       LIMIT ?
-    ''', [limit]);
+    ''',
+      [limit],
+    );
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
 
   Future<List<Flashcard>> getDueCardLimit(int limit) async {
     final db = await database;
-    final maps = await db.rawQuery('''
+    final maps = await db.rawQuery(
+      '''
       SELECT *
       FROM cards
       WHERE sound IS NOT NULL
@@ -171,7 +180,9 @@ class DatabaseHelper {
         AND (due IS NULL OR due <= ?)
       ORDER BY due ASC
       LIMIT ?
-    ''', [DateTime.now().millisecondsSinceEpoch, limit]);
+    ''',
+      [DateTime.now().millisecondsSinceEpoch, limit],
+    );
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
 
@@ -198,7 +209,8 @@ class DatabaseHelper {
 
   Future<List<Flashcard>> getCardByLevel(int level, int limit) async {
     final db = await database;
-    final maps = await db.rawQuery('''
+    final maps = await db.rawQuery(
+      '''
       SELECT *
       FROM cards
       WHERE sound IS NOT NULL
@@ -210,7 +222,9 @@ class DatabaseHelper {
         AND (due IS NULL OR due <= ?)
         AND complexity = ?
       LIMIT ?
-    ''', [DateTime.now().millisecondsSinceEpoch, level, limit]);
+    ''',
+      [DateTime.now().millisecondsSinceEpoch, level, limit],
+    );
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
 
@@ -225,7 +239,11 @@ class DatabaseHelper {
     row['due'] ??= now;
     row['lapses'] ??= 0;
     row['ease_factor'] ??= 2.5;
-    return db.insert('cards', row, conflictAlgorithm: ConflictAlgorithm.replace);
+    return db.insert(
+      'cards',
+      row,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> updateCard(Flashcard card) async {
@@ -325,42 +343,55 @@ class DatabaseHelper {
       return;
     }
 
-    final deckMap = jsonDecode(jsonDeck.first['decks'] as String)
-        as Map<String, dynamic>;
+    final deckMap =
+        jsonDecode(jsonDeck.first['decks'] as String) as Map<String, dynamic>;
     final folderName = await MoveMediaFile();
 
     for (final deck in deckMap.entries) {
-      final deckId = int.tryParse(deck.key);
-      if (deckId == null || deckId == 1) continue;
-      final deckName = deck.value['name']?.toString() ?? 'Imported Deck';
-      final myDeckId = await insertDeck(Deck(name: deckName, media: folderName));
-      await processCardForDeck(ankiDb, deckId, myDeckId);
+      for (final deck in deckMap.entries) {
+        final deckId = int.tryParse(deck.key);
+
+        if (deckId == null || deckId == 1) continue;
+
+        final deckName = deck.value['name']?.toString() ?? 'Imported Deck';
+
+        final cards = await getCardsForDeck(ankiDb, deckId);
+
+        if (cards.isEmpty) continue;
+
+        final myDeckId = await insertDeck(
+          Deck(name: deckName, media: folderName),
+        );
+
+        for (final row in cards) {
+          final newCard = mapRowToFlashcard(row, myDeckId);
+
+          if (newCard != null) {
+            await insertCard(newCard);
+          }
+        }
+      }
     }
     await ankiDb.close();
   }
 
-  Future<void> processCardForDeck(
+  Future<List<Map<String, Object?>>> getCardsForDeck(
     Database ankiDb,
     int ankiDeckId,
-    int deckId,
   ) async {
-    final cards = await ankiDb.rawQuery('''
-      SELECT DISTINCT
-        n.id AS note_id,
-        c.did AS deck_id,
-        n.flds,
-        n.mid
-      FROM notes AS n
-      JOIN cards AS c ON n.id = c.nid
-      WHERE c.did=?
-    ''', [ankiDeckId]);
-
-    for (final row in cards) {
-      final newCard = mapRowToFlashcard(row, deckId);
-      if (newCard != null) {
-        await insertCard(newCard);
-      }
-    }
+    return await ankiDb.rawQuery(
+      '''
+    SELECT DISTINCT
+      n.id AS note_id,
+      c.did AS deck_id,
+      n.flds,
+      n.mid
+    FROM notes AS n
+    JOIN cards AS c ON n.id = c.nid
+    WHERE c.did = ?
+  ''',
+      [ankiDeckId],
+    );
   }
 
   Future<String> MoveMediaFile() async {
@@ -370,8 +401,8 @@ class DatabaseHelper {
       throw Exception('Missing APKG media manifest');
     }
 
-    final mediaMapRaw = jsonDecode(await mediaFile.readAsString())
-        as Map<String, dynamic>;
+    final mediaMapRaw =
+        jsonDecode(await mediaFile.readAsString()) as Map<String, dynamic>;
     final deckDir = await createDeckFolder();
 
     for (final entry in mediaMapRaw.entries) {

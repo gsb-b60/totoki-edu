@@ -43,7 +43,16 @@ class _AchievementState extends State<AchievementUI> {
           },
         ),
       ),
-      body: ListView.builder(
+      body: provider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : flashcards.isEmpty
+              ? Center(
+                  child: Text(
+                    "No achievement cards found.",
+                    style: AppTheme.bodyLargeStyle.copyWith(color: AppTheme.lightText.withOpacity(0.7)),
+                  ),
+                )
+              : ListView.builder(
         itemCount: flashcards.length,
         itemBuilder: (context, index) {
           final card = flashcards[index];

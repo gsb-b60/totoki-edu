@@ -18,6 +18,8 @@ The app uses a professional dark theme with vibrant semantic highlights. All col
 | **Surface** | `AppTheme.darkSurface` | Secondary areas (e.g., card backgrounds, bottom sheets). |
 | **Active/Elevation** | `AppTheme.darkCard` | Interactive elements, elevated cards. |
 | **Border** | `AppTheme.darkBorder` | Subtle separators and outlines. |
+| **Primary Text** | `AppTheme.lightText` | Default text color for most elements. |
+| **Accent/Interactive** | `AppTheme.bluePrimary` | Highlighted elements, primary interactive components. |
 
 ### 2.2 Semantic & Feedback Colors
 *   **Correct/Success**: `AppTheme.greenPrimary` (FlashcardTheme.correct)

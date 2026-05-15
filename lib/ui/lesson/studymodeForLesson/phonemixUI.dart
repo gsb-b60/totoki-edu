@@ -131,7 +131,7 @@ class PhoneMatchBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = AppTheme.darkBase;
-    Color textColor = Colors.white;
+    Color textColor = AppTheme.lightText;
     Color borderColor = AppTheme.darkCard;
 
     switch (state) {
@@ -148,7 +148,7 @@ class PhoneMatchBtn extends StatelessWidget {
       case ButtonState.normal:
         backgroundColor = AppTheme.darkSurface;
         borderColor = AppTheme.darkBorder;
-        textColor = Colors.white;
+        textColor = AppTheme.lightText;
         break;
       case ButtonState.wrong:
         backgroundColor = AppTheme.darkSurface;
