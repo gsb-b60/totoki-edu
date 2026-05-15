@@ -2,21 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/business/flashcard/Flashcard.dart';
-import 'package:totoki_extract/ui/screens/blankfill/blankwordscreen.dart';
+
 import 'package:totoki_extract/ui/screens/decklist/learnModeMenu.dart';
-import 'package:totoki_extract/ui/screens/studymode/echofuse/echofuse.dart';
-import 'package:totoki_extract/ui/screens/studymode/echomatch/echomath.dart';
-import 'package:totoki_extract/ui/screens/studymode/echospell/echospell.dart';
-import 'package:totoki_extract/ui/screens/studymode/flashcard/newwayreview.dart';
-import 'package:totoki_extract/ui/screens/studymode/mindfield/mindfeild.dart';
-import 'package:totoki_extract/ui/screens/studymode/neuropick/neuropick.dart';
-import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemix.dart';
-import 'package:totoki_extract/ui/screens/studymode/sound&sight/sound&sight.dart';
-import 'package:totoki_extract/ui/screens/studymode/speechword/speechword.dart';
-import 'package:totoki_extract/ui/screens/studymode/synonymfield/synonymfield.dart';
-import 'package:totoki_extract/ui/screens/studymode/synonympick/synonympick.dart';
-import 'package:totoki_extract/ui/screens/studymode/wordpulse/wordpulse.dart';
-import 'package:totoki_extract/ui/screens/studymode/wordsnap/wordsnap.dart';
+
 
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';

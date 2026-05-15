@@ -20,12 +20,12 @@ class _DeckListScreenState extends State<DeckListScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppTheme.darkerCard,
+        borderRadius: BorderRadius.circular(16),
+        color: AppTheme.darkCard,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 255, 239, 239).withOpacity(0.5),
-            blurRadius: 5,
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 4,
             offset: const Offset(0, 2),
           ),
         ],
@@ -221,20 +221,69 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
   Widget build(BuildContext context) {
     return Consumer<Deckmodel>(
       builder: (context, value, child) {
-        return Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: deckController,
-                decoration: InputDecoration(labelText: "new deck name"),
-                onSubmitted: (_) => _createDeck(context, value),
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppTheme.darkCard,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () => _createDeck(context, value),
-              child: Text('them deck'),
-            ),
-          ],
+            ],
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: deckController,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  decoration: InputDecoration(
+                    labelText: "New deck name",
+                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: AppTheme.primaryTeal),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: AppTheme.primaryTeal.withOpacity(0.5)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: AppTheme.primaryTeal),
+                    ),
+                    filled: true,
+                    fillColor: AppTheme.darkSurface,
+                  ),
+                  onSubmitted: (_) => _createDeck(context, value),
+                ),
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton.icon(
+                onPressed: () => _createDeck(context, value),
+                icon: const Icon(Icons.add, color: AppTheme.darkSurface),
+                label: const Text(
+                  'Add Deck',
+                  style: TextStyle(
+                    color: AppTheme.darkSurface,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primaryTeal,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
