@@ -265,7 +265,7 @@ class FlashCardItem extends StatelessWidget {
               padding: EdgeInsets.only(top: 16),
               child: PictureHolder(
                 w: double.infinity,
-                h: 120,
+                h: 200,
                 path: '$dir/${card.img}',
               ),
             ),
@@ -274,7 +274,7 @@ class FlashCardItem extends StatelessWidget {
               padding: EdgeInsets.only(top: 16),
               child: PictureHolder(
                 w: double.infinity,
-                h: 160,
+                h: 240,
                 path: '$dir/${card.synonyms}',
               ),
             ),
@@ -399,14 +399,21 @@ class PictureHolder extends StatelessWidget {
       return Container(
         width: w,
         height: h,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(
+          color: AppTheme.darkBase,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppTheme.darkBorder.withOpacity(0.3)),
+        ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.file(File(path!), fit: BoxFit.fitWidth),
+          borderRadius: BorderRadius.circular(12),
+          child: Image.file(
+            File(path!), 
+            fit: BoxFit.contain,
+          ),
         ),
       );
     } else {
-      return Text("synonyms");
+      return const SizedBox.shrink();
     }
   }
 }
