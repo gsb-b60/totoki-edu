@@ -348,30 +348,29 @@ class DatabaseHelper {
     final folderName = await MoveMediaFile();
 
     for (final deck in deckMap.entries) {
-      for (final deck in deckMap.entries) {
-        final deckId = int.tryParse(deck.key);
+      final deckId = int.tryParse(deck.key);
 
-        if (deckId == null || deckId == 1) continue;
+      if (deckId == null || deckId == 1) continue;
 
-        final deckName = deck.value['name']?.toString() ?? 'Imported Deck';
+      final deckName = deck.value['name']?.toString() ?? 'Imported Deck';
 
-        final cards = await getCardsForDeck(ankiDb, deckId);
+      final cards = await getCardsForDeck(ankiDb, deckId);
 
-        if (cards.isEmpty) continue;
+      if (cards.isEmpty) continue;
 
-        final myDeckId = await insertDeck(
-          Deck(name: deckName, media: folderName),
-        );
+      final myDeckId = await insertDeck(
+        Deck(name: deckName, media: folderName),
+      );
 
-        for (final row in cards) {
-          final newCard = mapRowToFlashcard(row, myDeckId);
+      for (final row in cards) {
+        final newCard = mapRowToFlashcard(row, myDeckId);
 
-          if (newCard != null) {
-            await insertCard(newCard);
-          }
+        if (newCard != null) {
+          await insertCard(newCard);
         }
       }
     }
+
     await ankiDb.close();
   }
 

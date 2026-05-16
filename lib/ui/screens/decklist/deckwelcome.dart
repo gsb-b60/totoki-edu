@@ -32,7 +32,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
       ),
       child: ListTile(
         title: Text(
-          deck.name,
+          Deck.extractCardName(deck.name),
           style: const TextStyle(
             fontSize: 18,
             color: Colors.white,
@@ -74,12 +74,8 @@ class _DeckListScreenState extends State<DeckListScreen> {
     return Scaffold(
       backgroundColor: AppTheme.darkSurface,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.upload_file, color: Colors.white),
-        ),
+        elevation: 0,
+        scrolledUnderElevation: 0,
         backgroundColor: AppTheme.darkSurface,
         title: const Text(
           "All Decks",
@@ -88,38 +84,78 @@ class _DeckListScreenState extends State<DeckListScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 60),
-            child: IconButton(
-              onPressed: () {
-                Provider.of<Deckmodel>(context, listen: false).filePickerReal();
-              },
-              icon: const Icon(Icons.upload_file, color: Colors.white),
+            child: Consumer<Deckmodel>(
+              builder: (context, deckModel, child) => IconButton(
+                onPressed: deckModel.isLoading
+                    ? null
+                    : () async {
+                        await deckModel.filePicker();
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Import process finished.'),
+                            ),
+                          );
+                        }
+                      },
+                icon: Icon(
+                  Icons.upload_file,
+                  color: deckModel.isLoading ? Colors.white38 : Colors.white,
+                ),
+              ),
             ),
           ),
         ],
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
+      body: Consumer<Deckmodel>(
+        builder: (context, deckModel, child) {
+          return Stack(
             children: [
-              const CreateNewDeck(),
-              const SizedBox(height: 16),
-              Expanded(
-                child: Consumer<Deckmodel>(
-                  builder: (context, deckModel, child) {
-                    return ListView.builder(
-                      itemCount: deckModel.deck.length,
-                      itemBuilder: (context, index) {
-                        final deck = deckModel.deck[index];
-                        return _buildAnimatedTile(deck, deckModel, index);
-                      },
-                    );
-                  },
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    // const CreateNewDeck(),
+                    // const SizedBox(height: 16),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: deckModel.deck.length,
+                        itemBuilder: (context, index) {
+                          final deck = deckModel.deck[index];
+                          return _buildAnimatedTile(deck, deckModel, index);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              if (deckModel.isLoading)
+                Positioned.fill(
+                  child: Container(
+                    color: Colors.black.withOpacity(0.4),
+                    child: const Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircularProgressIndicator(
+                            color: AppTheme.primaryTeal,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            "Importing Deck...",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
             ],
-          ),
-        ),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         color: AppTheme.darkSurface,

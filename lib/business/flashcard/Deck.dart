@@ -42,6 +42,13 @@ class Deck {
       media: map["media"] as String?,
     );
   }
+
+ static String extractCardName(String fullName) {
+  final regex = RegExp(r'::(.+)$');
+  final match = regex.firstMatch(fullName);
+  return match?.group(1) ?? fullName;
+}
+
 }
 
 class Deckmodel with ChangeNotifier {
@@ -49,14 +56,22 @@ class Deckmodel with ChangeNotifier {
 
   final List<Deck> _decks = [];
   List<Deck> get deck => _decks;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   Future<void> fetchDecks() async {
+    _isLoading = true;
+    notifyListeners();
     final data = await _dbhelper.getDecks();
     _decks.clear();
     _decks.addAll(data);
+    _isLoading = false;
     notifyListeners();
   }
 
   Future<void> insertDeck(String name, {String? description}) async {
+    _isLoading = true;
+    notifyListeners();
     Deck addDeck = Deck(name: name, description: description);
     int newId = await _dbhelper.insertDeck(addDeck);
     Deck newDeck = Deck(id: newId, name: name, description: description);
@@ -71,24 +86,33 @@ class Deckmodel with ChangeNotifier {
   }
 
   Future<void> filePicker() async {
-    final filePath = await _dbhelper.pickAndCopyFile();
-    if (filePath == null || filePath.isEmpty) return;
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final filePath = await _dbhelper.pickAndCopyFile();
+      if (filePath == null || filePath.isEmpty) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
 
-    final ankiDbPath = await _dbhelper.unzipApkgFile(filePath);
-    if (ankiDbPath == null || ankiDbPath.isEmpty) {
-      return;
+      final ankiDbPath = await _dbhelper.unzipApkgFile(filePath);
+      if (ankiDbPath == null || ankiDbPath.isEmpty) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+      await _dbhelper.importDataFromAnki(ankiDbPath);
+      await fetchDecks();
+    } catch (e) {
+      debugPrint("Error in filePicker: $e");
+      _isLoading = false;
+      notifyListeners();
     }
-    await _dbhelper.importDataFromAnki(ankiDbPath);
-    await fetchDecks();
   }
 
   Future<String?> getMediaFile(int id) async {
     final String? result = await _dbhelper.getMediaFile(id);
     return result;
   }
-
-  Future<void> filePickerReal() async {
-    await filePicker();
-  }
 }
-
