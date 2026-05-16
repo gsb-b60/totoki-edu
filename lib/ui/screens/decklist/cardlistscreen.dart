@@ -43,32 +43,6 @@ class _CardListScreenState extends State<CardListScreen> {
     super.dispose();
   }
 
-  void _showStudyModes(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppTheme.darkSurface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) => SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Study Modes",
-                style: AppTheme.sectionHeaderStyle,
-              ),
-              SizedBox(height: 16),
-              LearnMode(deckID: widget.deckId!),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final cardModel = Provider.of<Cardmodel>(context);
@@ -97,14 +71,40 @@ class _CardListScreenState extends State<CardListScreen> {
           style: AppTheme.screenTitleStyle,
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              _showStudyModes(context);
-            },
-            icon: Icon(Icons.menu, color: AppTheme.greenPrimary),
+          Builder(
+            builder: (context) => IconButton(
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+              icon: Icon(Icons.menu, color: AppTheme.greenPrimary),
+            ),
           ),
         ],
         backgroundColor: AppTheme.darkSurface,
+      ),
+      endDrawer: Drawer(
+        backgroundColor: AppTheme.darkSurface,
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              Text(
+                "Study Modes",
+                style: AppTheme.sectionHeaderStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Divider(color: AppTheme.darkBorder, indent: 32, endIndent: 32),
+              const SizedBox(height: 16),
+              Expanded(
+                child: LearnMode(deckID: widget.deckId!),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Column(
         children: [

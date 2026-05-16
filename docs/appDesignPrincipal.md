@@ -51,6 +51,7 @@ Use a consistent hierarchy to guide the user's eye.
 | **Section Header** | 20px - 24px | Semibold | Sub-titles (e.g., Deck names in list). |
 | **Body (Large)** | 16px - 18px | Regular | Important descriptions, primary button text. |
 | **Body (Medium)** | 14px - 16px | Regular | Standard readable text (meanings, examples). |
+| **Body (Small)** | 13px | Regular | Secondary descriptions, tertiary info. |
 | **Small/Caption** | 12px | Light/Italic | IPA, metadata (Due dates, intervals). |
 
 *   **Color**: Use `AppTheme.lightText` as the base.

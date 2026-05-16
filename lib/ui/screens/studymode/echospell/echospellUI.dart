@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/screens/studymode/echospell/echospellNoti.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
 
 enum ButtonState { normal, selected, done, wrong }
 
@@ -21,143 +22,153 @@ class _EchospellUIState extends State<EchospellUI> {
     final listWord = provider.SetUpListWord();
     final ipa = provider.SetIPA();
     final listState = provider.GetListState();
+
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
-        leading: Row(
-          children: [
-            SizedBox(width: 8),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: AppTheme.darkBorder,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.lightText,
+            size: 24,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
         title: LinearProgressIndicator(
           value: provider.value,
           backgroundColor: AppTheme.darkCard,
           valueColor: AlwaysStoppedAnimation<Color>(AppTheme.greenPrimary),
-          minHeight: 18,
-          borderRadius: BorderRadius.circular(9),
+          minHeight: 12,
+          borderRadius: BorderRadius.circular(6),
         ),
         backgroundColor: AppTheme.darkBase,
+        elevation: 0,
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Row(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(width: 40),
+                  const SizedBox(height: 24),
                   Text(
-                    "Tap to build the word.",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton.outlined(
-                    onPressed: () {
-                      reader.playSound();
-                    },
-                    icon: Icon(
-                      Icons.volume_up,
+                    "Tap to build the word",
+                    style: AppTheme.sectionHeaderStyle.copyWith(
                       color: AppTheme.lightText,
-                      size: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Spacer(),
+                  // Question Area (Audio + IPA)
+                  Column(
+                    children: [
+                      IconButton.outlined(
+                        onPressed: () => reader.playSound(),
+                        icon: Icon(
+                          Icons.volume_up,
+                          color: AppTheme.primaryTeal,
+                          size: 64,
+                        ),
+                        padding: const EdgeInsets.all(24),
+                        style: IconButton.styleFrom(
+                          side: BorderSide(color: AppTheme.primaryTeal, width: 2),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Text(
+                        ipa,
+                        style: AppTheme.heroStyle.copyWith(
+                          fontFamily: 'Roboto',
+                          fontSize: 32,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  // Word Building Area (Blanks)
+                  Center(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.center,
+                        children: List.generate(listWord.length, (index) {
+                          String value = listWord[index];
+                          return Container(
+                            width: 40,
+                            padding: const EdgeInsets.only(bottom: 8),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: value == "_" ? AppTheme.darkBorder : AppTheme.greenPrimary,
+                                  width: 3,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              value == "_" ? "" : value,
+                              style: AppTheme.heroStyle.copyWith(
+                                fontSize: 32,
+                                color: AppTheme.greenPrimary,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }),
+                      ),
                     ),
                   ),
-                  SizedBox(width: 30),
-                  Text(
-                    ipa,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
+                  const Spacer(),
+                  // Options Area (Letter Grid)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 32.0),
+                    child: Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      alignment: WrapAlignment.center,
+                      children: List.generate(list.length, (index) {
+                        final value = list[index];
+                        return ChoiceBtn(
+                          value: value,
+                          state: listState[index],
+                          onChoose: () => reader.CheckAnswer(value, index),
+                        );
+                      }),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 15),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                alignment: WrapAlignment.center,
-                children: List.generate(listWord.length, (index) {
-                  String value = listWord[index];
-                  return Text(
-                    value,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                    ),
-                  );
-                }),
-              ),
-              SizedBox(height: 50),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                alignment: WrapAlignment.center,
-
-                children: List.generate(list.length, (index) {
-                  final value = list[index];
-                  return ChoiceBtn(
-                    value: value,
-                    state: listState[index],
-                    onChoose: () {
-                      reader.CheckAnswer(value, index);
-                    },
-                  );
-                }),
-              ),
-            ],
-          ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOutCubic,
-            bottom: provider.answered ? 0 : -MediaQuery.of(context).size.height,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).size.height,
-            child: ReviewScreen(
-              onPressed: () {
-                reader.SetNext();
-              },
             ),
-          ),
-        ],
+            if (provider.answered)
+              shared.ReviewScreen(
+                right: true, // Always right in EchoSpell until word complete
+                answer: provider.trueList!.join(""),
+                onPressed: () => reader.SetNext(),
+              ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class ChoiceBtn extends StatelessWidget {
-  ChoiceBtn({
+  final String value;
+  final ButtonState state;
+  final VoidCallback onChoose;
+
+  const ChoiceBtn({
     super.key,
     required this.value,
     required this.state,
     required this.onChoose,
   });
 
-  String value;
-  ButtonState state;
-  VoidCallback onChoose;
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = AppTheme.darkBase;
@@ -167,45 +178,42 @@ class ChoiceBtn extends StatelessWidget {
     switch (state) {
       case ButtonState.selected:
         backgroundColor = AppTheme.darkSurface;
-        borderColor = AppTheme.BlueMuted;
-        textColor = AppTheme.BlueMuted;
+        borderColor = AppTheme.bluePrimary;
+        textColor = AppTheme.bluePrimary;
         break;
       case ButtonState.done:
-        backgroundColor = AppTheme.darkBase;
+        backgroundColor = AppTheme.darkCard.withOpacity(0.5);
         borderColor = AppTheme.darkCard;
-        textColor = AppTheme.darkerCard;
+        textColor = AppTheme.lightText.withOpacity(0.2);
         break;
       case ButtonState.normal:
-        backgroundColor = AppTheme.darkBase;
-        borderColor = AppTheme.darkCard;
-        textColor = Colors.white;
+        backgroundColor = AppTheme.darkSurface;
+        borderColor = AppTheme.darkBorder;
+        textColor = AppTheme.lightText;
         break;
       case ButtonState.wrong:
         backgroundColor = AppTheme.darkSurface;
-        borderColor = AppTheme.redMuted;
-        textColor = AppTheme.redMuted;
+        borderColor = AppTheme.redPrimary;
+        textColor = AppTheme.redPrimary;
         break;
     }
+
     return GestureDetector(
-      onTap: () {
-        if (state != ButtonState.done) {
-          onChoose.call();
-        }
-      },
-      child: Container(
-        height: 50,
-        width: 50,
+      onTap: state == ButtonState.done ? null : onChoose,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        height: 56,
+        width: 56,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: BoxBorder.all(color: borderColor, width: 4),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: borderColor, width: 2),
           color: backgroundColor,
         ),
         child: Center(
           child: Text(
             value,
-            style: TextStyle(
+            style: AppTheme.sectionHeaderStyle.copyWith(
               color: textColor,
-              fontSize: 27,
               fontWeight: FontWeight.bold,
               fontFamily: 'Roboto',
             ),
@@ -216,91 +224,5 @@ class ChoiceBtn extends StatelessWidget {
   }
 }
 
-class ReviewScreen extends StatelessWidget {
-  ReviewScreen({super.key, required this.onPressed});
-  VoidCallback onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        width: double.infinity,
-        height: 250,
-        child: Container(
-          color: AppTheme.darkSurface,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                children: [
-                  SizedBox(width: 30),
-                  Icon(
-                    Icons.check_circle_rounded,
-                    color: AppTheme.greenBright,
-                    size: 40,
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    "Great job!",
-                    style: TextStyle(
-                      color: AppTheme.greenBright,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 650,
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        onPressed.call();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        backgroundColor: AppTheme.greenPrimary,
-                      ),
-                      child: Text(
-                        "CONTINUE",
-                        style: TextStyle(
-                          color: AppTheme.darkBase,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border(
-                            bottom: BorderSide(
-                              color: AppTheme.greenAccent,
-
-                              width: 6,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 

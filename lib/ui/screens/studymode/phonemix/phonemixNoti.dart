@@ -86,7 +86,7 @@ class phoneMixNoti extends ChangeNotifier {
         selectedIPAIDX = null;
 
 
-        answer = !wordState.contains(ButtonState.normal);
+        answer = !wordState.take(options!.length).contains(ButtonState.normal);
         notifyListeners();
       } else {
 

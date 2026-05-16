@@ -92,6 +92,12 @@ class AppTheme{
     color: lightText,
   );
 
+  static const TextStyle bodySmallStyle = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.normal,
+    color: lightText,
+  );
+
   static const TextStyle captionStyle = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w300,

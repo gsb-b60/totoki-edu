@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/ui/screens/studymode/echospell/echospellUI.dart';
 import 'package:totoki_extract/ui/screens/studymode/meanfuse/meanfuseNoti.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+
+// Enum defined in echospellUI might be used here if they were shared, 
+// but Meanfusenoti imports ButtonState from echospellUI.dart.
+// I will keep the imports as they are in the original file to avoid logic changes.
+import 'package:totoki_extract/ui/screens/studymode/echospell/echospellUI.dart' show ButtonState;
 
 class Meanfuse extends StatefulWidget {
-  int deck_id;
+  final int deck_id;
   Meanfuse({super.key, required this.deck_id});
 
   @override
@@ -20,11 +25,10 @@ class _MeanfuseState extends State<Meanfuse> {
       child: Consumer<Meanfusenoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
-          return MeanfuseUI();
+          return const MeanfuseUI();
         },
-        child: MeanfuseUI(),
       ),
     );
   }
@@ -39,123 +43,198 @@ class MeanfuseUI extends StatelessWidget {
     final reader = context.read<Meanfusenoti>();
     final list = provider.SetUpList();
     final listWord = provider.SetUpListWord();
-    final ipa = provider.SetIPA();
     final listState = provider.GetListState();
+
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
-        leading: Row(
-          children: [
-            SizedBox(width: 8),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: AppTheme.darkBorder,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.lightText,
+            size: 24,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
         title: LinearProgressIndicator(
           value: provider.value,
           backgroundColor: AppTheme.darkCard,
           valueColor: AlwaysStoppedAnimation<Color>(AppTheme.greenPrimary),
-          minHeight: 18,
-          borderRadius: BorderRadius.circular(9),
+          minHeight: 12,
+          borderRadius: BorderRadius.circular(6),
         ),
         backgroundColor: AppTheme.darkBase,
+        elevation: 0,
       ),
-      body: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(width: 40),
+                  const SizedBox(height: 24),
                   Text(
-                    "Tap to build the word.",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
+                    "Tap to build the word",
+                    style: AppTheme.sectionHeaderStyle.copyWith(
+                      color: AppTheme.lightText,
                       fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  // Meaning Question Area
+                  Expanded(
+                    flex: 2,
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Text(
+                          provider.mean,
+                          style: AppTheme.sectionHeaderStyle.copyWith(
+                            color: AppTheme.lightText.withOpacity(0.9),
+                            fontStyle: FontStyle.italic,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  // Word Building Area (Blanks)
+                  Center(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.center,
+                        children: List.generate(listWord.length, (index) {
+                          String value = listWord[index];
+                          return Container(
+                            width: 32,
+                            padding: const EdgeInsets.only(bottom: 4),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: value == "_" ? AppTheme.darkBorder : AppTheme.greenPrimary,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              value == "_" ? "" : value,
+                              style: AppTheme.sectionHeaderStyle.copyWith(
+                                fontSize: 24,
+                                color: AppTheme.greenPrimary,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  // Options Area (Letter Grid)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 32.0),
+                    child: Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      alignment: WrapAlignment.center,
+                      children: List.generate(list.length, (index) {
+                        final value = list[index];
+                        return ChoiceBtn(
+                          value: value,
+                          state: listState[index],
+                          onChoose: () => reader.CheckAnswer(value, index),
+                        );
+                      }),
                     ),
                   ),
                 ],
               ),
-              Container(
-                height: 150,
-                width: 750,
-                child: Center(
-                  child: Text(
-                    provider.mean,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                alignment: WrapAlignment.center,
-                children: List.generate(listWord.length, (index) {
-                  String value = listWord[index];
-                  return Text(
-                    value,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                    ),
-                  );
-                }),
-              ),
-              Container(
-                height: 70,
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    alignment: WrapAlignment.center,
-                    children: List.generate(list.length, (index) {
-                      final value = list[index];
-                      return ChoiceBtn(
-                        value: value,
-                        state: listState[index],
-                        onChoose: () {
-                          reader.CheckAnswer(value, index);
-                        },
-                      );
-                    }),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOutCubic,
-            bottom: provider.answered ? 0 : -MediaQuery.of(context).size.height,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).size.height,
-            child: ReviewScreen(
-              onPressed: () {
-                reader.SetNext();
-              },
             ),
-          ),
-        ],
+            if (provider.answered)
+              shared.ReviewScreen(
+                right: true,
+                answer: provider.trueList!.join(""),
+                onPressed: () => reader.SetNext(),
+              ),
+          ],
+        ),
       ),
     );
   }
 }
+
+class ChoiceBtn extends StatelessWidget {
+  final String value;
+  final ButtonState state;
+  final VoidCallback onChoose;
+
+  const ChoiceBtn({
+    super.key,
+    required this.value,
+    required this.state,
+    required this.onChoose,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color backgroundColor = AppTheme.darkBase;
+    Color textColor = Colors.white;
+    Color borderColor = AppTheme.darkCard;
+
+    switch (state) {
+      case ButtonState.selected:
+        backgroundColor = AppTheme.darkSurface;
+        borderColor = AppTheme.bluePrimary;
+        textColor = AppTheme.bluePrimary;
+        break;
+      case ButtonState.done:
+        backgroundColor = AppTheme.darkCard.withOpacity(0.5);
+        borderColor = AppTheme.darkCard;
+        textColor = AppTheme.lightText.withOpacity(0.2);
+        break;
+      case ButtonState.normal:
+        backgroundColor = AppTheme.darkSurface;
+        borderColor = AppTheme.darkBorder;
+        textColor = AppTheme.lightText;
+        break;
+      case ButtonState.wrong:
+        backgroundColor = AppTheme.darkSurface;
+        borderColor = AppTheme.redPrimary;
+        textColor = AppTheme.redPrimary;
+        break;
+    }
+
+    return GestureDetector(
+      onTap: state == ButtonState.done ? null : onChoose,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        height: 48,
+        width: 48,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: borderColor, width: 2),
+          color: backgroundColor,
+        ),
+        child: Center(
+          child: Text(
+            value,
+            style: AppTheme.bodyLargeStyle.copyWith(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Roboto',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
@@ -8,9 +9,7 @@ import 'front.dart';
 import "back.dart";
 import 'dart:math';
 
-
 final AudioPlayer audio = AudioPlayer();
-
 
 class Newwayreview extends StatefulWidget {
   final int deckId;
@@ -22,16 +21,20 @@ class Newwayreview extends StatefulWidget {
 
 class _Newwayreview extends State<Newwayreview> {
   List<Flashcard> _dueCards = [];
-  String media = "";
+  bool _isLoading = true;
   List<Widget>? cardWidgets;
 
   Future<void> _loadDueCard() async {
     final cardModel = Provider.of<Cardmodel>(context, listen: false);
     _dueCards = await cardModel.getDueCards(widget.deckId);
-    media = cardModel.media ?? "";
     cardWidgets = _dueCards.map((card) {
       return FlashCardItem(card: card, media: cardModel.media);
     }).toList();
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -44,44 +47,51 @@ class _Newwayreview extends State<Newwayreview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
-        title: const Text('Review Cards'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText, size: 24),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          'Review Cards',
+          style: AppTheme.sectionHeaderStyle.copyWith(color: AppTheme.lightText),
+        ),
         actions: [
           IconButton(
             tooltip: 'Undo last review',
-            icon: const Icon(Icons.undo),
+            icon: Icon(Icons.undo, color: AppTheme.primaryTeal),
             onPressed: () async {
               final cardModel = Provider.of<Cardmodel>(context, listen: false);
               await cardModel.undoLastReview();
-
               controller.rewind();
             },
           ),
         ],
+        backgroundColor: AppTheme.darkBase,
+        elevation: 0,
       ),
-      body: FutureBuilder(
-        future: _loadDueCard(),
-        builder: (context, snapshot) => Column(
-          children: [
-            Expanded(
-              child: SizedBox(
-                width: 900,
-                child: Center(
-                  child: Swipeder(
-                    controller: controller,
-                    cardWidgets: cardWidgets,
-                    cards: _dueCards,
+      body: SafeArea(
+        child: _isLoading 
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Swipeder(
+                      controller: controller,
+                      cardWidgets: cardWidgets,
+                      cards: _dueCards,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
       ),
     );
   }
 }
-
 
 class Swipeder extends StatefulWidget {
   const Swipeder({
@@ -100,7 +110,6 @@ class Swipeder extends StatefulWidget {
 }
 
 class _SwipederState extends State<Swipeder> {
-  bool right = false;
   int _activeItem = 0;
   @override
   Widget build(BuildContext context) {
@@ -114,83 +123,101 @@ class _SwipederState extends State<Swipeder> {
             SwipeDirection.up,
             SwipeDirection.down,
           },
-          swipeAssistDuration: Duration(milliseconds: 100),
+          swipeAssistDuration: const Duration(milliseconds: 200),
           stackClipBehaviour: Clip.none,
           swipeAnchor: SwipeAnchor.bottom,
           overlayBuilder: (context, properties) {
             final opacity = min(properties.swipeProgress, 1.0);
-
             switch (properties.direction) {
               case SwipeDirection.up:
                 return Opacity(
-
                   opacity: opacity,
                   child: CardLabel(
-                    color: Colors.redAccent,
-                    right: true,
-                    value: "Hard",
+                    color: AppTheme.redPrimary,
+                    value: "HARD",
                   ),
                 );
               case SwipeDirection.down:
                 return Opacity(
                   opacity: opacity,
                   child: CardLabel(
-                    color: Colors.teal,
-                    right: false,
-                    value: "easy",
+                    color: AppTheme.greenPrimary,
+                    value: "EASY",
                   ),
                 );
               default:
-                return Text(SwipeDirection.values.toString());
+                return const SizedBox.shrink();
             }
           },
           builder: (context, properties) {
             if (widget.cardWidgets == null || widget.cardWidgets!.isEmpty) {
-              return SizedBox();
+              return Center(
+                child: Text(
+                  "All cards reviewed!",
+                  style: AppTheme.sectionHeaderStyle.copyWith(color: AppTheme.lightText),
+                ),
+              );
             }
-            final itemIndex = (properties.index) % widget.cardWidgets!.length;
-
-            _activeItem = itemIndex;
-            return Stack(
-              children: [Card(child: widget.cardWidgets?[itemIndex])],
-            );
+            final itemIndex = properties.index % widget.cardWidgets!.length;
+            return widget.cardWidgets![itemIndex];
+          },
+          onSwipeCompleted: (index, direction) {
+            setState(() {
+              _activeItem = (index + 1) % (widget.cards?.length ?? 1);
+            });
           },
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: EdgeInsets.only(bottom: 30),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
             child: Wrap(
               spacing: 8,
               runSpacing: 8,
               alignment: WrapAlignment.center,
               children: List.generate(6, (i) {
+                final isEasy = i >= 3;
+                final label = i == 5 ? 'Perfect' : (i == 4 ? 'Easy' : (i == 3 ? 'Good' : (i == 2 ? 'Again' : (i == 1 ? 'Poor' : 'Null'))));
+                
+                return SizedBox(
+                  width: (MediaQuery.of(context).size.width - 64) / 3,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (widget.cards == null || widget.cards!.isEmpty) return;
+                      if (_activeItem >= widget.cards!.length) return;
+                      
+                      final card = widget.cards![_activeItem];
+                      final cardModel = Provider.of<Cardmodel>(context, listen: false);
+                      await cardModel.updateCardAfterReview(card, i);
 
-                return ElevatedButton(
-                  onPressed: () async {
-
-                    if (widget.cards == null || widget.cards!.isEmpty) return;
-                    final card = widget.cards![_activeItem];
-                    final cardModel = Provider.of<Cardmodel>(context, listen: false);
-                    await cardModel.updateCardAfterReview(card, i);
-
-                    final dir = (i >= 3) ? SwipeDirection.down : SwipeDirection.up;
-                    widget.controller.next(swipeDirection: dir);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: i >= 3 ? Colors.teal : Colors.redAccent,
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(i.toString(), style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
-                      Text(
-                        i == 5 ? 'Perfect' : (i == 4 ? 'Easy' : (i == 3 ? 'Good' : (i == 2 ? 'Again' : (i == 1 ? 'Poor' : 'Null')))),
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
-                    ],
+                      final dir = (i >= 3) ? SwipeDirection.down : SwipeDirection.up;
+                      widget.controller.next(swipeDirection: dir);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isEasy ? AppTheme.greenPrimary.withOpacity(0.8) : AppTheme.redPrimary.withOpacity(0.8),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      elevation: 0,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          i.toString(),
+                          style: AppTheme.bodyLargeStyle.copyWith(
+                            color: AppTheme.darkBase,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          label,
+                          style: AppTheme.bodyMediumStyle.copyWith(
+                            color: AppTheme.darkBase,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),
@@ -204,39 +231,34 @@ class _SwipederState extends State<Swipeder> {
 
 class CardLabel extends StatelessWidget {
   final Color color;
-  final bool right;
   final String value;
   const CardLabel({
     super.key,
     required this.color,
-    required this.right,
     required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: right ? Alignment.bottomCenter : Alignment.topCenter,
+    return Center(
       child: Container(
-        margin: EdgeInsets.all(50.0),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         decoration: BoxDecoration(
           border: Border.all(color: color, width: 4),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(24),
+          color: AppTheme.darkBase.withOpacity(0.8),
         ),
         child: Text(
           value,
-          style: TextStyle(
+          style: AppTheme.heroStyle.copyWith(
             color: color,
-            fontSize: 38,
-            fontWeight: FontWeight.bold,
+            letterSpacing: 4,
           ),
         ),
       ),
     );
   }
 }
-
 
 class FlashCardItem extends StatefulWidget {
   final Flashcard? card;
@@ -251,25 +273,21 @@ class _FlashCardItemState extends State<FlashCardItem> {
   @override
   Widget build(BuildContext context) {
     final backKey = GlobalKey<BackSideState>();
-    return Card(
-      elevation: 0.0,
-      color: Color.fromARGB(0, 255, 1, 1),
-      child: FlipCard(
-        front: FrontSide(widget: widget),
-
-        back: BackSide(key: backKey, card: widget.card!, media: widget.media),
-
-        onFlipDone: (isFront) {
-          if (isFront) {
-            backKey.currentState?.playSound(
-              widget.media!,
-              widget.card?.sound ?? '',
-            );
-          }
-        },
-      ),
+    return FlipCard(
+      speed: 300,
+      front: FrontSide(widget: widget),
+      back: BackSide(key: backKey, card: widget.card!, media: widget.media),
+      onFlipDone: (isFront) {
+        if (!isFront) {
+          backKey.currentState?.playSound(
+            widget.media!,
+            widget.card?.sound ?? '',
+          );
+        }
+      },
     );
   }
 }
+
 
 

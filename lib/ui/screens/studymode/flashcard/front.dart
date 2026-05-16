@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:totoki_extract/theme/appTheme.dart';
 import 'newwayreview.dart';
 
 class FrontSide extends StatelessWidget {
@@ -9,23 +10,31 @@ class FrontSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: Colors.yellow[70],
-      child: Center(
-        child: Text(
-          widget.card?.word ?? '',
-          style: const TextStyle(
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 167, 14, 77),
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      color: AppTheme.darkCard,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: AppTheme.darkBorder, width: 2),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Text(
+              widget.card?.word ?? '',
+              style: AppTheme.heroStyle.copyWith(
+                color: AppTheme.bluePrimary,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              textAlign: TextAlign.center,
+            ),
           ),
-          overflow: TextOverflow.clip,
-          textAlign: TextAlign.center,
         ),
       ),
     );
   }
 }
+
 

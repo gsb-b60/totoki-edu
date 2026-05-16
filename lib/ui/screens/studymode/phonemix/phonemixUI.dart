@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemixNoti.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+
+enum ButtonState { normal, selected, done, wrong }
 
 class PhoneMixUI extends StatefulWidget {
   const PhoneMixUI({super.key});
@@ -16,221 +19,102 @@ class _PhoneMixUIState extends State<PhoneMixUI> {
     final provider = context.watch<phoneMixNoti>();
     final reader = context.read<phoneMixNoti>();
     provider.setOptionList();
-    final word = provider.getWord();
-    final ipa = provider.getIPA();
+    final words = provider.getWord();
+    final ipas = provider.getIPA();
 
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
-        leading: Row(
-          children: [
-            SizedBox(width: 8),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: AppTheme.darkBorder,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.lightText,
+            size: 24,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
         title: LinearProgressIndicator(
           value: provider.value,
           backgroundColor: AppTheme.darkCard,
           valueColor: AlwaysStoppedAnimation<Color>(AppTheme.greenPrimary),
-          minHeight: 18,
-          borderRadius: BorderRadius.circular(9),
+          minHeight: 12,
+          borderRadius: BorderRadius.circular(6),
         ),
         backgroundColor: AppTheme.darkBase,
+        elevation: 0,
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Row(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(width: 40),
+                  const SizedBox(height: 24),
                   Text(
                     "Tap the matching pairs",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
+                    style: AppTheme.sectionHeaderStyle.copyWith(
+                      color: AppTheme.lightText,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
+                  const Spacer(),
+                  // Matching Area
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Words Column
+                      Expanded(
+                        child: Column(
+                          children: List.generate(words.length, (index) {
+                            return ChoiceBtn(
+                              value: words[index],
+                              state: provider.wordState[index],
+                              onChoose: () => reader.selectWord(index),
+                            );
+                          }),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      // IPAs Column
+                      Expanded(
+                        child: Column(
+                          children: List.generate(ipas.length, (index) {
+                            return ChoiceBtn(
+                              value: ipas[index],
+                              state: provider.ipaState[index],
+                              onChoose: () => reader.selectIPA(index),
+                            );
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(flex: 2),
                 ],
               ),
-              Container(
-                height: 125,
-                width: 750,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ListView.builder(
-                      itemCount: word.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: ChoiceBtn(
-                            value: word[index],
-                            state: provider.wordState[index],
-                            onChoose: () {
-                              reader.selectWord(index);
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    
-                  ],
-                ),
-              ),
-              SizedBox(width: 50),
-              Container(
-                height: 125,
-                width: 750,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ListView.builder(
-                      itemCount: ipa.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: ChoiceBtn(
-                            value: ipa[index],
-                            state: provider.ipaState[index],
-                            onChoose: () {
-                              reader.selectIPA(index);
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 50),
-            ],
-          ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOutCubic,
-            bottom: provider.answer ? 0 : -MediaQuery.of(context).size.height,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).size.height,
-            child: ReviewScreen(
-              onPressed: () {
-                reader.NextTask();
-              },
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ReviewScreen extends StatelessWidget {
-  ReviewScreen({super.key, required this.onPressed});
-  VoidCallback onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        width: double.infinity,
-        height: 250,
-        child: Container(
-          color: AppTheme.darkSurface,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                children: [
-                  SizedBox(width: 30),
-                  Icon(
-                    Icons.check_circle_rounded,
-                    color: AppTheme.greenBright,
-                    size: 40,
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    "Great job!",
-                    style: TextStyle(
-                      color: AppTheme.greenBright,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
+            if (provider.answer)
+              shared.ReviewScreen(
+                right: true,
+                answer: "All pairs matched!",
+                onPressed: () => reader.NextTask(),
               ),
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 650,
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        onPressed.call();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        backgroundColor: AppTheme.greenPrimary,
-                      ),
-                      child: Text(
-                        "CONTINUE",
-                        style: TextStyle(
-                          color: AppTheme.darkBase,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border(
-                            bottom: BorderSide(
-                              color: AppTheme.greenAccent,
-
-                              width: 6,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-            ],
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-enum ButtonState { normal, selected, done, wrong }
-
 class ChoiceBtn extends StatelessWidget {
-  String value;
-  ButtonState state;
-  VoidCallback? onChoose;
-  ChoiceBtn({
+  final String value;
+  final ButtonState state;
+  final VoidCallback? onChoose;
+
+  const ChoiceBtn({
     super.key,
     required this.state,
     required this.value,
@@ -246,50 +130,51 @@ class ChoiceBtn extends StatelessWidget {
     switch (state) {
       case ButtonState.selected:
         backgroundColor = AppTheme.darkSurface;
-        borderColor = AppTheme.BlueMuted;
-        textColor = AppTheme.BlueMuted;
+        borderColor = AppTheme.bluePrimary;
+        textColor = AppTheme.bluePrimary;
         break;
       case ButtonState.done:
-        backgroundColor = AppTheme.darkBase;
+        backgroundColor = AppTheme.darkCard.withOpacity(0.5);
         borderColor = AppTheme.darkCard;
-        textColor = AppTheme.darkerCard;
+        textColor = AppTheme.lightText.withOpacity(0.2);
         break;
       case ButtonState.normal:
-        backgroundColor = AppTheme.darkBase;
-        borderColor = AppTheme.darkCard;
-        textColor = Colors.white;
+        backgroundColor = AppTheme.darkSurface;
+        borderColor = AppTheme.darkBorder;
+        textColor = AppTheme.lightText;
         break;
       case ButtonState.wrong:
         backgroundColor = AppTheme.darkSurface;
-        borderColor = AppTheme.redMuted;
-        textColor = AppTheme.redMuted;
+        borderColor = AppTheme.redPrimary;
+        textColor = AppTheme.redPrimary;
         break;
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: 165,
-        height: 70,
-        child: ElevatedButton(
-          onPressed: () {
-            if (state != ButtonState.done) {
-              onChoose?.call();
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            side: BorderSide(color: borderColor, width: 4),
-            backgroundColor: backgroundColor,
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GestureDetector(
+        onTap: state == ButtonState.done ? null : onChoose,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          height: 64,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: borderColor, width: 2),
+            color: backgroundColor,
           ),
-          child: Text(
-            value,
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              color: textColor,
-              fontSize: 16,
+          child: Center(
+            child: Text(
+              value,
+              style: AppTheme.bodyLargeStyle.copyWith(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto',
+                fontSize: 14, // Smaller text for IPAs and long words
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),
@@ -297,5 +182,6 @@ class ChoiceBtn extends StatelessWidget {
     );
   }
 }
+
 
 

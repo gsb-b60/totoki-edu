@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'dart:io';
@@ -16,8 +17,7 @@ class BackSide extends StatefulWidget {
 
 class BackSideState extends State<BackSide> {
   void playSound(String media, String path) async {
-    String soundPath =
-        PathService.getFilePath(media, path);
+    String soundPath = PathService.getFilePath(media, path);
     try {
       await audio.play(DeviceFileSource(soundPath));
     } catch (e) {
@@ -26,207 +26,172 @@ class BackSideState extends State<BackSide> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final dir =
-        PathService.getDeckMediaPath(widget.media!);
+    final dir = PathService.getDeckMediaPath(widget.media!);
+    
     return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: Colors.yellow[70],
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            Row(
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      color: AppTheme.darkCard,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: AppTheme.darkBorder, width: 2),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // Image Section
                 if (widget.card.img != null)
-                  Container(
-                    width: 400,
-                    margin: const EdgeInsets.only(right: 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.file(
-                        height: 150,
-                        fit:BoxFit.cover,
-                        File('$dir/${widget.card.img}'),
-                      ),
+                  SizedBox(
+                    height: 200,
+                    child: Image.file(
+                      File('$dir/${widget.card.img}'),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                Expanded(
+                
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
+                      // Word & IPA
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Expanded(
                             child: Text(
                               widget.card.word ?? '',
-                              style: const TextStyle(
-                                fontSize: 29,
+                              style: AppTheme.sectionHeaderStyle.copyWith(
+                                color: AppTheme.bluePrimary,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 167, 14, 77),
+                                fontSize: 32,
                               ),
-                              overflow: TextOverflow.clip,
                             ),
                           ),
                           if (widget.card.ipa != null)
-                            Flexible(
-                              child: Text(
-                                "/${widget.card.ipa!}/",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontStyle: FontStyle.italic,
-                                  overflow: TextOverflow.ellipsis,
-                                  color: Colors.grey[700],
-                                ),
+                            Text(
+                              "/${widget.card.ipa!}/",
+                              style: AppTheme.bodySmallStyle.copyWith(
+                                color: AppTheme.lightText.withOpacity(0.6),
+                                fontStyle: FontStyle.italic,
+                                fontSize: 18,
                               ),
                             ),
                         ],
                       ),
-                      const SizedBox(height: 4),
+                      const Divider(color: AppTheme.darkBorder, height: 32),
 
-
-                      if (widget.card.meaning != null)
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: 'Meaning: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
-                                ),
-                              ),
-                              TextSpan(
-                                text: widget.card.meaning ?? '',
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                            ],
+                      // Meaning
+                      if (widget.card.meaning != null) ...[
+                        Text(
+                          "MEANING",
+                          style: AppTheme.bodySmallStyle.copyWith(
+                            color: AppTheme.primaryTeal,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
                           ),
                         ),
-                      if (widget.card.example != null &&
-                          widget.card.example != "")
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: 'Example: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
-                                ),
-                              ),
-                              TextSpan(
-                                text: widget.card.example ?? '',
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                            ],
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.card.meaning ?? '',
+                          style: AppTheme.bodyLargeStyle.copyWith(
+                            color: AppTheme.lightText,
                           ),
                         ),
+                        const SizedBox(height: 24),
+                      ],
+
+                      // Example
+                      if (widget.card.example != null && widget.card.example != "") ...[
+                        Text(
+                          "EXAMPLE",
+                          style: AppTheme.bodySmallStyle.copyWith(
+                            color: AppTheme.primaryTeal,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.card.example ?? '',
+                          style: AppTheme.bodyMediumStyle.copyWith(
+                            color: AppTheme.lightText.withOpacity(0.9),
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+
+                      // Sound Buttons Row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (widget.card.sound != null)
+                            _SoundButton(
+                              icon: Icons.volume_up,
+                              label: "Word",
+                              onPressed: () => playSound(widget.media!, widget.card.sound!),
+                            ),
+                          if (widget.card.usageSound != null)
+                            _SoundButton(
+                              icon: Icons.play_circle_outline,
+                              label: "Usage",
+                              onPressed: () => playSound(widget.media!, widget.card.usageSound!),
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-
-                Column(
-                  children: [
-                    if (widget.card.sound != null)
-                      Column(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.volume_up),
-                            onPressed: () async {
-                              await audio.play(
-                                DeviceFileSource('$dir/${widget.card.sound}'),
-                              );
-                            },
-                          ),
-                          Text("sound"),
-                        ],
-                      ),
-                    if (widget.card.usageSound != null)
-                      Column(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.volume_up),
-                            onPressed: () async {
-                              await audio.play(
-                                DeviceFileSource(
-                                  '$dir/${widget.card.usageSound}',
-                                ),
-                              );
-                            },
-                          ),
-                          Text("u sound"),
-                        ],
-                      ),
-                    if (widget.card.defSound != null)
-                      Column(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.volume_up),
-                            onPressed: () async {
-
-
-
-                            },
-                          ),
-                          Text("defsound"),
-                        ],
-                      ),
-                  ],
-                ),
               ],
             ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
+class _SoundButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  const _SoundButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        IconButton.filledTonal(
+          onPressed: onPressed,
+          icon: Icon(icon, color: AppTheme.bluePrimary),
+          style: IconButton.styleFrom(
+            backgroundColor: AppTheme.darkSurface,
+          ),
+        ),
+        Text(
+          label,
+          style: AppTheme.bodySmallStyle.copyWith(
+            color: AppTheme.lightText.withOpacity(0.5),
+            fontSize: 10,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 
 
