@@ -21,12 +21,13 @@ class _DeckListScreenState extends State<DeckListScreen> {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: AppTheme.darkCard,
+        color: AppTheme.darkSurface,
+        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.2), width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -39,7 +40,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: const Icon(Icons.layers, color: Colors.white),
+        leading: const Icon(Icons.layers, color: AppTheme.greenPrimary),
         onTap: () {
           Navigator.push(
             context,
@@ -72,11 +73,11 @@ class _DeckListScreenState extends State<DeckListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.darkSurface,
+      backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
-        backgroundColor: AppTheme.darkSurface,
+        backgroundColor: AppTheme.darkBase,
         title: const Text(
           "All Decks",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -158,7 +159,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
         },
       ),
       bottomNavigationBar: Container(
-        color: AppTheme.darkSurface,
+        color: AppTheme.darkBase,
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 9),
         child: Row(

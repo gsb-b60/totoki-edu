@@ -65,6 +65,8 @@ class Deckmodel with ChangeNotifier {
     final data = await _dbhelper.getDecks();
     _decks.clear();
     _decks.addAll(data);
+    _decks.sort((a, b) =>
+        Deck.extractCardName(a.name).compareTo(Deck.extractCardName(b.name)));
     _isLoading = false;
     notifyListeners();
   }
