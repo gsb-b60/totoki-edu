@@ -3,10 +3,12 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
+import 'package:totoki_extract/widget/progessIndicator.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
+import 'package:totoki_extract/widget/skipBtn.dart';
 
 class ReviewUI extends StatefulWidget {
   const ReviewUI({super.key});
@@ -26,6 +28,19 @@ class _ReviewUIState extends State<ReviewUI> {
 
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: ProgressBar(value: provider.value, inARow: provider.inARow),
+        actions: [
+          SkipBtn(onPressed: () => reader.skipLesson()),
+        ],
+        backgroundColor: AppTheme.darkBase,
+        elevation: 0,
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Stack(
           children: [

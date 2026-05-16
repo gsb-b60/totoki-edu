@@ -6,6 +6,7 @@ import 'package:totoki_extract/widget/checkBtnVertical.dart';
 import 'package:totoki_extract/widget/choiceBtnVertical.dart';
 import 'package:totoki_extract/widget/progessIndicator.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
+import 'package:totoki_extract/widget/skipBtn.dart';
 import 'package:provider/provider.dart';
 
 class SynonymfeildUI extends StatefulWidget {
@@ -33,6 +34,9 @@ class _SynonymfeildUIState extends State<SynonymfeildUI> {
           onPressed: () => Navigator.pop(context),
         ),
         title: ProgressBar(value: provider.value, inARow: provider.inARow),
+        actions: [
+          SkipBtn(onPressed: () => reader.skipLesson()),
+        ],
         backgroundColor: AppTheme.darkBase,
         elevation: 0,
         centerTitle: true,

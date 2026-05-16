@@ -236,32 +236,44 @@ class LessonNoti extends ChangeNotifier {
 
   Future<void> nextCard() async {
     updateRateCard(right);
-    print(RateCard);
-    if (currentLessIdx < SetUpLessonList.length) {
-      trueList = null;
-      listWord = null;
-      list = null;
-      states = null;
-      currentWordIdx = 0;
-      answered = false;
-      selectedIndex = null;
-      options = null;
-      statesBool = null;
+    if (currentLessIdx < SetUpLessonList.length - 1) {
+      _resetTaskState();
       currentLessIdx++;
       mode = SetUpLessonList[currentLessIdx]["mode"];
-
-      listWI = null;
-      listIPA = null;
-      listWordPhone = null;
-      selectedIPAIDX = null;
-      selectedWordIDX = null;
       await fetchMedia();
-      wordState = List.filled(4, ButtonState.normal);
-      ipaState = List.filled(4, ButtonState.normal);
-      notifyListeners();
-      right = true;
       notifyListeners();
     }
+  }
+
+  Future<void> skipLesson() async {
+    if (currentLessIdx < SetUpLessonList.length - 1) {
+      inARow = 0; // Reset streak on skip
+      _resetTaskState();
+      currentLessIdx++;
+      mode = SetUpLessonList[currentLessIdx]["mode"];
+      await fetchMedia();
+      notifyListeners();
+    }
+  }
+
+  void _resetTaskState() {
+    trueList = null;
+    listWord = null;
+    list = null;
+    states = null;
+    currentWordIdx = 0;
+    answered = false;
+    selectedIndex = null;
+    options = null;
+    statesBool = null;
+    listWI = null;
+    listIPA = null;
+    listWordPhone = null;
+    selectedIPAIDX = null;
+    selectedWordIDX = null;
+    wordState = List.filled(4, ButtonState.normal);
+    ipaState = List.filled(4, ButtonState.normal);
+    right = true;
   }
 
   List<String> get getOptionsShuffle {

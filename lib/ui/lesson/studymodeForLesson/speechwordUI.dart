@@ -3,6 +3,7 @@ import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
 import 'package:totoki_extract/widget/progessIndicator.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
+import 'package:totoki_extract/widget/skipBtn.dart';
 import 'package:provider/provider.dart';
 
 class SpeechWordUI extends StatefulWidget {
@@ -27,6 +28,9 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
           onPressed: () => Navigator.pop(context),
         ),
         title: ProgressBar(value: provider.value, inARow: provider.inARow),
+        actions: [
+          SkipBtn(onPressed: () => reader.skipLesson()),
+        ],
         backgroundColor: AppTheme.darkBase,
         elevation: 0,
         centerTitle: true,
