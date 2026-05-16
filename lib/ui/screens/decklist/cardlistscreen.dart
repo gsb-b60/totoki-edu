@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:totoki_extract/business/flashcard/Deck.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/business/flashcard/Flashcard.dart';
@@ -47,19 +48,16 @@ class _CardListScreenState extends State<CardListScreen> {
   Widget build(BuildContext context) {
     final cardModel = Provider.of<Cardmodel>(context);
 
-    String displayName = widget.deckName ?? "My Deck";
-    RegExp regExp = RegExp(r':\s*(.*)');
-    Match? match = regExp.firstMatch(displayName);
-    if (match != null) {
-      displayName = match.group(1)!;
-    }
+    String displayName = Deck.extractCardName(widget.deckName ?? "My Deck");
 
     final List<Widget> cardWidgets = cardModel.card.map((card) {
       return FlashCardItem(card: card, media: cardModel.media);
     }).toList();
     return Scaffold(
-      backgroundColor: AppTheme.darkSurface,
+      backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -68,7 +66,7 @@ class _CardListScreenState extends State<CardListScreen> {
         ),
         title: Text(
           displayName,
-          style: AppTheme.screenTitleStyle,
+          style: AppTheme.sectionHeaderStyle.copyWith(fontWeight: FontWeight.bold),
         ),
         actions: [
           Builder(
@@ -80,10 +78,10 @@ class _CardListScreenState extends State<CardListScreen> {
             ),
           ),
         ],
-        backgroundColor: AppTheme.darkSurface,
+        backgroundColor: AppTheme.darkBase,
       ),
       endDrawer: Drawer(
-        backgroundColor: AppTheme.darkSurface,
+        backgroundColor: AppTheme.darkBase,
         width: MediaQuery.of(context).size.width * 0.8,
         child: SafeArea(
           child: Column(
@@ -159,7 +157,7 @@ class NavPageBtn extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.darkCard.withValues(alpha: 0.5),
+            color: AppTheme.darkSurface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
           ),
@@ -197,13 +195,14 @@ class FlashCardItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
-        color: AppTheme.darkCard,
+        color: AppTheme.darkSurface,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.1), width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 4,
-            offset: Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.4),
+            blurRadius: 6,
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -216,7 +215,7 @@ class FlashCardItem extends StatelessWidget {
             SoundTitle(
               title: "sound",
               value: '$dir/${card.sound}',
-              icon: const Icon(Icons.volume_up),
+              icon: const Icon(Icons.volume_up, color: AppTheme.greenPrimary),
             ),
           TitleAndValue(title: "Meaning", value: card.meaning ?? ''),
           TitleAndValue(title: "Example", value: card.example ?? ''),
@@ -245,19 +244,19 @@ class FlashCardItem extends StatelessWidget {
               Complexity(card: card),
             ],
           ),
-          Column(
+          Row(
             children: [
               if (card.usageSound != null && dir != null)
                 SoundTitle(
                   title: "u sound",
                   value: '$dir/${card.usageSound}',
-                  icon: const Icon(Icons.volume_up),
+                  icon: const Icon(Icons.volume_up, color: AppTheme.greenPrimary),
                 ),
               if (card.defSound != null && dir != null)
                 SoundTitle(
                   title: "def sound",
                   value: '$dir/${card.defSound}',
-                  icon: const Icon(Icons.volume_up),
+                  icon: const Icon(Icons.volume_up, color: AppTheme.greenPrimary),
                 ),
             ],
           ),
