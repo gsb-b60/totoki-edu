@@ -308,5 +308,29 @@ class Cardmodel with ChangeNotifier {
     final String? result = await _dbhelper.getMediaFile(deckId);
     return result;
   }
+
+  Future<int> getDueCount() async {
+    return await _dbhelper.getDueCardsCount();
+  }
+
+  Future<int> getLearnedCount() async {
+    return await _dbhelper.getLearnedCardsCount();
+  }
+
+  Future<int> getMasterCount() async {
+    return await _dbhelper.getMasterCardsCount();
+  }
+
+  int dueCount=0;
+  int learnedCount=0;
+  int masterCount=0;
+
+  Future<void> refreshCounts() async {
+    dueCount = await getDueCount();
+    learnedCount = await getLearnedCount();
+    masterCount = await getMasterCount();
+    notifyListeners();
+  }
+
 }
 

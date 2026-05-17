@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
 import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DueDayDashBoard extends StatelessWidget {
+class DueDayDashBoard extends StatefulWidget {
   const DueDayDashBoard({super.key});
 
+  @override
+  State<DueDayDashBoard> createState() => _DueDayDashBoardState();
+}
 
+class _DueDayDashBoardState extends State<DueDayDashBoard> {
   double getFontSize(String text) {
     final length = text.length;
 
@@ -20,6 +26,15 @@ class DueDayDashBoard extends StatelessWidget {
     } else {
       return 120;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<Cardmodel>().refreshCounts();
+    });
   }
 
   @override
@@ -53,61 +68,63 @@ class DueDayDashBoard extends StatelessWidget {
                 const SizedBox(height: 32),
 
                 // Hero Section - Big Pressure
-                Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        "42", // Fake Data
-                        style: AppTheme.heroStyle.copyWith(
-                          fontSize: getFontSize("42"),
-                          color: AppTheme.redPrimary,
+                Consumer<Cardmodel>(
+                  builder: (context, value, child) {
+                    return Column(
+                      children: [
+                        Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                value.dueCount.toString(), // Fake Data
+                                style: AppTheme.heroStyle.copyWith(
+                                  fontSize: getFontSize(
+                                    value.dueCount.toString(),
+                                  ),
+                                  color: AppTheme.redPrimary,
+                                ),
+                              ),
+                              Text(
+                                "CARDS DUE TODAY",
+                                style: AppTheme.captionStyle.copyWith(
+                                  color: AppTheme.redPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Text(
-                        "CARDS DUE TODAY",
-                        style: AppTheme.captionStyle.copyWith(
-                          color: AppTheme.redPrimary,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                          fontSize: 14,
+
+                        const SizedBox(height: 32),
+
+                        // Stats Grid
+                        Row(
+                          children: [
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: _StatCard(
+                                label: "LEARNED",
+                                value: value.learnedCount.toString(),
+                                icon: Icons.auto_awesome,
+                                color: AppTheme.bluePrimary,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: _StatCard(
+                                label: "MASTERED",
+                                value: value.masterCount.toString(),
+                                icon: Icons.workspace_premium,
+                                color: AppTheme.greenPrimary,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 32),
-
-                // Stats Grid
-                Row(
-                  children: [
-                    Expanded(
-                      child: _StatCard(
-                        label: "STREAK",
-                        value: "15 Days",
-                        icon: Icons.local_fire_department,
-                        color: AppTheme.yellowPrimary,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _StatCard(
-                        label: "LEARNED",
-                        value: "128",
-                        icon: Icons.auto_awesome,
-                        color: AppTheme.bluePrimary,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _StatCard(
-                        label: "MASTERED",
-                        value: "64",
-                        icon: Icons.workspace_premium,
-                        color: AppTheme.greenPrimary,
-                      ),
-                    ),
-                  ],
+                      ],
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 32),

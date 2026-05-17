@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/Deck.dart';
@@ -13,6 +14,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Deckmodel()..fetchDecks()),
+        ChangeNotifierProvider(create: (_) => Cardmodel()),
       ],
       child: const MyApp(),
     ),

@@ -168,7 +168,7 @@ class DatabaseHelper {
   Future<List<Flashcard>> getDueCardLimit(int limit) async {
     final db = await database;
     final maps = await db.rawQuery(
-      '''
+      '''re
       SELECT *
       FROM cards
       WHERE sound IS NOT NULL
@@ -186,6 +186,8 @@ class DatabaseHelper {
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
 
+
+
   Future<List<Flashcard>> getDueCards() async {
     final db = await database;
     final maps = await db.query(
@@ -195,6 +197,58 @@ class DatabaseHelper {
       orderBy: 'due ASC',
     );
     return maps.map(Flashcard.fromMap).toList(growable: false);
+  }
+
+  Future<int> getDueCardsCount() async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM cards WHERE due IS NULL OR due <= ?',
+      [DateTime.now().millisecondsSinceEpoch],
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<int> getLearnedCardsCount() async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM cards WHERE interval > 2 AND reps > 2',
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<int> getMasterCardsCount() async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM cards WHERE reps > 3 AND interval > 2.2',
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<int> getDueCardsCountForDeck(int deckId) async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM cards WHERE deck_id = ? AND (due IS NULL OR due <= ?)',
+      [deckId, DateTime.now().millisecondsSinceEpoch],
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<int> getLearnedCardsCountForDeck(int deckId) async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM cards WHERE deck_id = ? AND interval > 2 AND reps > 2',
+      [deckId],
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<int> getMasterCardsCountForDeck(int deckId) async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM cards WHERE deck_id = ? AND reps > 3 AND interval > 2.2',
+      [deckId],
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
   }
 
   Future<List<Flashcard>> getCardByLevels(int level) async {

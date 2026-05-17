@@ -49,6 +49,20 @@ class Deck {
   return match?.group(1) ?? fullName;
 }
 
+  Future<int> getDueCount() async {
+    if (id == null) return 0;
+    return await DatabaseHelper.instance.getDueCardsCountForDeck(id!);
+  }
+
+  Future<int> getLearnedCount() async {
+    if (id == null) return 0;
+    return await DatabaseHelper.instance.getLearnedCardsCountForDeck(id!);
+  }
+
+  Future<int> getMasterCount() async {
+    if (id == null) return 0;
+    return await DatabaseHelper.instance.getMasterCardsCountForDeck(id!);
+  }
 }
 
 class Deckmodel with ChangeNotifier {
