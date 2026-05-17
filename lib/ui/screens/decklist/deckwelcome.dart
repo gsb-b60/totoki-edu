@@ -75,6 +75,23 @@ class _DeckListScreenState extends State<DeckListScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    final deckModel = Provider.of<Deckmodel>(context, listen: false);
+    deckModel.hadDB().then((hadDB) {
+      if (!hadDB) {
+        deckModel.filePicker().then((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Import process finished.'),
+            ),
+          );
+        });
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.darkBase,

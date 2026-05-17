@@ -186,8 +186,6 @@ class DatabaseHelper {
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
 
-
-
   Future<List<Flashcard>> getDueCards() async {
     final db = await database;
     final maps = await db.query(
@@ -324,16 +322,36 @@ class DatabaseHelper {
     await db.delete('cards', where: 'id=?', whereArgs: [cardId]);
   }
 
-  Future<String?> pickApkgFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['apkg'],
-    );
-    return result?.files.single.path;
+  Future<bool> hasData() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT 1 FROM cards LIMIT 1');
+    return result.isNotEmpty;
+  }
+
+  Future<String?> pickApkgFile(bool isTesting) async {
+    if (isTesting) {
+      final ByteData byteData = await rootBundle.load('assets/anki/Cambridge_Vocabulary_for_IELTS_-_Advanced_2023_Version.apkg');
+
+      // Create temp file
+      final tempDir = await getTemporaryDirectory();
+
+      final file = File('${tempDir.path}/Cambridge_Vocabulary_for_IELTS_-_Advanced_2023_Version.apkg');
+
+      // Write bytes into temp file
+      await file.writeAsBytes(byteData.buffer.asUint8List());
+
+      return file.path;
+    } else {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['apkg'],
+      );
+      return result?.files.single.path;
+    }
   }
 
   Future<String?> pickAndCopyFile() async {
-    final pickedFile = await pickApkgFile();
+    final pickedFile = await pickApkgFile(true);
     if (pickedFile == null || pickedFile.isEmpty) return null;
     final savedPath = p.join(PathService.appDocPath, p.basename(pickedFile));
     await File(pickedFile).copy(savedPath);

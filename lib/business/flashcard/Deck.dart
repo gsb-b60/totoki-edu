@@ -102,6 +102,10 @@ class Deckmodel with ChangeNotifier {
   }
 
   Future<void> filePicker() async {
+    bool haveDB = await _dbhelper.hasData();
+    if (haveDB) {
+      return;
+    }
     _isLoading = true;
     notifyListeners();
     try {
@@ -131,4 +135,10 @@ class Deckmodel with ChangeNotifier {
     final String? result = await _dbhelper.getMediaFile(id);
     return result;
   }
+
+  Future<bool> hadDB() async {
+    hadDBsync = await _dbhelper.hasData();
+    return hadDBsync;
+  }
+  bool hadDBsync = false;
 }
