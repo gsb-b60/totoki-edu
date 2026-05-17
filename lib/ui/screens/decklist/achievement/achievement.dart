@@ -3,25 +3,14 @@ import 'package:totoki_extract/ui/screens/decklist/achievement/achievementNoti.d
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievementUI.dart';
 import 'package:provider/provider.dart';
 
-class Achievement extends StatefulWidget {
+class Achievement extends StatelessWidget {
   const Achievement({super.key});
 
   @override
-  State<Achievement> createState() => _AchievementState();
-}
-
-class _AchievementState extends State<Achievement> {
-  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (context) => Achievementnoti()..fetchCard(),
-      child: Consumer<Achievementnoti>(
-        builder: (context, provider, _) {
-          if (provider.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return AchievementUI();
-        },
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => Achievementnoti()..fetchCard(),
+      child: const AchievementUI(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/business/flashcard/Deck.dart';
+import 'package:totoki_extract/ui/screens/dashboard/dueDay.dart';
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievement.dart';
 import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,10 @@ class _DeckListScreenState extends State<DeckListScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: AppTheme.darkSurface,
-        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.2), width: 1),
+        border: Border.all(
+          color: AppTheme.darkBorder.withOpacity(0.2),
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.4),
@@ -113,7 +117,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
           return Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                 child: Column(
                   children: [
                     // const CreateNewDeck(),
@@ -159,23 +163,39 @@ class _DeckListScreenState extends State<DeckListScreen> {
         },
       ),
       bottomNavigationBar: Container(
-        color: AppTheme.darkBase,
-        padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.only(bottom: 9),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ButtomNav(
-              value: "Achievement",
-              ico: Icons.stars,
-              screenBuilder: () => Achievement(),
+        decoration: BoxDecoration(
+          color: AppTheme.darkSurface,
+          border: Border(
+            top: BorderSide(
+              color: AppTheme.darkBorder.withOpacity(0.2),
+              width: 1,
             ),
-            ButtomNav(
-              value: "Lesson",
-              ico: Icons.flash_on_rounded,
-              screenBuilder: () => LearnModeScreen(),
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              children: [
+                ButtomNav(
+                  value: "Stats",
+                  ico: Icons.stars_rounded,
+                  screenBuilder: () => Achievement(),
+                ),
+                ButtomNav(
+                  value: "Lesson",
+                  ico: Icons.flash_on_rounded,
+                  isMain: true,
+                  screenBuilder: () => LearnModeScreen(),
+                ),
+                ButtomNav(
+                  value: "Dashboard",
+                  ico: Icons.space_dashboard_rounded,
+                  screenBuilder: () => DueDayDashBoard(),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -188,38 +208,45 @@ class ButtomNav extends StatelessWidget {
     required this.value,
     required this.ico,
     required this.screenBuilder,
+    this.isMain = false,
   });
   final String value;
   final IconData ico;
   final Widget Function() screenBuilder;
+  final bool isMain;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => screenBuilder()),
-        );
-      },
-      child: Container(
-        width: 150,
-        height: 50,
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-          color: AppTheme.greenPrimary,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screenBuilder()),
+          );
+        },
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: isMain ? 4 : 0),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: isMain ? AppTheme.greenPrimary : Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(ico, color: AppTheme.darkSurface, size: 35),
+              Icon(
+                ico,
+                color: isMain ? AppTheme.darkBase : AppTheme.greenPrimary,
+                size: isMain ? 34 : 26,
+              ),
+              const SizedBox(height: 4),
               Text(
-                value,
-                style: TextStyle(
-                  color: AppTheme.darkSurface,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                value.toUpperCase(),
+                style: AppTheme.captionStyle.copyWith(
+                  color: isMain ? AppTheme.darkBase : AppTheme.greenPrimary,
+                  fontWeight: isMain ? FontWeight.bold : FontWeight.normal,
+                  fontSize: isMain ? 11 : 10,
+                  letterSpacing: 1.2,
                 ),
               ),
             ],

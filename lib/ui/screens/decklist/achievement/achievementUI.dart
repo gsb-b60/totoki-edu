@@ -15,9 +15,6 @@ class _AchievementState extends State<AchievementUI> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<Achievementnoti>(context, listen: false).fetchCard();
-    });
   }
 
   @override
