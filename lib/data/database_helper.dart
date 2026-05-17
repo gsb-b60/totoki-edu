@@ -168,7 +168,7 @@ class DatabaseHelper {
   Future<List<Flashcard>> getDueCardLimit(int limit) async {
     final db = await database;
     final maps = await db.rawQuery(
-      '''re
+      '''
       SELECT *
       FROM cards
       WHERE sound IS NOT NULL
