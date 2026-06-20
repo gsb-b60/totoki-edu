@@ -14,19 +14,7 @@ class DueDayDashBoard extends StatefulWidget {
 }
 
 class _DueDayDashBoardState extends State<DueDayDashBoard> {
-  double getFontSize(String text) {
-    final length = text.length;
 
-    if (length <= 2) {
-      return 350;
-    } else if (length == 3) {
-      return 200;
-    } else if (length == 4) {
-      return 150;
-    } else {
-      return 120;
-    }
-  }
 
   @override
   void initState() {
@@ -75,13 +63,17 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
                         Center(
                           child: Column(
                             children: [
-                              Text(
-                                value.dueCount.toString(), // Fake Data
-                                style: AppTheme.heroStyle.copyWith(
-                                  fontSize: getFontSize(
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.80,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
                                     value.dueCount.toString(),
+                                    style: AppTheme.heroStyle.copyWith(
+                                      fontSize: 256, // reference size — FittedBox scales it
+                                      color: AppTheme.redPrimary,
+                                    ),
                                   ),
-                                  color: AppTheme.redPrimary,
                                 ),
                               ),
                               Text(

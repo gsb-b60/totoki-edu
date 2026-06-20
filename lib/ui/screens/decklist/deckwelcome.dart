@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/business/flashcard/Deck.dart';
-import 'package:totoki_extract/ui/screens/dashboard/dueDay.dart';
+import 'package:totoki_extract/ui/screens/dashboard/dashBoard.dart';
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievement.dart';
 import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
 import 'package:provider/provider.dart';

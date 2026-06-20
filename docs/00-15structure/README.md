@@ -19,8 +19,7 @@ docs/00-15structure/
 │   ├── 06-database.md         # SQLite tables and field descriptions
 │   ├── 07-api.md              # Offline-first storage and future API endpoints
 │   ├── 08-business-rules.md   # Spaced Repetition (SM-2) algorithm rules
-│   ├── 09-roadmap.md          # Project roadmap: Done, Doing, and Next
-│   └── 10-decisions.md        # Architectural decision records (ADR)
+│   └── 09-roadmap.md          # Project roadmap: Done, Doing, and Next
 │
 ├── spec/                      # Screen-by-screen specific UI & UX specs
 │   ├── home.md                # Dashboard, Deck list, and DB Import

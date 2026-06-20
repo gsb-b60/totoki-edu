@@ -14,4 +14,4 @@
 - **Database Operations**: Do not write raw SQL queries directly in UI components. Use `DatabaseHelper`.
 - **UI Guidelines**: Follow the Material 3 design spec. Always utilize theme tokens from `AppTheme` instead of hardcoded colors/styles.
 - **Verification**: Run `flutter analyze` and all widget/unit tests in `test/` before finalizing any changes.
-- **Updates**: Keep this documentation and the decision log (`docs/10-decisions.md`) updated on any architectural adjustments.
+- **Updates**: Keep this documentation updated on any architectural adjustments.
