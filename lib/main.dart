@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/Deck.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/screens/decklist/deckwelcome.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,25 +36,22 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppTheme.darkBase,
         primaryColor: AppTheme.primaryTeal,
         cardColor: AppTheme.darkSurface,
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: AppTheme.darkBase,
           elevation: 0,
           centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: AppTheme.lightText,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          titleTextStyle: AppTheme.screenTitleStyle.copyWith(fontSize: 20),
         ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppTheme.primaryTeal,
           brightness: Brightness.dark,
           surface: AppTheme.darkSurface,
         ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: AppTheme.lightText),
-          bodyMedium: TextStyle(color: AppTheme.lightText),
-          titleLarge: TextStyle(color: AppTheme.lightText, fontWeight: FontWeight.bold),
+        textTheme: GoogleFonts.outfitTextTheme(
+          ThemeData.dark().textTheme,
+        ).apply(
+          bodyColor: AppTheme.lightText,
+          displayColor: AppTheme.lightText,
         ),
       ),
       home: const DeckListScreen(),

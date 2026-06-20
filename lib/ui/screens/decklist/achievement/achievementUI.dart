@@ -25,7 +25,7 @@ class _AchievementState extends State<AchievementUI> {
       backgroundColor: AppTheme.darkSurface,
       appBar: AppBar(
         backgroundColor: AppTheme.darkSurface,
-        title: const Text(
+        title:  Text(
           "Achievement",
           style: AppTheme.screenTitleStyle,
         ),
