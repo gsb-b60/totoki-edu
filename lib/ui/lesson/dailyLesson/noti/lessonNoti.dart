@@ -595,11 +595,19 @@ class LessonNoti extends ChangeNotifier {
         wordState[selectedWordIDX!] = ButtonState.wrong;
         notifyListeners();
 
+        final currentWordIdx = selectedWordIDX!;
+        final currentIpaIdx = selectedIPAIDX!;
+
+        selectedWordIDX = null;
+        selectedIPAIDX = null;
+
         Future.delayed(Duration(milliseconds: 300), () {
-          ipaState[selectedIPAIDX!] = ButtonState.normal;
-          wordState[selectedWordIDX!] = ButtonState.normal;
-          selectedWordIDX = null;
-          selectedIPAIDX = null;
+          if (wordState[currentWordIdx] == ButtonState.wrong) {
+            wordState[currentWordIdx] = ButtonState.normal;
+          }
+          if (ipaState[currentIpaIdx] == ButtonState.wrong) {
+            ipaState[currentIpaIdx] = ButtonState.normal;
+          }
           notifyListeners();
         });
       }

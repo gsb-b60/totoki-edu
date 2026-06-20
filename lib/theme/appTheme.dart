@@ -10,12 +10,12 @@ class AppTheme{
 
   static const Color accentTeal = Color.fromARGB(255, 10, 114, 104);
 
-  static const darkBase = Color.fromRGBO(18, 32, 35, 1);
-  static const darkSurface = Color.fromRGBO(33, 46, 54, 1);
-  static const darkCard = Color.fromRGBO(53, 70, 78, 1);
-  static const darkBorder = Color.fromRGBO(84, 103, 110, 1);
-  static const darkerCard = Color.fromRGBO(57, 69, 69, 1);
-  static const darklight = Color.fromRGBO(57, 70, 79, 1);
+  static const darkBase = Color(0xFF000000);
+  static const darkSurface = Color(0xFF121212);
+  static const darkCard = Color(0xFF1E1E1E);
+  static const darkBorder = Color(0xFF2C2C2C);
+  static const darkerCard = Color(0xFF161616);
+  static const darklight = Color(0xFF2A2A2A);
   static const greyGreen = Color.fromRGBO(129, 188, 126, 1);
 
   static const greenPrimary = Color.fromRGBO(149, 211, 50, 1);
