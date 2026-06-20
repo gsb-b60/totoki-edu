@@ -64,43 +64,43 @@ class AppTheme{
 
   // --- Typography Scale (Outfit via google_fonts) ---
   static TextStyle heroStyle = GoogleFonts.outfit(
-    fontSize: 42,
-    fontWeight: FontWeight.bold,
-    color: lightText,
-  );
-
-  static TextStyle screenTitleStyle = GoogleFonts.outfit(
     fontSize: 30,
     fontWeight: FontWeight.bold,
     color: lightText,
   );
 
-  static TextStyle sectionHeaderStyle = GoogleFonts.outfit(
+  static TextStyle screenTitleStyle = GoogleFonts.outfit(
     fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: lightText,
+  );
+
+  static TextStyle sectionHeaderStyle = GoogleFonts.outfit(
+    fontSize: 18,
     fontWeight: FontWeight.w600,
     color: lightText,
   );
 
   static TextStyle bodyLargeStyle = GoogleFonts.outfit(
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: FontWeight.normal,
     color: lightText,
   );
 
   static TextStyle bodyMediumStyle = GoogleFonts.outfit(
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: FontWeight.normal,
     color: lightText,
   );
 
   static TextStyle bodySmallStyle = GoogleFonts.outfit(
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: FontWeight.normal,
     color: lightText,
   );
 
   static TextStyle captionStyle = GoogleFonts.outfit(
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.italic,
     color: lightText,
