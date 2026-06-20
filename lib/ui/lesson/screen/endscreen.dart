@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/timerNoti.dart';
@@ -26,6 +27,7 @@ class _EndScreenState extends State<EndScreen> {
       final lesson = context.read<LessonNoti>();
       lesson.CallQuest(context);
       lesson.updateCard();
+      context.read<SoundController>().playFinish();
     });
   }
   

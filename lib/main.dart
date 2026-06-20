@@ -4,6 +4,7 @@ import 'package:totoki_extract/business/path_service.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/Deck.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/ui/screens/decklist/deckwelcome.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +17,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => Deckmodel()..fetchDecks()),
         ChangeNotifierProvider(create: (_) => Cardmodel()),
+        ChangeNotifierProvider(create: (_) => SoundController()),
       ],
       child: const MyApp(),
     ),

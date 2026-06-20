@@ -11,6 +11,7 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/noti/questNoti.dart';
 import 'package:totoki_extract/business/flashcard/Flashcard.dart';
 import 'package:totoki_extract/data/database_helper.dart';
 import 'package:totoki_extract/business/flashcard/supermemo.dart';
+import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -19,6 +20,10 @@ import 'package:vibration/vibration.dart';
 enum ButtonState { normal, selected, done, wrong }
 
 class LessonNoti extends ChangeNotifier {
+  LessonNoti({this.soundController});
+
+  final SoundController? soundController;
+
   //data
   static final _dbhelper = DatabaseHelper.instance;
   final List<Flashcard> _cards = [];
@@ -115,10 +120,17 @@ class LessonNoti extends ChangeNotifier {
   void ResultHandler(bool succ) {
     if (succ) {
       totalRep++;
-      haper();
       inARow++;
+      haper();
+      if (soundController?.shouldCelebrateStreak(inARow) ?? false) {
+        soundController?.playStreak();
+      } else {
+        soundController?.playCorrect();
+      }
       print("suc $_acc rep :$totalRep");
     } else {
+      inARow = 0;
+      soundController?.playWrong();
       print("false $_acc rep :$totalRep");
       _acc++;
       totalLapse++;

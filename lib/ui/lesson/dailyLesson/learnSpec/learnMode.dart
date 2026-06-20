@@ -20,6 +20,7 @@ import 'package:totoki_extract/ui/lesson/studymodeForLesson/synonympickUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/wordpulseUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/wordsnapUI.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/services/sound_controller.dart';
 
 class LessLearnMode extends StatefulWidget {
   LessLearnMode({super.key, required this.st});
@@ -34,7 +35,9 @@ class _LessLearnModeState extends State<LessLearnMode> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => LessonNoti()..getByMode(widget.st),
+          create: (context) => LessonNoti(
+            soundController: context.read<SoundController>(),
+          )..getByMode(widget.st),
         ),
         ChangeNotifierProvider(create: (context) => TimerNoti()..start()),
         ChangeNotifierProvider(create: (context) => Questnoti()),

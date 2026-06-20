@@ -18,6 +18,7 @@ import 'package:totoki_extract/ui/lesson/studymodeForLesson/synonymfeildUI.dart'
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/synonympickUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/wordpulseUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/wordsnapUI.dart';
+import 'package:totoki_extract/services/sound_controller.dart';
 
 import 'package:provider/provider.dart';
 import '../../screen/endscreen.dart';
@@ -35,7 +36,9 @@ class _LessonScreenState extends State<LessonScreen> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => LessonNoti()..getFlashcardList(widget.fetchMode),
+          create: (context) => LessonNoti(
+            soundController: context.read<SoundController>(),
+          )..getFlashcardList(widget.fetchMode),
         ),
         ChangeNotifierProvider(create: (context) => TimerNoti()..start()),
         ChangeNotifierProvider(create: (context) => Questnoti()),
