@@ -13,7 +13,7 @@ class SoundController extends ChangeNotifier {
   final Set<SoundEffect> _missingEffects = {};
 
   bool _soundEnabled = true;
-  double _volume = 0.7;
+  double _volume = 1.2;
   int _correctCount = 0;
 
   bool get soundEnabled => _soundEnabled;
@@ -106,47 +106,9 @@ class SoundController extends ChangeNotifier {
 }
 
 const Map<SoundEffect, List<String>> _assetCandidates = {
-  SoundEffect.correct: [
-    'sound/correct.mp3',
-    'sound/correct.wav',
-    'sound/correct.ogg',
-    'sound/corret.mp3',
-    'sound/corret.wav',
-    'sound/corret.ogg',
-  ],
-  SoundEffect.correctAlternate: [
-    'sound/correct_ver_2.mp3',
-    'sound/correct_ver_2.wav',
-    'sound/correct_ver_2.ogg',
-    'sound/correct-2.mp3',
-    'sound/correct-2.wav',
-    'sound/correct-2.ogg',
-    'sound/correct_2.mp3',
-    'sound/correct_2.wav',
-    'sound/correct_2.ogg',
-    'sound/correct2.mp3',
-    'sound/correct2.wav',
-    'sound/correct2.ogg',
-  ],
-  SoundEffect.finish: [
-    'sound/finish.mp3',
-    'sound/finish.wav',
-    'sound/finish.ogg',
-  ],
-  SoundEffect.wrong: [
-    'sound/wrong.mp3',
-    'sound/wrong.wav',
-    'sound/wrong.ogg',
-  ],
-  SoundEffect.streak: [
-    'sound/right_in_a_row.mp3',
-    'sound/right_in_a_row.wav',
-    'sound/right_in_a_row.ogg',
-    'sound/in_a_row.mp3',
-    'sound/in_a_row.wav',
-    'sound/in_a_row.ogg',
-    'sound/rightinarow.mp3',
-    'sound/rightinarow.wav',
-    'sound/rightinarow.ogg',
-  ],
+  SoundEffect.correct: ['sound/correct.mp3'],
+  SoundEffect.correctAlternate: ['sound/correct-2.mp3'],
+  SoundEffect.finish: ['sound/finish.mp3'],
+  SoundEffect.wrong: ['sound/wrong.mp3'],
+  SoundEffect.streak: ['sound/in_a_row.mp3'],
 };
