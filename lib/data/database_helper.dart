@@ -19,22 +19,31 @@ class DatabaseHelper {
   DatabaseHelper._privateConstructor();
 
   static Database? _database;
+  Exception? _dbInitError;
 
   Future<Database> get database async {
-    _database ??= await _initDatabase();
-    return _database!;
+    if (_dbInitError != null) throw _dbInitError!;
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    if (_database != null) return _database!;
+    throw _dbInitError ?? Exception('Unknown database init failure');
   }
 
   Future<Database> _initDatabase() async {
-    final dbPath = p.join(await getDatabasesPath(), 'flashcards.db');
-    final db = await openDatabase(
-      dbPath,
-      version: 1,
-      onCreate: _onCreate,
-      onConfigure: (db) async => db.execute('PRAGMA foreign_keys = ON'),
-    );
-    await _reconcileSchema(db);
-    return db;
+    try {
+      final dbPath = p.join(await getDatabasesPath(), 'flashcards.db');
+      final db = await openDatabase(
+        dbPath,
+        version: 1,
+        onCreate: _onCreate,
+        onConfigure: (db) async => db.execute('PRAGMA foreign_keys = ON'),
+      );
+      await _reconcileSchema(db);
+      return db;
+    } catch (e) {
+      _dbInitError = Exception('Database init failed: $e');
+      rethrow;
+    }
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -469,7 +478,8 @@ class DatabaseHelper {
     final unzipDir = await createUnZipFolder();
     final mediaFile = File(p.join(unzipDir.path, 'media'));
     if (!mediaFile.existsSync()) {
-      throw Exception('Missing APKG media manifest');
+      debugPrint('Missing APKG media manifest');
+      return '';
     }
 
     final mediaMapRaw =

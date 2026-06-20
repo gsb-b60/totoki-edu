@@ -5,18 +5,25 @@ import 'package:path/path.dart' as p;
 class PathService {
   static late final String appDocPath;
   static late final String ankiPath;
+  static String? initError;
 
   /// Initializes the base paths for the application.
   /// Must be called before accessing any paths.
   static Future<void> init() async {
-    final directory = await getApplicationDocumentsDirectory();
-    appDocPath = directory.path;
-    ankiPath = p.join(appDocPath, 'anki');
-    
-    // Ensure the anki directory exists
-    final ankiDir = Directory(ankiPath);
-    if (!await ankiDir.exists()) {
-      await ankiDir.create(recursive: true);
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      appDocPath = directory.path;
+      ankiPath = p.join(appDocPath, 'anki');
+
+      final ankiDir = Directory(ankiPath);
+      if (!await ankiDir.exists()) {
+        await ankiDir.create(recursive: true);
+      }
+    } catch (e) {
+      initError = 'Path init failed: $e';
+      final tempDir = await getTemporaryDirectory();
+      appDocPath = tempDir.path;
+      ankiPath = p.join(appDocPath, 'anki');
     }
   }
 

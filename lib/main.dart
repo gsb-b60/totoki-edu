@@ -19,9 +19,36 @@ void main() async {
         ChangeNotifierProvider(create: (_) => Cardmodel()),
         ChangeNotifierProvider(create: (_) => SoundController()),
       ],
-      child: const MyApp(),
+      child: PathService.initError != null
+          ? ErrorApp(PathService.initError!)
+          : const MyApp(),
     ),
   );
+}
+
+class ErrorApp extends StatelessWidget {
+  final String message;
+  const ErrorApp(this.message, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Text(
+              'Startup Error\n$message',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16, color: Colors.white70),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

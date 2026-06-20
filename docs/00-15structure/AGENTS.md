@@ -18,6 +18,7 @@
 - **State Management**: Never use `setState` for global or shared states. Use `Provider` (`ChangeNotifierProvider` and `Consumer` or `Provider.of`).
 - **Database Operations**: Do not write raw SQL queries directly in UI components. Use `DatabaseHelper`.
 - **UI Guidelines**: Follow the Material 3 design spec. Always utilize theme tokens from `AppTheme` instead of hardcoded colors/styles.
+- **Error Resilience**: Wrap all init-level I/O (paths, database, services) in try-catch. On failure, store a descriptive error, provide fallback values, and surface the error to the user instead of crashing. Use `PathService.initError` / `_dbInitError` patterns. Never throw unhandled exceptions at startup in `main()`.
 - **Verification**: Run `flutter analyze` before finalizing any changes. Note: `test/` currently contains only boilerplate; add unit tests for SM-2, database, and notifiers as features stabilize.
 - **Updates**: Keep this documentation updated on any architectural adjustments.
 
