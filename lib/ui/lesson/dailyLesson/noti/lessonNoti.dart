@@ -409,19 +409,45 @@ class LessonNoti extends ChangeNotifier {
     String word = _cards[cardIdx].word!;
     final rand = Random();
     strs.add(word);
+    
+    const String alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
     while (strs.length < 3) {
       String mixed;
+      int attempts = 0;
 
       if (strs.length == 1) {
         do {
           mixed = generateVariant(word, rand);
-        } while (mixed == word || strs.contains(mixed));
+          attempts++;
+        } while ((mixed == word || strs.contains(mixed)) && attempts < 10);
       } else {
         // Second distractor: full shuffle
         final letters = word.split('');
         do {
           final shuffled = List.from(letters)..shuffle(rand);
           mixed = shuffled.join('');
+          attempts++;
+        } while ((mixed == word || strs.contains(mixed)) && attempts < 10);
+      }
+
+      // Fallback if max attempts reached and no unique variant found
+      if (mixed == word || strs.contains(mixed)) {
+        int fallbackAttempts = 0;
+        do {
+          if (word.isNotEmpty) {
+            final chars = word.split('');
+            int i = rand.nextInt(chars.length);
+            chars[i] = alphabet[rand.nextInt(alphabet.length)];
+            mixed = chars.join('');
+          } else {
+            mixed = alphabet[rand.nextInt(alphabet.length)];
+          }
+          fallbackAttempts++;
+          if (fallbackAttempts > 50) {
+            // Absolute last resort
+            mixed = "${word}_${rand.nextInt(1000)}";
+          }
         } while (mixed == word || strs.contains(mixed));
       }
 
