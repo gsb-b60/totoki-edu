@@ -7,7 +7,9 @@ import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DueDayDashBoard extends StatefulWidget {
-  const DueDayDashBoard({super.key});
+  const DueDayDashBoard({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   @override
   State<DueDayDashBoard> createState() => _DueDayDashBoardState();
@@ -29,22 +31,27 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppTheme.darkBase,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
-        ),
-        title: Text(
-          "DASHBOARD",
-          style: AppTheme.sectionHeaderStyle.copyWith(
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.5,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: widget.showAppBar
+          ? AppBar(
+              elevation: 0,
+              backgroundColor: AppTheme.darkBase,
+              leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppTheme.lightText,
+                ),
+              ),
+              title: Text(
+                "DASHBOARD",
+                style: AppTheme.sectionHeaderStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                ),
+              ),
+              centerTitle: true,
+            )
+          : null,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

@@ -9,7 +9,9 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 
 
 class LearnModeScreen extends StatefulWidget {
-  const LearnModeScreen({super.key});
+  const LearnModeScreen({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   @override
   State<LearnModeScreen> createState() => _LearnModeScreenState();
@@ -27,18 +29,27 @@ class _LearnModeScreenState extends State<LearnModeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
-      appBar: AppBar(
-        backgroundColor: AppTheme.darkBase,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
-        ),
-        title: Text(
-          index == 0 ? "Daily Training" : index == 1 ? "Levels" : "Study Modes",
-          style: AppTheme.screenTitleStyle,
-        ),
-      ),
+      appBar: widget.showAppBar
+          ? AppBar(
+              backgroundColor: AppTheme.darkBase,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppTheme.lightText,
+                ),
+              ),
+              title: Text(
+                index == 0
+                    ? "Daily Training"
+                    : index == 1
+                        ? "Levels"
+                        : "Study Modes",
+                style: AppTheme.screenTitleStyle,
+              ),
+            )
+          : null,
       body: _screens[index],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(

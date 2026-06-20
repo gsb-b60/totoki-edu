@@ -4,13 +4,15 @@ import 'package:totoki_extract/ui/screens/decklist/achievement/achievementUI.dar
 import 'package:provider/provider.dart';
 
 class Achievement extends StatelessWidget {
-  const Achievement({super.key});
+  const Achievement({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => Achievementnoti()..fetchCard(),
-      child: const AchievementUI(),
+      child: AchievementUI(showAppBar: showAppBar),
     );
   }
 }

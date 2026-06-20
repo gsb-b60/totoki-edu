@@ -17,6 +17,15 @@ class DeckListScreen extends StatefulWidget {
 }
 
 class _DeckListScreenState extends State<DeckListScreen> {
+  int _selectedIndex = 0;
+
+  static const List<String> _tabTitles = [
+    'All Decks',
+    'Learn',
+    'Stats',
+    'Dashboard',
+  ];
+
   Widget _buildAnimatedTile(dynamic deck, dynamic deckModel, int index) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -99,177 +108,153 @@ class _DeckListScreenState extends State<DeckListScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: AppTheme.darkBase,
-        title: const Text(
-          "All Decks",
+        title: Text(
+          _tabTitles[_selectedIndex],
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 60),
-            child: Consumer<Deckmodel>(
-              builder: (context, deckModel, child) => IconButton(
-                onPressed: deckModel.isLoading
-                    ? null
-                    : () async {
-                        await deckModel.filePicker();
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Import process finished.'),
-                            ),
-                          );
-                        }
-                      },
-                icon: Icon(
-                  Icons.upload_file,
-                  color: deckModel.isLoading ? Colors.white38 : Colors.white,
+        actions: _selectedIndex == 0
+            ? [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Consumer<Deckmodel>(
+                    builder: (context, deckModel, child) => IconButton(
+                      tooltip: 'Import deck',
+                      onPressed: deckModel.isLoading
+                          ? null
+                          : () async {
+                              await deckModel.filePicker();
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Import process finished.'),
+                                  ),
+                                );
+                              }
+                            },
+                      icon: Icon(
+                        Icons.upload_file,
+                        color: deckModel.isLoading
+                            ? Colors.white38
+                            : Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              ]
+            : null,
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          Consumer<Deckmodel>(
+            builder: (context, deckModel, child) => _buildDecksTab(deckModel),
           ),
+          const LearnModeScreen(showAppBar: false),
+          const Achievement(showAppBar: false),
+          const DueDayDashBoard(showAppBar: false),
         ],
       ),
-      body: Consumer<Deckmodel>(
-        builder: (context, deckModel, child) {
-          return Stack(
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          backgroundColor: AppTheme.darkSurface,
+          indicatorColor: AppTheme.greenPrimary.withOpacity(0.18),
+          labelTextStyle: MaterialStateProperty.resolveWith((states) {
+            final selected = states.contains(MaterialState.selected);
+            return AppTheme.captionStyle.copyWith(
+              color: selected
+                  ? AppTheme.greenPrimary
+                  : AppTheme.lightText.withOpacity(0.55),
+              fontWeight: selected ? FontWeight.bold : FontWeight.w600,
+              letterSpacing: 0,
+            );
+          }),
+          iconTheme: MaterialStateProperty.resolveWith((states) {
+            final selected = states.contains(MaterialState.selected);
+            return IconThemeData(
+              color: selected
+                  ? AppTheme.greenPrimary
+                  : AppTheme.lightText.withOpacity(0.55),
+            );
+          }),
+        ),
+        child: NavigationBar(
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (index) {
+            setState(() => _selectedIndex = index);
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.layers_outlined),
+              selectedIcon: Icon(Icons.layers_rounded),
+              label: 'Decks',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.flash_on_outlined),
+              selectedIcon: Icon(Icons.flash_on_rounded),
+              label: 'Learn',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.stars_outlined),
+              selectedIcon: Icon(Icons.stars_rounded),
+              label: 'Stats',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.space_dashboard_outlined),
+              selectedIcon: Icon(Icons.space_dashboard_rounded),
+              label: 'Dashboard',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDecksTab(dynamic deckModel) {
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+          child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              // const CreateNewDeck(),
+              // const SizedBox(height: 16),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: deckModel.deck.length,
+                  itemBuilder: (context, index) {
+                    final deck = deckModel.deck[index];
+                    return _buildAnimatedTile(deck, deckModel, index);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (deckModel.isLoading)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withOpacity(0.4),
+              child: const Center(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // const CreateNewDeck(),
-                    // const SizedBox(height: 16),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: deckModel.deck.length,
-                        itemBuilder: (context, index) {
-                          final deck = deckModel.deck[index];
-                          return _buildAnimatedTile(deck, deckModel, index);
-                        },
+                    CircularProgressIndicator(
+                      color: AppTheme.primaryTeal,
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      "Importing Deck...",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-              if (deckModel.isLoading)
-                Positioned.fill(
-                  child: Container(
-                    color: Colors.black.withOpacity(0.4),
-                    child: const Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CircularProgressIndicator(
-                            color: AppTheme.primaryTeal,
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            "Importing Deck...",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        },
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.darkSurface,
-          border: Border(
-            top: BorderSide(
-              color: AppTheme.darkBorder.withOpacity(0.2),
-              width: 1,
             ),
           ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Row(
-              children: [
-                ButtomNav(
-                  value: "Stats",
-                  ico: Icons.stars_rounded,
-                  screenBuilder: () => Achievement(),
-                ),
-                ButtomNav(
-                  value: "Lesson",
-                  ico: Icons.flash_on_rounded,
-                  isMain: true,
-                  screenBuilder: () => LearnModeScreen(),
-                ),
-                ButtomNav(
-                  value: "Dashboard",
-                  ico: Icons.space_dashboard_rounded,
-                  screenBuilder: () => DueDayDashBoard(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ButtomNav extends StatelessWidget {
-  const ButtomNav({
-    super.key,
-    required this.value,
-    required this.ico,
-    required this.screenBuilder,
-    this.isMain = false,
-  });
-  final String value;
-  final IconData ico;
-  final Widget Function() screenBuilder;
-  final bool isMain;
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => screenBuilder()),
-          );
-        },
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: isMain ? 4 : 0),
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            color: isMain ? AppTheme.greenPrimary : Colors.transparent,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                ico,
-                color: isMain ? AppTheme.darkBase : AppTheme.greenPrimary,
-                size: isMain ? 34 : 26,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value.toUpperCase(),
-                style: AppTheme.captionStyle.copyWith(
-                  color: isMain ? AppTheme.darkBase : AppTheme.greenPrimary,
-                  fontWeight: isMain ? FontWeight.bold : FontWeight.normal,
-                  fontSize: isMain ? 11 : 10,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

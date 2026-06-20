@@ -5,7 +5,9 @@ import 'package:totoki_extract/ui/screens/decklist/achievement/achievementNoti.d
 import 'package:provider/provider.dart';
 
 class AchievementUI extends StatefulWidget {
-  const AchievementUI({super.key});
+  const AchievementUI({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   @override
   State<AchievementUI> createState() => _AchievementState();
@@ -23,23 +25,25 @@ class _AchievementState extends State<AchievementUI> {
     final flashcards = provider.getCard();
     return Scaffold(
       backgroundColor: AppTheme.darkSurface,
-      appBar: AppBar(
-        backgroundColor: AppTheme.darkSurface,
-        title:  Text(
-          "Achievement",
-          style: AppTheme.screenTitleStyle,
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: AppTheme.darkBorder,
-            size: 24,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      appBar: widget.showAppBar
+          ? AppBar(
+              backgroundColor: AppTheme.darkSurface,
+              title: Text(
+                "Achievement",
+                style: AppTheme.screenTitleStyle,
+              ),
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppTheme.darkBorder,
+                  size: 24,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          : null,
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : flashcards.isEmpty
