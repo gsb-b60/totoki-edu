@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/Deck.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
-import 'package:totoki_extract/ui/screens/decklist/deckwelcome.dart';
+import 'package:totoki_extract/ui/screens/home/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
           displayColor: AppTheme.lightText,
         ),
       ),
-      home: const DeckListScreen(),
+      home: const HomeScreen(),
     );
   }
 }
