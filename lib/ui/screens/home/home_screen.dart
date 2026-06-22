@@ -6,6 +6,7 @@ import 'package:totoki_extract/ui/screens/dashboard/dashBoard.dart';
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievement.dart';
 import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
 import 'package:totoki_extract/ui/screens/decklist/decklist_screen.dart';
+import 'package:totoki_extract/ui/screens/ielts/ielts_training.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'Learn',
     'Stats',
     'Dashboard',
+    'IELTS',
   ];
 
   @override
@@ -91,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const LearnModeScreen(showAppBar: false),
           const Achievement(showAppBar: false),
           const DueDayDashBoard(showAppBar: false),
+          const IeltsTraining(showAppBar: false),
         ],
       ),
       bottomNavigationBar: NavigationBarTheme(
@@ -141,6 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.space_dashboard_outlined),
               selectedIcon: Icon(Icons.space_dashboard_rounded),
               label: 'Dashboard',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.language_outlined),
+              selectedIcon: Icon(Icons.language_rounded),
+              label: 'IELTS',
             ),
           ],
         ),
