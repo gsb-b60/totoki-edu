@@ -67,7 +67,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                             provider.ipa,
                             style: AppTheme.sectionHeaderStyle.copyWith(
                               color: AppTheme.lightText.withOpacity(0.7),
-                              fontFamily: 'Roboto',
+
                             ),
                             textAlign: TextAlign.center,
                           ),

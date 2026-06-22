@@ -15,32 +15,18 @@ class AchievementUI extends StatefulWidget {
 
 class _AchievementState extends State<AchievementUI> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final provider = context.watch<Achievementnoti>();
-    final flashcards = provider.getCard();
+    final flashcards = provider.getCards();
     return Scaffold(
       backgroundColor: AppTheme.darkSurface,
       appBar: widget.showAppBar
           ? AppBar(
-              backgroundColor: AppTheme.darkSurface,
-              title: Text(
-                "Achievement",
-                style: AppTheme.screenTitleStyle,
-              ),
+      backgroundColor: AppTheme.darkBase,
+              title: Text("Achievement", style: AppTheme.screenTitleStyle),
               leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: AppTheme.darkBorder,
-                  size: 24,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+                onPressed: () => Navigator.pop(context),
               ),
             )
           : null,
@@ -53,73 +39,102 @@ class _AchievementState extends State<AchievementUI> {
                     style: AppTheme.bodyLargeStyle.copyWith(color: AppTheme.lightText.withOpacity(0.7)),
                   ),
                 )
-              : ListView.builder(
-        itemCount: flashcards.length,
-        itemBuilder: (context, index) {
-          final card = flashcards[index];
-          final due = card.due ?? DateTime.now();
-          final Color levelColor;
-          final level = card.complexity ?? 1;
-          bool learned = card.reps != null && card.reps! > 0;
-          final reps = (card.reps != null && card.reps! >= 0 && card.reps! <= 5)
-              ? card.reps
-              : 0;
-          final path = 'assets/rep/rep$reps.png';
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: flashcards.length,
+                        itemBuilder: (context, index) {
+                          final card = flashcards[index];
+                          final due = card.due ?? DateTime.now();
+                          final level = card.complexity ?? 1;
+                          final learned = card.reps != null && card.reps! > 0;
+                          final reps = (card.reps != null && card.reps! >= 0 && card.reps! <= 5)
+                              ? card.reps
+                              : 0;
+                          final path = 'assets/rep/rep$reps.png';
 
-          switch (card.complexity) {
-            case 1: levelColor = AppTheme.bronze; break;
-            case 2: levelColor = AppTheme.silver; break;
-            case 3: levelColor = AppTheme.amberRank; break;
-            case 4: levelColor = AppTheme.platinum; break;
-            case 5: levelColor = AppTheme.diamond; break;
-            case 6: levelColor = AppTheme.master; break;
-            case 7: levelColor = AppTheme.challenger; break;
-            default: levelColor = Colors.grey;
-          }
+                          final Color levelColor;
+                          switch (card.complexity) {
+                            case 1: levelColor = AppTheme.bronze; break;
+                            case 2: levelColor = AppTheme.silver; break;
+                            case 3: levelColor = AppTheme.amberRank; break;
+                            case 4: levelColor = AppTheme.platinum; break;
+                            case 5: levelColor = AppTheme.diamond; break;
+                            case 6: levelColor = AppTheme.master; break;
+                            case 7: levelColor = AppTheme.challenger; break;
+                            default: levelColor = Colors.grey;
+                          }
 
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: AppTheme.darkBase,
-              border: Border.all(color: AppTheme.darkCard, width: 2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CardInforScreen(card: card),
-                  ),
-                );
-              },
-              leading: Image.asset(path, width: 32, height: 32),
-              title: Text(
-                card.word!,
-                style: AppTheme.sectionHeaderStyle.copyWith(
-                  color: learned ? levelColor : AppTheme.darkCard,
-                  shadows: learned ? [
-                    Shadow(color: levelColor.withOpacity(0.5), blurRadius: 8),
-                  ] : [],
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: AppTheme.darkBase,
+                              border: Border.all(color: AppTheme.darkBorder, width: 1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CardInforScreen(card: card),
+                                  ),
+                                );
+                              },
+                              leading: Image.asset(path, width: 32, height: 32),
+                              title: Text(
+                                card.word!,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: learned ? levelColor : AppTheme.darkBorder,
+                                  shadows: learned ? [
+                                    Shadow(color: levelColor.withOpacity(0.5), blurRadius: 8),
+                                  ] : [],
+                                ),
+                              ),
+                              subtitle: Text(
+                                'Due: ${due.day}/${due.month}/${due.year}',
+                                style: TextStyle(color: AppTheme.lightText.withOpacity(0.4), fontSize: 12),
+                              ),
+                              trailing: Text(
+                                "Lvl $level",
+                                style: TextStyle(
+                                  color: learned ? levelColor : AppTheme.darkBorder,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      color: AppTheme.darkBase,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: provider.hasPrev ? () => provider.prevPage() : null,
+                            icon: const Icon(Icons.chevron_left),
+                            color: provider.hasPrev ? Colors.white : AppTheme.darkBorder,
+                          ),
+                          Text(
+                            "Page ${provider.currentPage} of ${provider.totalPages} (${provider.totalCards} cards)",
+                            style: TextStyle(color: AppTheme.lightText.withOpacity(0.5), fontSize: 13),
+                          ),
+                          IconButton(
+                            onPressed: provider.hasNext ? () => provider.nextPage() : null,
+                            icon: const Icon(Icons.chevron_right),
+                            color: provider.hasNext ? Colors.white : AppTheme.darkBorder,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              subtitle: Text(
-                'Due Day: ${due.day}/${due.month}/${due.year}',
-                style: AppTheme.captionStyle.copyWith(
-                  color: AppTheme.lightText.withOpacity(0.6),
-                ),
-              ),
-              trailing: Text(
-                "Lvl $level",
-                style: AppTheme.bodyLargeStyle.copyWith(
-                  color: levelColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
@@ -132,7 +147,7 @@ class CardInforScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.darkSurface,
+        backgroundColor: AppTheme.darkBase,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder),
@@ -188,20 +203,19 @@ class _InfoSection extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTheme.bodyLargeStyle.copyWith(
-            color: AppTheme.primaryTeal,
+          style: TextStyle(
+            color: AppTheme.lightText.withOpacity(0.5),
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
+            fontSize: 14,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           value,
-          style: AppTheme.bodyMediumStyle,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
         ),
       ],
     );
   }
 }
-
-

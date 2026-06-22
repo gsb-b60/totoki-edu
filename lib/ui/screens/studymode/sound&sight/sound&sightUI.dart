@@ -225,7 +225,7 @@ class ChoiceBtn extends StatelessWidget {
             style: AppTheme.bodyLargeStyle.copyWith(
               color: textColor,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Roboto',
+
             ),
           ),
         ),

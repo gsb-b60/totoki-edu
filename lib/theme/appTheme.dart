@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class AppTheme{
   static const Color primaryTeal = Colors.teal;
@@ -62,44 +62,44 @@ class AppTheme{
 
   static const phoneMix = Color(0xFF364958); // dark steel blue
 
-  // --- Typography Scale (Outfit via google_fonts) ---
-  static TextStyle heroStyle = GoogleFonts.outfit(
+  // --- Typography Scale ---
+  static TextStyle heroStyle = const TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
     color: lightText,
   );
 
-  static TextStyle screenTitleStyle = GoogleFonts.outfit(
+  static TextStyle screenTitleStyle = const TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.bold,
     color: lightText,
   );
 
-  static TextStyle sectionHeaderStyle = GoogleFonts.outfit(
+  static TextStyle sectionHeaderStyle = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: lightText,
   );
 
-  static TextStyle bodyLargeStyle = GoogleFonts.outfit(
+  static TextStyle bodyLargeStyle = const TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: lightText,
   );
 
-  static TextStyle bodyMediumStyle = GoogleFonts.outfit(
+  static TextStyle bodyMediumStyle = const TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: lightText,
   );
 
-  static TextStyle bodySmallStyle = GoogleFonts.outfit(
+  static TextStyle bodySmallStyle = const TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.normal,
     color: lightText,
   );
 
-  static TextStyle captionStyle = GoogleFonts.outfit(
+  static TextStyle captionStyle = const TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.italic,

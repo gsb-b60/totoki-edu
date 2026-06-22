@@ -81,7 +81,8 @@ class _EchospellUIState extends State<EchospellUI> {
                       Text(
                         ipa,
                         style: AppTheme.heroStyle.copyWith(
-                          fontFamily: 'Roboto',
+
+
                           fontSize: 32,
                         ),
                         textAlign: TextAlign.center,

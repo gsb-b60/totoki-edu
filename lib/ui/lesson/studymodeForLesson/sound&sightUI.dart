@@ -98,7 +98,7 @@ class _SoundNSightUIState extends State<SoundNSightUI> {
                         String value = listWord[index];
                         return Text(
                           value,
-                          style: AppTheme.heroStyle.copyWith(fontFamily: 'Roboto', fontSize: 36),
+                           style: AppTheme.heroStyle.copyWith(fontSize: 36),
                         );
                       }),
                     ),

@@ -75,7 +75,7 @@ class MeanfuseUI extends StatelessWidget {
                         String value = listWord[index];
                         return Text(
                           value,
-                          style: AppTheme.heroStyle.copyWith(fontFamily: 'Roboto'),
+                           style: AppTheme.heroStyle,
                         );
                       }),
                     ),

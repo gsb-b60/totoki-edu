@@ -169,7 +169,7 @@ class ChoiceBtn extends StatelessWidget {
               style: AppTheme.bodyLargeStyle.copyWith(
                 color: textColor,
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto',
+
                 fontSize: 14, // Smaller text for IPAs and long words
               ),
               textAlign: TextAlign.center,

@@ -81,7 +81,8 @@ class _EchoFuseUIState extends State<EchoFuseUI> {
                       Text(
                         ipa,
                         style: AppTheme.heroStyle.copyWith(
-                          fontFamily: 'Roboto',
+
+
                         ),
                         textAlign: TextAlign.center,
                       ),

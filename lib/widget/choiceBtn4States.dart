@@ -62,7 +62,7 @@ class ChoiceBtnStates extends StatelessWidget {
               color: textColor,
               fontSize: 27,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Roboto',
+
             ),
           ),
         ),

@@ -155,6 +155,19 @@ class DatabaseHelper {
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
 
+  Future<int> getCardCount() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) AS count FROM cards');
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<List<Flashcard>> getCardPage(int page, int pageSize) async {
+    final db = await database;
+    final offset = (page - 1) * pageSize;
+    final maps = await db.query('cards', limit: pageSize, offset: offset);
+    return maps.map(Flashcard.fromMap).toList(growable: false);
+  }
+
   Future<List<Flashcard>> getCardLimit(int limit) async {
     final db = await database;
     final maps = await db.rawQuery(

@@ -6,7 +6,8 @@ import 'package:totoki_extract/business/flashcard/Deck.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/ui/screens/home/home_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,9 +77,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           surface: AppTheme.darkSurface,
         ),
-        textTheme: GoogleFonts.outfitTextTheme(
-          ThemeData.dark().textTheme,
-        ).apply(
+        textTheme: ThemeData.dark().textTheme.apply(
           bodyColor: AppTheme.lightText,
           displayColor: AppTheme.lightText,
         ),

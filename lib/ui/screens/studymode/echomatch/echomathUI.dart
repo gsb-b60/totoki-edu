@@ -81,7 +81,8 @@ class _EchoMatchUIState extends State<EchoMatchUI> {
                       Text(
                         ipa,
                         style: AppTheme.heroStyle.copyWith(
-                          fontFamily: 'Roboto',
+
+
                         ),
                         textAlign: TextAlign.center,
                       ),

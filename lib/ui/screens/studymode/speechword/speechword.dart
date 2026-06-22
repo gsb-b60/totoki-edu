@@ -98,7 +98,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                         style: AppTheme.bodyLargeStyle.copyWith(
                           fontSize: 24,
                           color: AppTheme.lightText.withOpacity(0.7),
-                          fontFamily: 'roboto',
+
                         ),
                         textAlign: TextAlign.center,
                       ),

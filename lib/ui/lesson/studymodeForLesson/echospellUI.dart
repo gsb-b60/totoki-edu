@@ -89,7 +89,7 @@ class _EchospellUIState extends State<EchospellUI> {
                         String value = listWord[index];
                         return Text(
                           value,
-                          style: AppTheme.heroStyle.copyWith(fontFamily: 'Roboto'),
+                           style: AppTheme.heroStyle,
                         );
                       }),
                     ),
