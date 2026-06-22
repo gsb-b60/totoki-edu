@@ -30,21 +30,28 @@ class _AchievementState extends State<AchievementUI> {
               ),
             )
           : null,
-      body: provider.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : flashcards.isEmpty
-              ? Center(
-                  child: Text(
-                    "No achievement cards found.",
-                    style: AppTheme.bodyLargeStyle.copyWith(color: AppTheme.lightText.withOpacity(0.7)),
-                  ),
-                )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: flashcards.length,
-                        itemBuilder: (context, index) {
+      body: flashcards.isEmpty && !provider.isLoading
+          ? Center(
+              child: Text(
+                "No achievement cards found.",
+                style: AppTheme.bodyLargeStyle.copyWith(color: AppTheme.lightText.withOpacity(0.7)),
+              ),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) => FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+                    child: provider.isLoading && flashcards.isEmpty
+                        ? const Center(key: ValueKey('spinner'), child: CircularProgressIndicator())
+                        : ListView.builder(
+                            key: ValueKey(provider.currentPage),
+                            itemCount: flashcards.length,
+                            itemBuilder: (context, index) {
                           final card = flashcards[index];
                           final due = card.due ?? DateTime.now();
                           final level = card.complexity ?? 1;
@@ -110,7 +117,8 @@ class _AchievementState extends State<AchievementUI> {
                         },
                       ),
                     ),
-                    Container(
+                  ),
+                  Container(
                       color: AppTheme.darkBase,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       child: Row(

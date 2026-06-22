@@ -28,8 +28,9 @@ class Achievementnoti extends ChangeNotifier {
     _totalPages = (total / pageSize).ceil().clamp(1, 999999);
     _currentPage = page.clamp(1, _totalPages);
     final data = await _dbhelper.getCardPage(_currentPage, pageSize);
-    _cards.clear();
-    _cards.addAll(data);
+    _cards
+      ..clear()
+      ..addAll(data);
     isLoading = false;
     notifyListeners();
   }

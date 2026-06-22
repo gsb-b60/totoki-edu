@@ -1,0 +1,2166 @@
+{
+    "test_question": [
+        {
+            "start": 1,
+            "end": 5,
+            "type": "select-given-list",
+            "desc": {
+                "nb": true,
+                "text": [
+                    "Look at the following solutions (Questions <question-range>) and locations. ",
+                    "Match each solution with one location."
+                ],
+                "optionRange": [
+                    "A",
+                    "G"
+                ],
+                "textReadable": [
+                    "Look at the following solutions (Questions 1-5) and locations. ",
+                    "Match each solution with one location."
+                ]
+            },
+            "body": {
+                "list": [
+                    "Singapore  ",
+                    "Tokyo      ",
+                    "London     ",
+                    "New York   ",
+                    "Mexico City",
+                    "Cambridge  ",
+                    "Los Angeles"
+                ],
+                "items": [
+                    "Manufacturers must sell cleaner cars. <input>",
+                    "Authorities want to have power to enforce anti-pollution laws. <input>",
+                    "Drivers will be charged according to the roads they use. <input>",
+                    "Moving vehicles will be monitored for their exhaust emissions. <input>",
+                    "Commuters are encouraged to share their vehicles with others. <input>"
+                ],
+                "title": "SOLUTIONS",
+                "listTitle": "LOCATIONS"
+            },
+            "body_smart": {
+                "list": [
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Singapore",
+                                "word_gid": "a3t4r1_1-5_1"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Tokyo",
+                                "word_gid": "a3t4r1_1-5_2"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "London",
+                                "word_gid": "a3t4r1_1-5_3"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "New",
+                                "word_gid": "a3t4r1_1-5_4"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_5"
+                            },
+                            {
+                                "type": "word",
+                                "content": "York",
+                                "word_gid": "a3t4r1_1-5_6"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Mexico",
+                                "word_gid": "a3t4r1_1-5_7"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_8"
+                            },
+                            {
+                                "type": "word",
+                                "content": "City",
+                                "word_gid": "a3t4r1_1-5_9"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Cambridge",
+                                "word_gid": "a3t4r1_1-5_10"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Los",
+                                "word_gid": "a3t4r1_1-5_11"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_12"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Angeles",
+                                "word_gid": "a3t4r1_1-5_13"
+                            }
+                        ]
+                    }
+                ],
+                "items": [
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Manufacturers",
+                                "word_gid": "a3t4r1_1-5_15"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_16"
+                            },
+                            {
+                                "type": "word",
+                                "content": "must",
+                                "word_gid": "a3t4r1_1-5_17"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_18"
+                            },
+                            {
+                                "type": "word",
+                                "content": "sell",
+                                "word_gid": "a3t4r1_1-5_19"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_20"
+                            },
+                            {
+                                "type": "word",
+                                "content": "cleaner",
+                                "word_gid": "a3t4r1_1-5_21"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_22"
+                            },
+                            {
+                                "type": "word",
+                                "content": "cars",
+                                "word_gid": "a3t4r1_1-5_23"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_1-5_24"
+                            },
+                            {
+                                "type": "input",
+                                "content": 1,
+                                "word_gid": "a3t4r1_1-5_25"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Authorities",
+                                "word_gid": "a3t4r1_1-5_26"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_27"
+                            },
+                            {
+                                "type": "word",
+                                "content": "want",
+                                "word_gid": "a3t4r1_1-5_28"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_29"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_1-5_30"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_31"
+                            },
+                            {
+                                "type": "word",
+                                "content": "have",
+                                "word_gid": "a3t4r1_1-5_32"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_33"
+                            },
+                            {
+                                "type": "word",
+                                "content": "power",
+                                "word_gid": "a3t4r1_1-5_34"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_35"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_1-5_36"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_37"
+                            },
+                            {
+                                "type": "word",
+                                "content": "enforce",
+                                "word_gid": "a3t4r1_1-5_38"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_39"
+                            },
+                            {
+                                "type": "word",
+                                "content": "anti-pollution",
+                                "word_gid": "a3t4r1_1-5_40"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_41"
+                            },
+                            {
+                                "type": "word",
+                                "content": "laws",
+                                "word_gid": "a3t4r1_1-5_42"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_1-5_43"
+                            },
+                            {
+                                "type": "input",
+                                "content": 2,
+                                "word_gid": "a3t4r1_1-5_44"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Drivers",
+                                "word_gid": "a3t4r1_1-5_45"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_46"
+                            },
+                            {
+                                "type": "word",
+                                "content": "will",
+                                "word_gid": "a3t4r1_1-5_47"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_48"
+                            },
+                            {
+                                "type": "word",
+                                "content": "be",
+                                "word_gid": "a3t4r1_1-5_49"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_50"
+                            },
+                            {
+                                "type": "word",
+                                "content": "charged",
+                                "word_gid": "a3t4r1_1-5_51"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_52"
+                            },
+                            {
+                                "type": "word",
+                                "content": "according",
+                                "word_gid": "a3t4r1_1-5_53"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_54"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_1-5_55"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_56"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t4r1_1-5_57"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_58"
+                            },
+                            {
+                                "type": "word",
+                                "content": "roads",
+                                "word_gid": "a3t4r1_1-5_59"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_60"
+                            },
+                            {
+                                "type": "word",
+                                "content": "they",
+                                "word_gid": "a3t4r1_1-5_61"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_62"
+                            },
+                            {
+                                "type": "word",
+                                "content": "use",
+                                "word_gid": "a3t4r1_1-5_63"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_1-5_64"
+                            },
+                            {
+                                "type": "input",
+                                "content": 3,
+                                "word_gid": "a3t4r1_1-5_65"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Moving",
+                                "word_gid": "a3t4r1_1-5_66"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_67"
+                            },
+                            {
+                                "type": "word",
+                                "content": "vehicles",
+                                "word_gid": "a3t4r1_1-5_68"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_69"
+                            },
+                            {
+                                "type": "word",
+                                "content": "will",
+                                "word_gid": "a3t4r1_1-5_70"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_71"
+                            },
+                            {
+                                "type": "word",
+                                "content": "be",
+                                "word_gid": "a3t4r1_1-5_72"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_73"
+                            },
+                            {
+                                "type": "word",
+                                "content": "monitored",
+                                "word_gid": "a3t4r1_1-5_74"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_75"
+                            },
+                            {
+                                "type": "word",
+                                "content": "for",
+                                "word_gid": "a3t4r1_1-5_76"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_77"
+                            },
+                            {
+                                "type": "word",
+                                "content": "their",
+                                "word_gid": "a3t4r1_1-5_78"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_79"
+                            },
+                            {
+                                "type": "word",
+                                "content": "exhaust",
+                                "word_gid": "a3t4r1_1-5_80"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_81"
+                            },
+                            {
+                                "type": "word",
+                                "content": "emissions",
+                                "word_gid": "a3t4r1_1-5_82"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_1-5_83"
+                            },
+                            {
+                                "type": "input",
+                                "content": 4,
+                                "word_gid": "a3t4r1_1-5_84"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Commuters",
+                                "word_gid": "a3t4r1_1-5_85"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_86"
+                            },
+                            {
+                                "type": "word",
+                                "content": "are",
+                                "word_gid": "a3t4r1_1-5_87"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_88"
+                            },
+                            {
+                                "type": "word",
+                                "content": "encouraged",
+                                "word_gid": "a3t4r1_1-5_89"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_90"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_1-5_91"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_92"
+                            },
+                            {
+                                "type": "word",
+                                "content": "share",
+                                "word_gid": "a3t4r1_1-5_93"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_94"
+                            },
+                            {
+                                "type": "word",
+                                "content": "their",
+                                "word_gid": "a3t4r1_1-5_95"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_96"
+                            },
+                            {
+                                "type": "word",
+                                "content": "vehicles",
+                                "word_gid": "a3t4r1_1-5_97"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_98"
+                            },
+                            {
+                                "type": "word",
+                                "content": "with",
+                                "word_gid": "a3t4r1_1-5_99"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_1-5_100"
+                            },
+                            {
+                                "type": "word",
+                                "content": "others",
+                                "word_gid": "a3t4r1_1-5_101"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_1-5_102"
+                            },
+                            {
+                                "type": "input",
+                                "content": 5,
+                                "word_gid": "a3t4r1_1-5_103"
+                            }
+                        ]
+                    }
+                ],
+                "title": {
+                    "type": "atom",
+                    "blocks": [
+                        {
+                            "type": "word",
+                            "content": "SOLUTIONS",
+                            "word_gid": "a3t4r1_1-5_14"
+                        }
+                    ]
+                },
+                "listTitle": {
+                    "type": "atom",
+                    "blocks": [
+                        {
+                            "type": "word",
+                            "content": "LOCATIONS",
+                            "word_gid": "a3t4r1_1-5_0"
+                        }
+                    ]
+                },
+                "item_qids": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            }
+        },
+        {
+            "start": 6,
+            "end": 10,
+            "type": "option-yes-no",
+            "desc": {},
+            "body": {
+                "items": [
+                    "According to British research, a mere twelve per cent of vehicles tested produced over fifty per cent of total pollution produced by the sample group.",
+                    "It is currently possible to measure the pollution coming from individual vehicles whilst they are moving.                                             ",
+                    "Residents of Los Angeles are now tending to reduce the yearly distances they travel by car.                                                           ",
+                    "Car-pooling has steadily become more popular in Los Angelesin recent years.                                                                           ",
+                    "Charging drivers for entering certain parts of the city has been successfully done in Cambridge, England.                                             "
+                ]
+            },
+            "body_smart": {
+                "items": [
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "According",
+                                "word_gid": "a3t4r1_6-10_0"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_1"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_6-10_2"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_3"
+                            },
+                            {
+                                "type": "word",
+                                "content": "British",
+                                "word_gid": "a3t4r1_6-10_4"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_5"
+                            },
+                            {
+                                "type": "word",
+                                "content": "research",
+                                "word_gid": "a3t4r1_6-10_6"
+                            },
+                            {
+                                "type": "",
+                                "content": ", ",
+                                "word_gid": "a3t4r1_6-10_7"
+                            },
+                            {
+                                "type": "word",
+                                "content": "a",
+                                "word_gid": "a3t4r1_6-10_8"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_9"
+                            },
+                            {
+                                "type": "word",
+                                "content": "mere",
+                                "word_gid": "a3t4r1_6-10_10"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_11"
+                            },
+                            {
+                                "type": "word",
+                                "content": "twelve",
+                                "word_gid": "a3t4r1_6-10_12"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_13"
+                            },
+                            {
+                                "type": "word",
+                                "content": "per",
+                                "word_gid": "a3t4r1_6-10_14"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_15"
+                            },
+                            {
+                                "type": "word",
+                                "content": "cent",
+                                "word_gid": "a3t4r1_6-10_16"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_17"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t4r1_6-10_18"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_19"
+                            },
+                            {
+                                "type": "word",
+                                "content": "vehicles",
+                                "word_gid": "a3t4r1_6-10_20"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_21"
+                            },
+                            {
+                                "type": "word",
+                                "content": "tested",
+                                "word_gid": "a3t4r1_6-10_22"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_23"
+                            },
+                            {
+                                "type": "word",
+                                "content": "produced",
+                                "word_gid": "a3t4r1_6-10_24"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_25"
+                            },
+                            {
+                                "type": "word",
+                                "content": "over",
+                                "word_gid": "a3t4r1_6-10_26"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_27"
+                            },
+                            {
+                                "type": "word",
+                                "content": "fifty",
+                                "word_gid": "a3t4r1_6-10_28"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_29"
+                            },
+                            {
+                                "type": "word",
+                                "content": "per",
+                                "word_gid": "a3t4r1_6-10_30"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_31"
+                            },
+                            {
+                                "type": "word",
+                                "content": "cent",
+                                "word_gid": "a3t4r1_6-10_32"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_33"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t4r1_6-10_34"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_35"
+                            },
+                            {
+                                "type": "word",
+                                "content": "total",
+                                "word_gid": "a3t4r1_6-10_36"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_37"
+                            },
+                            {
+                                "type": "word",
+                                "content": "pollution",
+                                "word_gid": "a3t4r1_6-10_38"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_39"
+                            },
+                            {
+                                "type": "word",
+                                "content": "produced",
+                                "word_gid": "a3t4r1_6-10_40"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_41"
+                            },
+                            {
+                                "type": "word",
+                                "content": "by",
+                                "word_gid": "a3t4r1_6-10_42"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_43"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t4r1_6-10_44"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_45"
+                            },
+                            {
+                                "type": "word",
+                                "content": "sample",
+                                "word_gid": "a3t4r1_6-10_46"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_47"
+                            },
+                            {
+                                "type": "word",
+                                "content": "group",
+                                "word_gid": "a3t4r1_6-10_48"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_6-10_49"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "It",
+                                "word_gid": "a3t4r1_6-10_50"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_51"
+                            },
+                            {
+                                "type": "word",
+                                "content": "is",
+                                "word_gid": "a3t4r1_6-10_52"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_53"
+                            },
+                            {
+                                "type": "word",
+                                "content": "currently",
+                                "word_gid": "a3t4r1_6-10_54"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_55"
+                            },
+                            {
+                                "type": "word",
+                                "content": "possible",
+                                "word_gid": "a3t4r1_6-10_56"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_57"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_6-10_58"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_59"
+                            },
+                            {
+                                "type": "word",
+                                "content": "measure",
+                                "word_gid": "a3t4r1_6-10_60"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_61"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t4r1_6-10_62"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_63"
+                            },
+                            {
+                                "type": "word",
+                                "content": "pollution",
+                                "word_gid": "a3t4r1_6-10_64"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_65"
+                            },
+                            {
+                                "type": "word",
+                                "content": "coming",
+                                "word_gid": "a3t4r1_6-10_66"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_67"
+                            },
+                            {
+                                "type": "word",
+                                "content": "from",
+                                "word_gid": "a3t4r1_6-10_68"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_69"
+                            },
+                            {
+                                "type": "word",
+                                "content": "individual",
+                                "word_gid": "a3t4r1_6-10_70"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_71"
+                            },
+                            {
+                                "type": "word",
+                                "content": "vehicles",
+                                "word_gid": "a3t4r1_6-10_72"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_73"
+                            },
+                            {
+                                "type": "word",
+                                "content": "whilst",
+                                "word_gid": "a3t4r1_6-10_74"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_75"
+                            },
+                            {
+                                "type": "word",
+                                "content": "they",
+                                "word_gid": "a3t4r1_6-10_76"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_77"
+                            },
+                            {
+                                "type": "word",
+                                "content": "are",
+                                "word_gid": "a3t4r1_6-10_78"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_79"
+                            },
+                            {
+                                "type": "word",
+                                "content": "moving",
+                                "word_gid": "a3t4r1_6-10_80"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_6-10_81"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Residents",
+                                "word_gid": "a3t4r1_6-10_82"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_83"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t4r1_6-10_84"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_85"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Los",
+                                "word_gid": "a3t4r1_6-10_86"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_87"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Angeles",
+                                "word_gid": "a3t4r1_6-10_88"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_89"
+                            },
+                            {
+                                "type": "word",
+                                "content": "are",
+                                "word_gid": "a3t4r1_6-10_90"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_91"
+                            },
+                            {
+                                "type": "word",
+                                "content": "now",
+                                "word_gid": "a3t4r1_6-10_92"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_93"
+                            },
+                            {
+                                "type": "word",
+                                "content": "tending",
+                                "word_gid": "a3t4r1_6-10_94"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_95"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t4r1_6-10_96"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_97"
+                            },
+                            {
+                                "type": "word",
+                                "content": "reduce",
+                                "word_gid": "a3t4r1_6-10_98"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_99"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t4r1_6-10_100"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_101"
+                            },
+                            {
+                                "type": "word",
+                                "content": "yearly",
+                                "word_gid": "a3t4r1_6-10_102"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_103"
+                            },
+                            {
+                                "type": "word",
+                                "content": "distances",
+                                "word_gid": "a3t4r1_6-10_104"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_105"
+                            },
+                            {
+                                "type": "word",
+                                "content": "they",
+                                "word_gid": "a3t4r1_6-10_106"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_107"
+                            },
+                            {
+                                "type": "word",
+                                "content": "travel",
+                                "word_gid": "a3t4r1_6-10_108"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_109"
+                            },
+                            {
+                                "type": "word",
+                                "content": "by",
+                                "word_gid": "a3t4r1_6-10_110"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_111"
+                            },
+                            {
+                                "type": "word",
+                                "content": "car",
+                                "word_gid": "a3t4r1_6-10_112"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_6-10_113"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Car-pooling",
+                                "word_gid": "a3t4r1_6-10_114"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_115"
+                            },
+                            {
+                                "type": "word",
+                                "content": "has",
+                                "word_gid": "a3t4r1_6-10_116"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_117"
+                            },
+                            {
+                                "type": "word",
+                                "content": "steadily",
+                                "word_gid": "a3t4r1_6-10_118"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_119"
+                            },
+                            {
+                                "type": "word",
+                                "content": "become",
+                                "word_gid": "a3t4r1_6-10_120"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_121"
+                            },
+                            {
+                                "type": "word",
+                                "content": "more",
+                                "word_gid": "a3t4r1_6-10_122"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_123"
+                            },
+                            {
+                                "type": "word",
+                                "content": "popular",
+                                "word_gid": "a3t4r1_6-10_124"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_125"
+                            },
+                            {
+                                "type": "word",
+                                "content": "in",
+                                "word_gid": "a3t4r1_6-10_126"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_127"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Los",
+                                "word_gid": "a3t4r1_6-10_128"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_129"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Angelesin",
+                                "word_gid": "a3t4r1_6-10_130"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_131"
+                            },
+                            {
+                                "type": "word",
+                                "content": "recent",
+                                "word_gid": "a3t4r1_6-10_132"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_133"
+                            },
+                            {
+                                "type": "word",
+                                "content": "years",
+                                "word_gid": "a3t4r1_6-10_134"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_6-10_135"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Charging",
+                                "word_gid": "a3t4r1_6-10_136"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_137"
+                            },
+                            {
+                                "type": "word",
+                                "content": "drivers",
+                                "word_gid": "a3t4r1_6-10_138"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_139"
+                            },
+                            {
+                                "type": "word",
+                                "content": "for",
+                                "word_gid": "a3t4r1_6-10_140"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_141"
+                            },
+                            {
+                                "type": "word",
+                                "content": "entering",
+                                "word_gid": "a3t4r1_6-10_142"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_143"
+                            },
+                            {
+                                "type": "word",
+                                "content": "certain",
+                                "word_gid": "a3t4r1_6-10_144"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_145"
+                            },
+                            {
+                                "type": "word",
+                                "content": "parts",
+                                "word_gid": "a3t4r1_6-10_146"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_147"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t4r1_6-10_148"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_149"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t4r1_6-10_150"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_151"
+                            },
+                            {
+                                "type": "word",
+                                "content": "city",
+                                "word_gid": "a3t4r1_6-10_152"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_153"
+                            },
+                            {
+                                "type": "word",
+                                "content": "has",
+                                "word_gid": "a3t4r1_6-10_154"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_155"
+                            },
+                            {
+                                "type": "word",
+                                "content": "been",
+                                "word_gid": "a3t4r1_6-10_156"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_157"
+                            },
+                            {
+                                "type": "word",
+                                "content": "successfully",
+                                "word_gid": "a3t4r1_6-10_158"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_159"
+                            },
+                            {
+                                "type": "word",
+                                "content": "done",
+                                "word_gid": "a3t4r1_6-10_160"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_161"
+                            },
+                            {
+                                "type": "word",
+                                "content": "in",
+                                "word_gid": "a3t4r1_6-10_162"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t4r1_6-10_163"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Cambridge",
+                                "word_gid": "a3t4r1_6-10_164"
+                            },
+                            {
+                                "type": "",
+                                "content": ", ",
+                                "word_gid": "a3t4r1_6-10_165"
+                            },
+                            {
+                                "type": "word",
+                                "content": "England",
+                                "word_gid": "a3t4r1_6-10_166"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t4r1_6-10_167"
+                            }
+                        ]
+                    }
+                ],
+                "item_qids": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ]
+            }
+        },
+        {
+            "start": 11,
+            "end": 13,
+            "type": "option-abc",
+            "desc": {
+                "optionRange": [
+                    "A",
+                    "D"
+                ]
+            },
+            "body": {
+                "items": [
+                    {
+                        "title": "How many pollutants currently exceed WHO guidelines in all megacities studied?",
+                        "options": [
+                            "one  ",
+                            "two  ",
+                            "three",
+                            "seven"
+                        ]
+                    },
+                    {
+                        "title": "Which pollutant is currently the subject of urgent research?",
+                        "options": [
+                            "nitrogen dioxide  ",
+                            "ozone             ",
+                            "lead              ",
+                            "particulate matter"
+                        ]
+                    },
+                    {
+                        "title": "Which of the following groups of people are the most severely affected by intense air pollution?",
+                        "options": [
+                            "allergy sufferers",
+                            "children         ",
+                            "the old and ill  ",
+                            "asthma sufferers "
+                        ]
+                    }
+                ]
+            },
+            "body_smart": {
+                "items": [
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "How",
+                                    "word_gid": "a3t4r1_11-13_0"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_1"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "many",
+                                    "word_gid": "a3t4r1_11-13_2"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_3"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "pollutants",
+                                    "word_gid": "a3t4r1_11-13_4"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_5"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "currently",
+                                    "word_gid": "a3t4r1_11-13_6"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_7"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "exceed",
+                                    "word_gid": "a3t4r1_11-13_8"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_9"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "WHO",
+                                    "word_gid": "a3t4r1_11-13_10"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_11"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "guidelines",
+                                    "word_gid": "a3t4r1_11-13_12"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_13"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "in",
+                                    "word_gid": "a3t4r1_11-13_14"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_15"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "all",
+                                    "word_gid": "a3t4r1_11-13_16"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_17"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "megacities",
+                                    "word_gid": "a3t4r1_11-13_18"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_19"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "studied",
+                                    "word_gid": "a3t4r1_11-13_20"
+                                },
+                                {
+                                    "type": "",
+                                    "content": "?",
+                                    "word_gid": "a3t4r1_11-13_21"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "one",
+                                        "word_gid": "a3t4r1_11-13_22"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "two",
+                                        "word_gid": "a3t4r1_11-13_23"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "three",
+                                        "word_gid": "a3t4r1_11-13_24"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "seven",
+                                        "word_gid": "a3t4r1_11-13_25"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "Which",
+                                    "word_gid": "a3t4r1_11-13_26"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_27"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "pollutant",
+                                    "word_gid": "a3t4r1_11-13_28"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_29"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "is",
+                                    "word_gid": "a3t4r1_11-13_30"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_31"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "currently",
+                                    "word_gid": "a3t4r1_11-13_32"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_33"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t4r1_11-13_34"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_35"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "subject",
+                                    "word_gid": "a3t4r1_11-13_36"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_37"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t4r1_11-13_38"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_39"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "urgent",
+                                    "word_gid": "a3t4r1_11-13_40"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_41"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "research",
+                                    "word_gid": "a3t4r1_11-13_42"
+                                },
+                                {
+                                    "type": "",
+                                    "content": "?",
+                                    "word_gid": "a3t4r1_11-13_43"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "nitrogen",
+                                        "word_gid": "a3t4r1_11-13_44"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_45"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "dioxide",
+                                        "word_gid": "a3t4r1_11-13_46"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "ozone",
+                                        "word_gid": "a3t4r1_11-13_47"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "lead",
+                                        "word_gid": "a3t4r1_11-13_48"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "particulate",
+                                        "word_gid": "a3t4r1_11-13_49"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_50"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "matter",
+                                        "word_gid": "a3t4r1_11-13_51"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "Which",
+                                    "word_gid": "a3t4r1_11-13_52"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_53"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t4r1_11-13_54"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_55"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t4r1_11-13_56"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_57"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "following",
+                                    "word_gid": "a3t4r1_11-13_58"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_59"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "groups",
+                                    "word_gid": "a3t4r1_11-13_60"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_61"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t4r1_11-13_62"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_63"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "people",
+                                    "word_gid": "a3t4r1_11-13_64"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_65"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "are",
+                                    "word_gid": "a3t4r1_11-13_66"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_67"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t4r1_11-13_68"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_69"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "most",
+                                    "word_gid": "a3t4r1_11-13_70"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_71"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "severely",
+                                    "word_gid": "a3t4r1_11-13_72"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_73"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "affected",
+                                    "word_gid": "a3t4r1_11-13_74"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_75"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "by",
+                                    "word_gid": "a3t4r1_11-13_76"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_77"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "intense",
+                                    "word_gid": "a3t4r1_11-13_78"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_79"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "air",
+                                    "word_gid": "a3t4r1_11-13_80"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t4r1_11-13_81"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "pollution",
+                                    "word_gid": "a3t4r1_11-13_82"
+                                },
+                                {
+                                    "type": "",
+                                    "content": "?",
+                                    "word_gid": "a3t4r1_11-13_83"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "allergy",
+                                        "word_gid": "a3t4r1_11-13_84"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_85"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "sufferers",
+                                        "word_gid": "a3t4r1_11-13_86"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "children",
+                                        "word_gid": "a3t4r1_11-13_87"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t4r1_11-13_88"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_89"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "old",
+                                        "word_gid": "a3t4r1_11-13_90"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_91"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "and",
+                                        "word_gid": "a3t4r1_11-13_92"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_93"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "ill",
+                                        "word_gid": "a3t4r1_11-13_94"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "asthma",
+                                        "word_gid": "a3t4r1_11-13_95"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t4r1_11-13_96"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "sufferers",
+                                        "word_gid": "a3t4r1_11-13_97"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "item_qids": [
+                    11,
+                    12,
+                    13
+                ]
+            }
+        }
+    ]
+}
