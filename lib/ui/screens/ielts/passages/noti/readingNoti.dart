@@ -28,14 +28,23 @@ class ReadingNoti extends ChangeNotifier {
     return entry?["quick_def"] as String?;
   }
 
-  Future<void> loadPassage() async {
+  Future<void> loadPassage({
+    required int seriesId,
+    required int testId,
+    required int part,
+    required int questionGroup,
+  }) async {
     isLoading = true;
     notifyListeners();
 
+    final testPath = "assets/ielts/test/$seriesId-$testId-$part.json";
+    final questionPath = "assets/ielts/question/$seriesId-$testId-$part.json";
+    final answerPath = "assets/ielts/answer/$seriesId-$testId.json";
+
     final results = await Future.wait([
-      rootBundle.loadString("assets/ielts/test/1-1-1.json"),
-      rootBundle.loadString("assets/ielts/question/1-1-1.json"),
-      rootBundle.loadString("assets/ielts/answer/1-1.json"),
+      rootBundle.loadString(testPath),
+      rootBundle.loadString(questionPath),
+      rootBundle.loadString(answerPath),
       rootBundle.loadString("assets/ielts/jsondictionary.json"),
     ]);
     _dictionary = jsonDecode(results[3]) as Map<String, dynamic>;
@@ -75,7 +84,8 @@ class ReadingNoti extends ChangeNotifier {
 
     questions = [];
     final inputRegex = RegExp(r'<input(?:=[^>]*)?>');
-    final qGroup = (questionData["test_question"] as List).first;
+    final qList = questionData["test_question"] as List;
+    final qGroup = qList[questionGroup - 1];
     final body = qGroup["body"] as Map<String, dynamic>;
     final list = (body["list"] as List).map((e) => e.toString().trim()).toList();
     final items = body["items"] as List;

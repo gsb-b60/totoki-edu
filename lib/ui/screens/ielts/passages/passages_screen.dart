@@ -7,7 +7,18 @@ import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:flutter/gestures.dart';
 
 class PassagesScreen extends StatefulWidget {
-  const PassagesScreen({super.key});
+  final int seriesId;
+  final int testId;
+  final int part;
+  final int questionGroup;
+
+  const PassagesScreen({
+    super.key,
+    this.seriesId = 1,
+    this.testId = 1,
+    this.part = 1,
+    this.questionGroup = 2,
+  });
 
   @override
   State<PassagesScreen> createState() => _PassagesScreenState();
@@ -144,7 +155,12 @@ class _PassagesScreenState extends State<PassagesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ReadingNoti>().loadPassage();
+      context.read<ReadingNoti>().loadPassage(
+        seriesId: widget.seriesId,
+        testId: widget.testId,
+        part: widget.part,
+        questionGroup: widget.questionGroup,
+      );
     });
   }
 
