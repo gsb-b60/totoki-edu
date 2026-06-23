@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/noti/readingNoti.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_summary_given_list.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:flutter/gestures.dart';
 
@@ -13,9 +14,11 @@ class PassagesScreen extends StatefulWidget {
 }
 
 class _PassagesScreenState extends State<PassagesScreen> {
-  int _currentQ = 0;
-  int? _selected;
+  int _currentParagraph = 0;
+  List<int?> _selections = [];
   bool _answered = false;
+  final Map<int, List<int?>> _savedSelections = {};
+  final Set<int> _submittedParagraphs = {};
   final List<TapGestureRecognizer> _recognizers = [];
   OverlayEntry? _overlayEntry;
 
@@ -146,19 +149,116 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 
   void _submit() {
-    if (_selected == null) return;
+    final noti = context.read<ReadingNoti>();
+    for (int i = 0; i < noti.questions.length; i++) {
+      _submittedParagraphs.add(i);
+    }
     setState(() => _answered = true);
+  }
+
+  void _saveCurrentSelections() {
+    _savedSelections[_currentParagraph] = List.from(_selections);
+  }
+
+  void _loadSelectionsFor(int index) {
+    final pg = context.read<ReadingNoti>().questions[index];
+    final saved = _savedSelections[index];
+    _selections = saved != null && saved.length == pg.answers.length
+        ? List.from(saved)
+        : List.filled(pg.answers.length, null);
+  }
+
+  void _goToParagraph(int index) {
+    _saveCurrentSelections();
+    setState(() {
+      _currentParagraph = index;
+      _answered = false;
+      _loadSelectionsFor(index);
+    });
   }
 
   void _next() {
     final noti = context.read<ReadingNoti>();
-    if (_currentQ < noti.questions.length - 1) {
-      setState(() {
-        _currentQ++;
-        _selected = null;
-        _answered = false;
-      });
+    if (_currentParagraph < noti.questions.length - 1) {
+      _goToParagraph(_currentParagraph + 1);
     }
+  }
+
+  void _prev() {
+    if (_currentParagraph > 0) {
+      _goToParagraph(_currentParagraph - 1);
+    }
+  }
+
+  bool get _currentIsSubmitted => _submittedParagraphs.contains(_currentParagraph);
+
+  bool get _allParagraphsComplete {
+    final noti = context.read<ReadingNoti>();
+    for (int i = 0; i < noti.questions.length; i++) {
+      final sel = i == _currentParagraph ? _selections : _savedSelections[i];
+      if (sel == null || sel.any((s) => s == null)) return false;
+    }
+    return true;
+  }
+
+  Widget _buildBottomBar(int totalParagraphs) {
+    final isLast = _currentParagraph == totalParagraphs - 1;
+    final isFirst = _currentParagraph == 0;
+
+    return Row(
+      children: [
+        Expanded(
+          child: _NavBtn(
+            label: "BACK",
+            icon: Icons.arrow_back_ios,
+            onTap: isFirst ? null : _prev,
+          ),
+        ),
+        const SizedBox(width: 12),
+        if (!_answered)
+          Expanded(
+            flex: 2,
+            child: _SubmitBtn(
+              active: _allParagraphsComplete && !_currentIsSubmitted,
+              onTap: _allParagraphsComplete && !_currentIsSubmitted ? _submit : null,
+            ),
+          )
+        else
+          Expanded(
+            flex: 2,
+            child: _SubmitBtn(
+              active: true,
+              onTap: _dismissReview,
+              label: "DISMISS",
+            ),
+          ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _NavBtn(
+            label: "NEXT",
+            icon: Icons.arrow_forward_ios,
+            onTap: isLast ? null : _next,
+            trailing: true,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _dismissReview() {
+    setState(() => _answered = false);
+  }
+
+  Widget _buildQuestionPanel(ParagraphGroup pg) {
+    return SelectSummaryGivenList(
+      questionText: pg.displayText,
+      options: pg.options,
+      selected: _selections,
+      answered: _answered,
+      questionIndex: _currentParagraph + 1,
+      totalQuestions: context.read<ReadingNoti>().questions.length,
+      onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
+    );
   }
 
   @override
@@ -182,8 +282,25 @@ class _PassagesScreenState extends State<PassagesScreen> {
       );
     }
 
-    final q = noti.questions[_currentQ];
-    final correct = _selected == q["answer"];
+    final pg = noti.questions[_currentParagraph];
+    if (_selections.length != pg.answers.length) {
+      _selections = List.filled(pg.answers.length, null);
+    }
+    final isSubmitted = _submittedParagraphs.contains(_currentParagraph);
+    bool allCorrect = false;
+    String correctAnswerStr = '';
+    if (isSubmitted) {
+      allCorrect = true;
+      final parts = <String>[];
+      for (int i = 0; i < pg.answers.length; i++) {
+        parts.add(pg.options[pg.answers[i]]);
+        if (i >= _selections.length || _selections[i] != pg.answers[i]) {
+          allCorrect = false;
+        }
+      }
+      correctAnswerStr = parts.join(', ');
+    }
+    final totalParagraphs = noti.questions.length;
 
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
@@ -243,64 +360,11 @@ class _PassagesScreenState extends State<PassagesScreen> {
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppTheme.darkBorder, width: 2),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            "Question ${_currentQ + 1}/${noti.questions.length}",
-                            style: AppTheme.captionStyle.copyWith(fontSize: 13),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            q["q"] as String,
-                            style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 16),
-                          ),
-                          const SizedBox(height: 12),
-                          Expanded(
-                            child: ListView(
-                              children: List.generate(
-                                (q["options"] as List<String>).length,
-                                (i) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: _OptionBtn(
-                                    label: (q["options"] as List<String>)[i],
-                                    isSelected: _selected == i,
-                                    onTap: _answered ? null : () => setState(() => _selected = i),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          if (!_answered)
-                            GestureDetector(
-                              onTap: _selected != null ? _submit : null,
-                              child: Container(
-                                width: double.infinity,
-                                height: 52,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: _selected != null ? AppTheme.greenPrimary : AppTheme.darkCard,
-                                  boxShadow: _selected != null
-                                      ? [BoxShadow(color: AppTheme.greenPrimary.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4))]
-                                      : [],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "SUBMIT ANSWER",
-                                    style: AppTheme.bodyLargeStyle.copyWith(
-                                      color: _selected != null ? AppTheme.darkBase : AppTheme.lightText.withOpacity(0.5),
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 2,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
+                      child: _buildQuestionPanel(pg),
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  _buildBottomBar(totalParagraphs),
                 ],
               ),
             ),
@@ -312,9 +376,9 @@ class _PassagesScreenState extends State<PassagesScreen> {
               right: 0,
               height: MediaQuery.of(context).size.height,
               child: ReviewScreen(
-                right: correct,
-                answer: (q["options"] as List<String>)[q["answer"] as int],
-                onPressed: _next,
+                right: allCorrect,
+                answer: correctAnswerStr,
+                onPressed: _dismissReview,
               ),
             ),
           ],
@@ -324,36 +388,87 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 }
 
-class _OptionBtn extends StatelessWidget {
+class _NavBtn extends StatelessWidget {
   final String label;
-  final bool isSelected;
+  final IconData icon;
   final VoidCallback? onTap;
+  final bool trailing;
 
-  const _OptionBtn({required this.label, required this.isSelected, this.onTap});
+  const _NavBtn({
+    required this.label,
+    required this.icon,
+    this.onTap,
+    this.trailing = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 50,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          side: BorderSide(color: isSelected ? AppTheme.greenPrimary : AppTheme.darkBorder, width: 2),
-          backgroundColor: isSelected ? AppTheme.darkCard : AppTheme.darkSurface,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-        ),
-        child: Text(
-          label,
-          style: AppTheme.bodyLargeStyle.copyWith(
-            color: isSelected ? AppTheme.greenPrimary : AppTheme.lightText,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+    final active = onTap != null;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: active ? AppTheme.greenPrimary : AppTheme.darkBorder,
+            width: 1.5,
           ),
-          textAlign: TextAlign.left,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: trailing ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            if (!trailing) Icon(icon, size: 16, color: active ? AppTheme.greenPrimary : AppTheme.darkBorder),
+            if (!trailing) const SizedBox(width: 4),
+            Text(
+              label,
+              style: AppTheme.bodyLargeStyle.copyWith(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: active ? AppTheme.greenPrimary : AppTheme.darkBorder,
+              ),
+            ),
+            if (trailing) const SizedBox(width: 4),
+            if (trailing) Icon(icon, size: 16, color: active ? AppTheme.greenPrimary : AppTheme.darkBorder),
+          ],
         ),
       ),
     );
   }
 }
+
+class _SubmitBtn extends StatelessWidget {
+  final bool active;
+  final VoidCallback? onTap;
+  final String label;
+
+  const _SubmitBtn({required this.active, this.onTap, this.label = "SUBMIT"});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: active ? AppTheme.greenPrimary : AppTheme.darkCard,
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: AppTheme.bodyLargeStyle.copyWith(
+              color: active ? AppTheme.darkBase : AppTheme.lightText.withOpacity(0.5),
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              letterSpacing: 1.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

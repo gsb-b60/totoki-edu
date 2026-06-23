@@ -2,10 +2,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+class ParagraphGroup {
+  final String displayText;
+  final List<String> options;
+  final List<int> answers;
+  final String type;
+
+  ParagraphGroup({
+    required this.displayText,
+    required this.options,
+    required this.answers,
+    required this.type,
+  });
+}
+
 class ReadingNoti extends ChangeNotifier {
   String title = "";
   String articleText = "";
-  List<Map<String, dynamic>> questions = [];
+  List<ParagraphGroup> questions = [];
   bool isLoading = false;
   Map<String, dynamic> _dictionary = {};
 
@@ -20,10 +34,14 @@ class ReadingNoti extends ChangeNotifier {
 
     final results = await Future.wait([
       rootBundle.loadString("assets/ielts/test/1-1-1.json"),
+      rootBundle.loadString("assets/ielts/question/1-1-1.json"),
+      rootBundle.loadString("assets/ielts/answer/1-1.json"),
       rootBundle.loadString("assets/ielts/jsondictionary.json"),
     ]);
-    _dictionary = jsonDecode(results[1]) as Map<String, dynamic>;
+    _dictionary = jsonDecode(results[3]) as Map<String, dynamic>;
     final data = jsonDecode(results[0]) as Map<String, dynamic>;
+    final questionData = jsonDecode(results[1]) as Map<String, dynamic>;
+    final answerData = jsonDecode(results[2]) as Map<String, dynamic>;
     final article = data["test_text"]["article"];
     title = article["title"] as String;
     final sections = article["sections"] as List;
@@ -42,39 +60,49 @@ class ReadingNoti extends ChangeNotifier {
     }
     articleText = buffer.toString().trim();
 
-    questions = [
-      {
-        "q": "What did early man believe about fire according to the passage?",
-        "options": [
-          "It was a divine gift randomly delivered",
-          "It could be created by rubbing stones",
-          "It was discovered in volcanic regions",
-          "It was first used for cooking food",
-        ],
-        "answer": 0,
-      },
-      {
-        "q": "How did the earliest peoples store fire before they could make it?",
-        "options": [
-          "By using magnifying glasses",
-          "By keeping slow burning logs alight",
-          "By rubbing flint stones together",
-          "By storing sunlight in crystals",
-        ],
-        "answer": 1,
-      },
-      {
-        "q": "How was the first man-made fire likely discovered?",
-        "options": [
-          "By studying lightning strikes",
-          "Accidentally during tool-making",
-          "By observing volcanic eruptions",
-          "Through religious ceremonies",
-        ],
-        "answer": 1,
-      },
-    ];
+    final readingAnswers = answerData["reading"] as List;
+    final answerLookup = <int, int>{};
+    for (final ans in readingAnswers) {
+      final qId = int.parse(ans["question_id"] as String);
+      final letter = ans["correct_answer"] as String;
+      if (letter.length == 1) {
+        final code = letter.codeUnitAt(0);
+        if (code >= 65 && code <= 90) {
+          answerLookup[qId] = code - 65;
+        }
+      }
+    }
 
+    questions = [];
+    final inputRegex = RegExp(r'<input(?:=[^>]*)?>');
+    final qGroup = (questionData["test_question"] as List).first;
+    final body = qGroup["body"] as Map<String, dynamic>;
+    final list = (body["list"] as List).map((e) => e.toString().trim()).toList();
+    final items = body["items"] as List;
+    int qNum = qGroup["start"] as int;
+
+    for (final item in items) {
+      if (item is Map && item["type"] == "example") continue;
+      if (item is! String) continue;
+
+      final matches = inputRegex.allMatches(item).toList();
+      if (matches.isEmpty) continue;
+
+      final displayText = item.replaceAll(inputRegex, '___').replaceAll(RegExp(r'\s+'), ' ').trim();
+
+      final answers = <int>[];
+      for (int i = 0; i < matches.length; i++) {
+        answers.add(answerLookup[qNum] ?? 0);
+        qNum++;
+      }
+
+      questions.add(ParagraphGroup(
+        displayText: displayText,
+        options: List<String>.from(list),
+        answers: answers,
+        type: qGroup["type"] as String,
+      ));
+    }
     isLoading = false;
     notifyListeners();
   }
