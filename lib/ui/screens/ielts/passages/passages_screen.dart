@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/noti/readingNoti.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
+import 'package:flutter/gestures.dart';
 
 class PassagesScreen extends StatefulWidget {
   const PassagesScreen({super.key});
@@ -13,46 +16,134 @@ class _PassagesScreenState extends State<PassagesScreen> {
   int _currentQ = 0;
   int? _selected;
   bool _answered = false;
+  final List<TapGestureRecognizer> _recognizers = [];
+  OverlayEntry? _overlayEntry;
 
-  final _article =
-      "The concept of sustainable development has gained significant traction in recent decades as societies grapple with the complex interplay between economic growth, environmental preservation, and social equity. At its core, sustainable development seeks to meet the needs of the present without compromising the ability of future generations to meet their own needs.\n\n"
-      "One of the primary challenges in achieving sustainable development lies in the tension between short-term economic gains and long-term environmental costs. Industrial activities, while driving economic prosperity, often result in resource depletion and environmental degradation. The extraction of fossil fuels, deforestation for agricultural expansion, and the discharge of pollutants into waterways represent just a few examples of this inherent conflict.\n\n"
-      "However, sustainable development is not antithetical to economic progress. On the contrary, many economists and environmentalists argue that sustainable practices can drive innovation, create new markets, and enhance long-term profitability. The renewable energy sector, for instance, has experienced exponential growth, generating employment opportunities while reducing carbon emissions. Similarly, circular economy models that prioritize waste reduction and resource efficiency have demonstrated both environmental and economic benefits.\n\n"
-      "Social equity represents the third pillar of sustainable development, emphasizing that the benefits of development must be distributed fairly across society. This includes access to education, healthcare, clean water, and economic opportunities. Marginalized communities often bear the disproportionate burden of environmental degradation, a phenomenon known as environmental injustice. Addressing these disparities is essential for achieving truly sustainable development.\n\n"
-      "International cooperation plays a crucial role in advancing sustainable development goals. Agreements such as the Paris Climate Accord and the United Nations Sustainable Development Goals (SDGs) provide frameworks for collective action. Yet, implementation remains challenging due to varying national priorities, economic disparities, and political will. The transition to sustainable development requires coordinated efforts across governments, businesses, civil society, and individuals.";
+  @override
+  void dispose() {
+    _removeOverlay();
+    for (final r in _recognizers) {
+      r.dispose();
+    }
+    super.dispose();
+  }
 
-  final _questions = [
-    {
-      "q": "What is the primary challenge in achieving sustainable development according to the passage?",
-      "options": [
-        "Lack of international cooperation",
-        "Tension between short-term economic gains and long-term environmental costs",
-        "Insufficient technological innovation",
-        "Population growth in developing countries",
-      ],
-      "answer": 1,
-    },
-    {
-      "q": "What does the author suggest about sustainable development and economic progress?",
-      "options": [
-        "They are fundamentally incompatible",
-        "Sustainable practices always reduce profitability",
-        "They can complement each other through innovation",
-        "Economic progress should take priority",
-      ],
-      "answer": 2,
-    },
-    {
-      "q": "What does 'environmental injustice' refer to in the passage?",
-      "options": [
-        "Lack of environmental regulations",
-        "Marginalized communities bearing disproportionate environmental burden",
-        "Unequal distribution of natural resources",
-        "Corporate exploitation of natural resources",
-      ],
-      "answer": 1,
-    },
-  ];
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
+  void _showWordDefinition(String word, String definition, Offset globalPosition) {
+    _removeOverlay();
+    final overlay = Overlay.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    const popupWidth = 280.0;
+    const popupHeight = 120.0;
+
+    double dx = globalPosition.dx - popupWidth / 2;
+    double dy = globalPosition.dy + 20;
+    if (dx < 12) dx = 12;
+    if (dx + popupWidth > screenSize.width - 12) {
+      dx = screenSize.width - popupWidth - 12;
+    }
+    if (dy + popupHeight > screenSize.height - 12) {
+      dy = globalPosition.dy - popupHeight - 10;
+    }
+    if (dy < 12) dy = 12;
+
+    _overlayEntry = OverlayEntry(
+      builder: (ctx) => GestureDetector(
+        onTap: _removeOverlay,
+        behavior: HitTestBehavior.translucent,
+        child: Stack(
+          children: [
+            Container(color: Colors.transparent),
+            Positioned(
+              left: dx,
+              top: dy,
+              child: Material(
+                elevation: 8,
+                borderRadius: BorderRadius.circular(12),
+                color: AppTheme.darkSurface,
+                child: GestureDetector(
+                  onTap: _removeOverlay,
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: popupWidth),
+                    padding: const EdgeInsets.all(14),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          word,
+                          style: AppTheme.bodyLargeStyle.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          definition,
+                          style: AppTheme.bodyLargeStyle.copyWith(
+                            fontSize: 14,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    overlay.insert(_overlayEntry!);
+  }
+
+  List<InlineSpan> _buildArticleSpans(ReadingNoti noti) {
+    for (final r in _recognizers) {
+      r.dispose();
+    }
+    _recognizers.clear();
+
+    final spans = <InlineSpan>[];
+    final wordRegex = RegExp(r"[A-Za-z]+(?:[''][A-Za-z]+)*");
+    int lastEnd = 0;
+    for (final match in wordRegex.allMatches(noti.articleText)) {
+      if (match.start > lastEnd) {
+        spans.add(TextSpan(text: noti.articleText.substring(lastEnd, match.start)));
+      }
+      final word = match.group(0)!;
+      final recognizer = TapGestureRecognizer()
+        ..onTapUp = (details) {
+          final def = noti.lookupWord(word);
+          if (def != null) {
+            _showWordDefinition(word, def, details.globalPosition);
+          }
+        };
+      _recognizers.add(recognizer);
+      spans.add(TextSpan(
+        text: word,
+        recognizer: recognizer,
+        style: const TextStyle(decoration: TextDecoration.underline, decorationColor: AppTheme.greenPrimary, decorationThickness: 0.5),
+      ));
+      lastEnd = match.end;
+    }
+    if (lastEnd < noti.articleText.length) {
+      spans.add(TextSpan(text: noti.articleText.substring(lastEnd)));
+    }
+    return spans;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ReadingNoti>().loadPassage();
+    });
+  }
 
   void _submit() {
     if (_selected == null) return;
@@ -60,7 +151,8 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 
   void _next() {
-    if (_currentQ < _questions.length - 1) {
+    final noti = context.read<ReadingNoti>();
+    if (_currentQ < noti.questions.length - 1) {
       setState(() {
         _currentQ++;
         _selected = null;
@@ -71,7 +163,26 @@ class _PassagesScreenState extends State<PassagesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final q = _questions[_currentQ];
+    final noti = context.watch<ReadingNoti>();
+
+    if (noti.isLoading || noti.articleText.isEmpty) {
+      return Scaffold(
+        backgroundColor: AppTheme.darkBase,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text("Reading", style: AppTheme.screenTitleStyle),
+          backgroundColor: AppTheme.darkBase,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final q = noti.questions[_currentQ];
     final correct = _selected == q["answer"];
 
     return Scaffold(
@@ -103,9 +214,21 @@ class _PassagesScreenState extends State<PassagesScreen> {
                         border: Border.all(color: AppTheme.darkBorder, width: 2),
                       ),
                       child: SingleChildScrollView(
-                        child: Text(
-                          _article,
-                          style: AppTheme.bodyLargeStyle.copyWith(height: 1.6),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              noti.title,
+                              style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            RichText(
+                              text: TextSpan(
+                                style: AppTheme.bodyLargeStyle.copyWith(height: 1.6),
+                                children: _buildArticleSpans(noti),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -124,7 +247,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            "Question ${_currentQ + 1}/${_questions.length}",
+                            "Question ${_currentQ + 1}/${noti.questions.length}",
                             style: AppTheme.captionStyle.copyWith(fontSize: 13),
                           ),
                           const SizedBox(height: 8),
