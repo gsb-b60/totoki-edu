@@ -250,13 +250,26 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 
   Widget _buildQuestionPanel(ParagraphGroup pg) {
+    final usedOptionIndices = <int>{};
+    final noti = context.read<ReadingNoti>();
+    for (int i = 0; i < noti.questions.length; i++) {
+      if (i == _currentParagraph) continue;
+      final saved = _savedSelections[i];
+      if (saved != null) {
+        for (final sel in saved) {
+          if (sel != null) usedOptionIndices.add(sel);
+        }
+      }
+    }
+
     return SelectSummaryGivenList(
       questionText: pg.displayText,
       options: pg.options,
       selected: _selections,
       answered: _answered,
       questionIndex: _currentParagraph + 1,
-      totalQuestions: context.read<ReadingNoti>().questions.length,
+      totalQuestions: noti.questions.length,
+      usedOptionIndices: usedOptionIndices,
       onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
     );
   }

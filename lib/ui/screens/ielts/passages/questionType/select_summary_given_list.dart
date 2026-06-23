@@ -8,6 +8,7 @@ class SelectSummaryGivenList extends StatefulWidget {
   final bool answered;
   final int questionIndex;
   final int totalQuestions;
+  final Set<int> usedOptionIndices;
   final void Function(int blankIndex, int optionIndex) onSelect;
 
   const SelectSummaryGivenList({
@@ -19,6 +20,7 @@ class SelectSummaryGivenList extends StatefulWidget {
     required this.questionIndex,
     required this.totalQuestions,
     required this.onSelect,
+    this.usedOptionIndices = const {},
   });
 
   @override
@@ -62,13 +64,43 @@ class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
       if (i < parts.length - 1) {
         final sel = widget.selected.length > i ? widget.selected[i] : null;
         if (sel != null) {
-          spans.add(TextSpan(
-            text: widget.options[sel],
-            style: const TextStyle(
-              color: AppTheme.greenPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ));
+          if (!widget.answered) {
+            spans.add(WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: GestureDetector(
+                onTap: () => _showOptionsDialog(i),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppTheme.greenPrimary, width: 1.5),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.options[sel],
+                        style: const TextStyle(
+                          color: AppTheme.greenPrimary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Icon(Icons.arrow_drop_down, color: AppTheme.greenPrimary, size: 20),
+                    ],
+                  ),
+                ),
+              ),
+            ));
+          } else {
+            spans.add(TextSpan(
+              text: widget.options[sel],
+              style: const TextStyle(
+                color: AppTheme.greenPrimary,
+                fontWeight: FontWeight.bold,
+              ),
+            ));
+          }
         } else if (!widget.answered) {
           spans.add(WidgetSpan(
             alignment: PlaceholderAlignment.middle,
@@ -113,6 +145,20 @@ class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
   }
 
   void _showOptionsDialog(int blankIdx) {
+    final usedByOthers = <int>{...widget.usedOptionIndices};
+    for (int i = 0; i < widget.selected.length; i++) {
+      if (i != blankIdx && widget.selected[i] != null) {
+        usedByOthers.add(widget.selected[i]!);
+      }
+    }
+
+    final available = <int>[];
+    for (int i = 0; i < widget.options.length; i++) {
+      if (!usedByOthers.contains(i) || (widget.selected.length > blankIdx && widget.selected[blankIdx] == i)) {
+        available.add(i);
+      }
+    }
+
     showDialog(
       context: context,
       builder: (ctx) => SimpleDialog(
@@ -121,7 +167,7 @@ class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
           'Select an option',
           style: AppTheme.sectionHeaderStyle,
         ),
-        children: List.generate(widget.options.length, (i) {
+        children: available.map((i) {
           final isSelected = widget.selected.length > blankIdx && widget.selected[blankIdx] == i;
           return SimpleDialogOption(
             onPressed: () {
@@ -139,7 +185,7 @@ class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
               ),
             ),
           );
-        }),
+        }).toList(),
       ),
     );
   }
