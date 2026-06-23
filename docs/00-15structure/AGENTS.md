@@ -14,7 +14,7 @@
 - Standard color scheme and text styles: [appTheme.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/theme/appTheme.dart)
 
 ## Rules & Constraints
-- **Read First**: Always read the specifications in `docs/` and `docs/00-15structure/spec/` before coding.
+- **Read First**: Always read the specifications in `docs/` and `docs/00-15structure/spec/` before coding. Start with [README.md](./README.md) for the full document tree overview.
 - **State Management**: Never use `setState` for global or shared states. Use `Provider` (`ChangeNotifierProvider` and `Consumer` or `Provider.of`).
 - **Database Operations**: Do not write raw SQL queries directly in UI components. Use `DatabaseHelper`.
 - **UI Guidelines**: Follow the Material 3 design spec. Always utilize theme tokens from `AppTheme` instead of hardcoded colors/styles.
@@ -22,15 +22,3 @@
 - **Verification**: Run `flutter analyze` before finalizing any changes. Note: `test/` currently contains only boilerplate; add unit tests for SM-2, database, and notifiers as features stabilize.
 - **Updates**: Keep this documentation updated on any architectural adjustments.
 
-## Sound Effects
-- Shared learning-feedback audio is managed by `SoundController` in `lib/services/sound_controller.dart`.
-- Register `SoundController` with Provider at app startup and inject it into lesson notifiers instead of playing global feedback sounds directly from UI widgets.
-- Store bundled feedback effects in `assets/sound/`. Supported events are correct, alternate correct, wrong, streak, and finish.
-- Use sounds only for learning feedback and lesson completion; avoid generic navigation or scrolling sounds.
-
-## Assets
-- `assets/sound/` — bundled feedback effects (mp3)
-- `assets/anki/` — bundled demo `.apkg` for import testing
-- `assets/illumode/` — illustrations used in learning content (PNG)
-- `assets/rep/` — reputation/progress indicator images (rep0-rep5)
-- `assets/icon/` — app icon variants (logo.png, logo1.png, logo1trans.png)

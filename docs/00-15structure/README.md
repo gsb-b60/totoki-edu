@@ -19,7 +19,10 @@ docs/00-15structure/
 │   ├── 06-database.md         # SQLite tables and field descriptions
 │   ├── 07-api.md              # Offline-first storage and future API endpoints
 │   ├── 08-business-rules.md   # Spaced Repetition (SM-2) algorithm rules
-│   └── 09-roadmap.md          # Project roadmap: Done, Doing, and Next
+│   ├── 09-roadmap.md          # Project roadmap: Done, Doing, and Next
+│   ├── 10-ielts.md            # IELTS training: assets, UI structure, data flow
+│   ├── 11-sound.md            # Sound effects: controller, registration, events
+│   └── 12-assets.md           # Asset directory map (sound, anki, icons, etc.)
 │
 ├── spec/                      # Screen-by-screen specific UI & UX specs
 │   ├── home.md                # Dashboard, Deck list, and DB Import
