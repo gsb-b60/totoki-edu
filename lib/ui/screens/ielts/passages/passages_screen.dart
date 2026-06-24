@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/noti/readingNoti.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_summary_given_list.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/questionType/option_choice.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/questionType/checkbox_widget.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_answer.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:flutter/gestures.dart';
 
@@ -27,8 +30,10 @@ class PassagesScreen extends StatefulWidget {
 class _PassagesScreenState extends State<PassagesScreen> {
   int _currentParagraph = 0;
   List<int?> _selections = [];
+  List<String> _textInputs = [];
   bool _answered = false;
   final Map<int, List<int?>> _savedSelections = {};
+  final Map<int, List<String>> _savedTextInputs = {};
   final Set<int> _submittedParagraphs = {};
   final List<TapGestureRecognizer> _recognizers = [];
   OverlayEntry? _overlayEntry;
@@ -165,6 +170,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 
   void _submit() {
+    _saveCurrentSelections();
     final noti = context.read<ReadingNoti>();
     for (int i = 0; i < noti.questions.length; i++) {
       _submittedParagraphs.add(i);
@@ -173,15 +179,27 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 
   void _saveCurrentSelections() {
-    _savedSelections[_currentParagraph] = List.from(_selections);
+    final pg = context.read<ReadingNoti>().questions[_currentParagraph];
+    if (pg.type.startsWith("input-")) {
+      _savedTextInputs[_currentParagraph] = List.from(_textInputs);
+    } else {
+      _savedSelections[_currentParagraph] = List.from(_selections);
+    }
   }
 
   void _loadSelectionsFor(int index) {
     final pg = context.read<ReadingNoti>().questions[index];
-    final saved = _savedSelections[index];
-    _selections = saved != null && saved.length == pg.answers.length
-        ? List.from(saved)
-        : List.filled(pg.answers.length, null);
+    if (pg.type.startsWith("input-")) {
+      final saved = _savedTextInputs[index];
+      _textInputs = saved != null && saved.length == pg.textAnswers.length
+          ? List.from(saved)
+          : List.filled(pg.textAnswers.length, "");
+    } else {
+      final saved = _savedSelections[index];
+      _selections = saved != null && saved.length == pg.answers.length
+          ? List.from(saved)
+          : List.filled(pg.answers.length, null);
+    }
   }
 
   void _goToParagraph(int index) {
@@ -211,8 +229,14 @@ class _PassagesScreenState extends State<PassagesScreen> {
   bool get _allParagraphsComplete {
     final noti = context.read<ReadingNoti>();
     for (int i = 0; i < noti.questions.length; i++) {
-      final sel = i == _currentParagraph ? _selections : _savedSelections[i];
-      if (sel == null || sel.any((s) => s == null)) return false;
+      final pg = noti.questions[i];
+      if (pg.type.startsWith("input-")) {
+        final inputs = i == _currentParagraph ? _textInputs : _savedTextInputs[i];
+        if (inputs == null || inputs.any((s) => s.trim().isEmpty)) return false;
+      } else {
+        final sel = i == _currentParagraph ? _selections : _savedSelections[i];
+        if (sel == null || sel.any((s) => s == null)) return false;
+      }
     }
     return true;
   }
@@ -266,28 +290,84 @@ class _PassagesScreenState extends State<PassagesScreen> {
   }
 
   Widget _buildQuestionPanel(ParagraphGroup pg) {
-    final usedOptionIndices = <int>{};
     final noti = context.read<ReadingNoti>();
-    for (int i = 0; i < noti.questions.length; i++) {
-      if (i == _currentParagraph) continue;
-      final saved = _savedSelections[i];
-      if (saved != null) {
-        for (final sel in saved) {
-          if (sel != null) usedOptionIndices.add(sel);
+    final qIdx = _currentParagraph + 1;
+    final totalQ = noti.questions.length;
+
+    if (pg.type.startsWith("select-")) {
+      final usedOptionIndices = <int>{};
+      for (int i = 0; i < noti.questions.length; i++) {
+        if (i == _currentParagraph) continue;
+        final saved = _savedSelections[i];
+        if (saved != null) {
+          for (final sel in saved) {
+            if (sel != null) usedOptionIndices.add(sel);
+          }
         }
       }
+
+      return SelectSummaryGivenList(
+        questionText: pg.displayText,
+        options: pg.options,
+        selected: _selections,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        usedOptionIndices: usedOptionIndices,
+        onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
+      );
     }
 
-    return SelectSummaryGivenList(
-      questionText: pg.displayText,
-      options: pg.options,
-      selected: _selections,
-      answered: _answered,
-      questionIndex: _currentParagraph + 1,
-      totalQuestions: noti.questions.length,
-      usedOptionIndices: usedOptionIndices,
-      onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
-    );
+    if (pg.type == "option-abc" ||
+        pg.type == "option-true-false" ||
+        pg.type == "option-yes-no") {
+      return OptionChoice(
+        questionText: pg.displayText,
+        options: pg.options,
+        selected: _selections.isNotEmpty ? _selections[0] : null,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        onSelect: (optIdx) => setState(() {
+          _selections = [optIdx];
+        }),
+      );
+    }
+
+    if (pg.type == "checkbox") {
+      return CheckboxWidget(
+        questionText: pg.displayText,
+        options: pg.options,
+        selected: _selections,
+        quantity: pg.answers.length,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        onSelect: (idx, opt) => setState(() {
+          if (opt < 0) {
+            _selections[idx] = null;
+          } else if (idx < _selections.length) {
+            _selections[idx] = opt;
+          }
+        }),
+      );
+    }
+
+    if (pg.type.startsWith("input-")) {
+      return InputAnswer(
+        questionText: pg.displayText,
+        inputs: _textInputs,
+        constraint: pg.constraint,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        onChanged: (idx, v) => setState(() {
+          if (idx < _textInputs.length) _textInputs[idx] = v;
+        }),
+      );
+    }
+
+    return const Center(child: Text("Unknown question type", style: TextStyle(color: Colors.redAccent)));
   }
 
   @override
@@ -312,8 +392,14 @@ class _PassagesScreenState extends State<PassagesScreen> {
     }
 
     final pg = noti.questions[_currentParagraph];
-    if (_selections.length != pg.answers.length) {
-      _selections = List.filled(pg.answers.length, null);
+    if (pg.type.startsWith("input-")) {
+      if (_textInputs.length != pg.textAnswers.length) {
+        _textInputs = List.filled(pg.textAnswers.length, "");
+      }
+    } else {
+      if (_selections.length != pg.answers.length) {
+        _selections = List.filled(pg.answers.length, null);
+      }
     }
     final isSubmitted = _submittedParagraphs.contains(_currentParagraph);
     bool allCorrect = false;
@@ -321,10 +407,22 @@ class _PassagesScreenState extends State<PassagesScreen> {
     if (isSubmitted) {
       allCorrect = true;
       final parts = <String>[];
-      for (int i = 0; i < pg.answers.length; i++) {
-        parts.add(pg.options[pg.answers[i]]);
-        if (i >= _selections.length || _selections[i] != pg.answers[i]) {
-          allCorrect = false;
+      if (pg.type.startsWith("input-")) {
+        for (int i = 0; i < pg.textAnswers.length; i++) {
+          parts.add(pg.textAnswers[i]);
+          if (i >= _textInputs.length ||
+              _textInputs[i].trim().toLowerCase() != pg.textAnswers[i].trim().toLowerCase()) {
+            allCorrect = false;
+          }
+        }
+      } else {
+        for (int i = 0; i < pg.answers.length; i++) {
+          if (i < pg.options.length) {
+            parts.add(pg.options[pg.answers[i]]);
+          }
+          if (i >= _selections.length || _selections[i] != pg.answers[i]) {
+            allCorrect = false;
+          }
         }
       }
       correctAnswerStr = parts.join(', ');
