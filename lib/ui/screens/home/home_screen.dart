@@ -18,6 +18,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
+  Color get _selectedColor {
+    switch (_selectedIndex) {
+      case 0:
+      case 1:
+        return AppTheme.greenPrimary;
+      case 2:
+        return AppTheme.pinkPrimary;
+      case 3:
+        return AppTheme.redPrimary;
+      case 4:
+        return AppTheme.bluePrimary;
+      default:
+        return AppTheme.greenPrimary;
+    }
+  }
+
   static const List<String> _tabTitles = [
     'All Decks',
     'Learn',
@@ -99,12 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: AppTheme.darkSurface,
-          indicatorColor: AppTheme.greenPrimary.withOpacity(0.18),
+          indicatorColor: _selectedColor.withOpacity(0.18),
           labelTextStyle: MaterialStateProperty.resolveWith((states) {
             final selected = states.contains(MaterialState.selected);
             return AppTheme.captionStyle.copyWith(
               color: selected
-                  ? AppTheme.greenPrimary
+                  ? _selectedColor
                   : AppTheme.lightText.withOpacity(0.55),
               fontWeight: selected ? FontWeight.bold : FontWeight.w600,
               letterSpacing: 0,
@@ -114,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final selected = states.contains(MaterialState.selected);
             return IconThemeData(
               color: selected
-                  ? AppTheme.greenPrimary
+                  ? _selectedColor
                   : AppTheme.lightText.withOpacity(0.55),
             );
           }),
