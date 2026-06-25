@@ -67,11 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: AppTheme.darkBase,
-        title: Text(
-          _tabTitles[_selectedIndex],
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        actions: _selectedIndex == 0
+              title: Text(
+                _tabTitles[_selectedIndex],
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              actions: _selectedIndex == 0
             ? [
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _selectedIndex,
         children: [
           const DeckListTab(),
-          const LearnModeScreen(showAppBar: false),
+          const LearnModeScreen(),
           const Achievement(showAppBar: false),
           const DueDayDashBoard(showAppBar: false),
           const IeltsTraining(showAppBar: false),

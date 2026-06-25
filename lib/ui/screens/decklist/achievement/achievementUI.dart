@@ -50,8 +50,33 @@ class _AchievementState extends State<AchievementUI> {
                         ? const Center(key: ValueKey('spinner'), child: CircularProgressIndicator())
                         : ListView.builder(
                             key: ValueKey(provider.currentPage),
-                            itemCount: flashcards.length,
+                            itemCount: flashcards.length + 1,
                             itemBuilder: (context, index) {
+                          if (index == flashcards.length) {
+                            return Container(
+                              color: AppTheme.darkBase,
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                    onPressed: provider.hasPrev ? () => provider.prevPage() : null,
+                                    icon: const Icon(Icons.chevron_left),
+                                    color: provider.hasPrev ? Colors.white : AppTheme.darkBorder,
+                                  ),
+                                  Text(
+                                    "Page ${provider.currentPage} of ${provider.totalPages} (${provider.totalCards} cards)",
+                                    style: TextStyle(color: AppTheme.lightText.withOpacity(0.5), fontSize: 13),
+                                  ),
+                                  IconButton(
+                                    onPressed: provider.hasNext ? () => provider.nextPage() : null,
+                                    icon: const Icon(Icons.chevron_right),
+                                    color: provider.hasNext ? Colors.white : AppTheme.darkBorder,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                           final card = flashcards[index];
                           final due = card.due ?? DateTime.now();
                           final level = card.complexity ?? 1;
@@ -116,32 +141,8 @@ class _AchievementState extends State<AchievementUI> {
                           );
                         },
                       ),
-                    ),
-                  ),
-                  Container(
-                      color: AppTheme.darkBase,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: provider.hasPrev ? () => provider.prevPage() : null,
-                            icon: const Icon(Icons.chevron_left),
-                            color: provider.hasPrev ? Colors.white : AppTheme.darkBorder,
-                          ),
-                          Text(
-                            "Page ${provider.currentPage} of ${provider.totalPages} (${provider.totalCards} cards)",
-                            style: TextStyle(color: AppTheme.lightText.withOpacity(0.5), fontSize: 13),
-                          ),
-                          IconButton(
-                            onPressed: provider.hasNext ? () => provider.nextPage() : null,
-                            icon: const Icon(Icons.chevron_right),
-                            color: provider.hasNext ? Colors.white : AppTheme.darkBorder,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ),)
+                  ]
                 ),
     );
   }

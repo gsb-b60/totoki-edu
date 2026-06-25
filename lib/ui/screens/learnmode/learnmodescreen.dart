@@ -9,9 +9,7 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 
 
 class LearnModeScreen extends StatefulWidget {
-  const LearnModeScreen({super.key, this.showAppBar = true});
-
-  final bool showAppBar;
+  const LearnModeScreen({super.key});
 
   @override
   State<LearnModeScreen> createState() => _LearnModeScreenState();
@@ -29,58 +27,47 @@ class _LearnModeScreenState extends State<LearnModeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
-      appBar: widget.showAppBar
-          ? AppBar(
-              backgroundColor: AppTheme.darkBase,
-              elevation: 0,
-              leading: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: AppTheme.lightText,
-                ),
-              ),
-              title: Text(
-                index == 0
-                    ? "Daily Training"
-                    : index == 1
-                        ? "Levels"
-                        : "Study Modes",
-                style: AppTheme.screenTitleStyle,
-              ),
-            )
-          : null,
-      body: _screens[index],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-        ),
-        child: BottomNavigationBar(
-          currentIndex: index,
-          onTap: (i) => setState(() => index = i),
-          iconSize: 28,
-          unselectedItemColor: AppTheme.lightText.withOpacity(0.5),
-          backgroundColor: AppTheme.darkSurface,
-          selectedFontSize: 14,
-          unselectedFontSize: 12,
-          selectedItemColor: AppTheme.greenPrimary,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.assignment_turned_in),
-              label: 'Daily',
+      body: Column(
+        children: [
+          Container(
+            color: AppTheme.darkBase,
+            child: Row(
+              children: List.generate(3, (i) {
+                final selected = index == i;
+                return Expanded(
+                  child: GestureDetector(
+                    onTap: () => setState(() => index = i),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: selected
+                                ? AppTheme.greenPrimary
+                                : Colors.transparent,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        const ['Daily', 'Levels', 'Modes'][i],
+                        textAlign: TextAlign.center,
+                        style: AppTheme.bodyMediumStyle.copyWith(
+                          color: selected
+                              ? AppTheme.greenPrimary
+                              : AppTheme.lightText.withOpacity(0.5),
+                          fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                          fontSize: selected ? 15 : 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.military_tech),
-              label: 'Levels',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.quiz),
-              label: 'Modes',
-            ),
-          ],
-        ),
+          ),
+          Expanded(child: _screens[index]),
+        ],
       ),
     );
   }

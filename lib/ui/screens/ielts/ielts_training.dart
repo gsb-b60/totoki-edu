@@ -51,41 +51,47 @@ class _IeltsTrainingState extends State<IeltsTraining> {
               ),
             )
           : null,
-      body: _screens[index],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-        ),
-        child: BottomNavigationBar(
-          currentIndex: index,
-          onTap: (i) => setState(() => index = i),
-          iconSize: 24,
-          unselectedItemColor: AppTheme.lightText.withOpacity(0.5),
-          backgroundColor: AppTheme.darkSurface,
-          selectedFontSize: 12,
-          unselectedFontSize: 10,
-          selectedItemColor: AppTheme.greenPrimary,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book),
-              label: 'Reading',
+      body: Column(
+        children: [
+          Container(
+            color: AppTheme.darkBase,
+            child: Row(
+              children: List.generate(4, (i) {
+                final selected = index == i;
+                return Expanded(
+                  child: GestureDetector(
+                    onTap: () => setState(() => index = i),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: selected
+                                ? AppTheme.bluePrimary
+                                : Colors.transparent,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        _titles[i],
+                        textAlign: TextAlign.center,
+                        style: AppTheme.bodyMediumStyle.copyWith(
+                          color: selected
+                              ? AppTheme.bluePrimary
+                              : AppTheme.lightText.withOpacity(0.5),
+                          fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                          fontSize: selected ? 15 : 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.headphones),
-              label: 'Listening',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit),
-              label: 'Writing',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.mic),
-              label: 'Speaking',
-            ),
-          ],
-        ),
+          ),
+          Expanded(child: _screens[index]),
+        ],
       ),
     );
   }
