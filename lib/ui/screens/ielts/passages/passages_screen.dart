@@ -6,6 +6,7 @@ import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_sum
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/option_choice.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/checkbox_widget.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_answer.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_table.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:flutter/gestures.dart';
 
@@ -349,6 +350,21 @@ class _PassagesScreenState extends State<PassagesScreen> {
           } else if (idx < _selections.length) {
             _selections[idx] = opt;
           }
+        }),
+      );
+    }
+
+    if (pg.type == "input-table") {
+      return InputTable(
+        headerText: pg.displayText,
+        rowLabels: pg.rowLabels ?? [],
+        inputs: _textInputs,
+        constraint: pg.constraint,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        onChanged: (idx, v) => setState(() {
+          if (idx < _textInputs.length) _textInputs[idx] = v;
         }),
       );
     }
