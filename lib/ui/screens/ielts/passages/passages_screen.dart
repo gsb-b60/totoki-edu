@@ -295,6 +295,30 @@ class _PassagesScreenState extends State<PassagesScreen> {
     final qIdx = _currentParagraph + 1;
     final totalQ = noti.questions.length;
 
+    if (pg.type == "select-flowchart-given-list") {
+      final usedOptionIndices = <int>{};
+      for (int i = 0; i < noti.questions.length; i++) {
+        if (i == _currentParagraph) continue;
+        final saved = _savedSelections[i];
+        if (saved != null) {
+          for (final sel in saved) {
+            if (sel != null) usedOptionIndices.add(sel);
+          }
+        }
+      }
+
+      return SelectSummaryGivenList(
+        questionText: pg.displayText,
+        options: pg.options,
+        selected: _selections,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        usedOptionIndices: usedOptionIndices,
+        onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
+      );
+    }
+
     if (pg.type.startsWith("select-")) {
       final usedOptionIndices = <int>{};
       for (int i = 0; i < noti.questions.length; i++) {

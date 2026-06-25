@@ -25,49 +25,54 @@ class InputTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          "Question $questionIndex/$totalQuestions",
-          style: AppTheme.captionStyle.copyWith(fontSize: 13),
-        ),
-        if (constraint != null) ...[
-          const SizedBox(height: 4),
-          Text(
-            constraint!,
-            style: AppTheme.captionStyle.copyWith(color: Colors.orangeAccent, fontSize: 12),
-          ),
-        ],
-        const SizedBox(height: 12),
-        if (headerText.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Text(
-              headerText,
-              style: AppTheme.sectionHeaderStyle.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.darkBorder,
-              ),
-            ),
-          ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Table(
-              border: TableBorder.all(color: AppTheme.darkBorder, width: 1),
-              columnWidths: const {
-                0: FlexColumnWidth(2),
-                1: FlexColumnWidth(1),
-              },
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildHeaderRow(),
-                for (int i = 0; i < rowLabels.length; i++) _buildDataRow(i),
+                Text(
+                  "Question $questionIndex/$totalQuestions",
+                  style: AppTheme.captionStyle.copyWith(fontSize: 13),
+                ),
+                if (constraint != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    constraint!,
+                    style: AppTheme.captionStyle.copyWith(color: Colors.orangeAccent, fontSize: 12),
+                  ),
+                ],
+                const SizedBox(height: 12),
+                if (headerText.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      headerText,
+                      style: AppTheme.sectionHeaderStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.darkBorder,
+                      ),
+                    ),
+                  ),
+                Table(
+                  border: TableBorder.all(color: AppTheme.darkBorder, width: 1),
+                  columnWidths: const {
+                    0: FlexColumnWidth(2),
+                    1: FlexColumnWidth(1),
+                  },
+                  children: [
+                    _buildHeaderRow(),
+                    for (int i = 0; i < rowLabels.length; i++) _buildDataRow(i),
+                  ],
+                ),
               ],
             ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 

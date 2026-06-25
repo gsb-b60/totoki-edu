@@ -101,6 +101,36 @@ class ReadingNoti extends ChangeNotifier {
     final body = qGroup["body"] as Map<String, dynamic>;
 
     switch (type) {
+      case "select-flowchart-given-list":
+        final list = (body["list"] as List?)?.map((e) => e.toString().trim()).toList() ?? [];
+        final items = body["items"] as List;
+        int qNum = qGroup["start"] as int;
+
+        for (final item in items) {
+          if (item is Map && item["type"] == "example") continue;
+          if (item is! String) continue;
+
+          final matches = inputRegex.allMatches(item).toList();
+          if (matches.isEmpty) continue;
+
+          final displayText = item
+              .replaceAll(inputRegex, '___')
+              .replaceAll(RegExp(r'\s+'), ' ')
+              .trim();
+
+          final answers = <int>[];
+          for (int i = 0; i < matches.length; i++) {
+            answers.add(answerLookup[qNum] ?? 0);
+            qNum++;
+          }
+
+          questions.add(ParagraphGroup(
+            displayText: displayText,
+            options: List<String>.from(list),
+            answers: answers,
+            type: type,
+          ));
+        }
       case final _ when type.startsWith("select-"):
         final list = (body["list"] as List?)?.map((e) => e.toString().trim()).toList() ?? [];
         final items = body["items"] as List;
