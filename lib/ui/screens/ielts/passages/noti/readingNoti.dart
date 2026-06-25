@@ -11,6 +11,9 @@ class ParagraphGroup {
   final String? constraint;
   final List<String>? rowLabels;
 
+  final String? imageAssetPath;
+  final String? diagramTitle;
+
   ParagraphGroup({
     required this.displayText,
     required this.options,
@@ -19,6 +22,8 @@ class ParagraphGroup {
     required this.type,
     this.constraint,
     this.rowLabels,
+    this.imageAssetPath,
+    this.diagramTitle,
   });
 }
 
@@ -291,6 +296,32 @@ class ReadingNoti extends ChangeNotifier {
           type: type,
           constraint: constraint,
           rowLabels: rowLabels,
+        ));
+      case "input-diagram":
+        final imgFilename = body["img"] as String;
+        final cleaned = imgFilename.replaceAll('.jpg', '.jpeg');
+        final imageAssetPath = "assets/ielts/picture/$seriesId/$cleaned";
+        final diagramTitle = body["title"] as String?;
+        final constraint = qGroup["desc"]?["constraint"] as String?;
+        final descText = qGroup["desc"]?["text"] as List?;
+        final instruction = (descText != null && descText.isNotEmpty) ? descText[0] as String : "";
+        final inputItems = body["items"] as List;
+        final innerItems = inputItems.isNotEmpty ? inputItems[0] as List : <dynamic>[];
+        int qNum = qGroup["start"] as int;
+        final textAnswers = <String>[];
+        for (final _ in innerItems) {
+          textAnswers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+        questions.add(ParagraphGroup(
+          displayText: instruction,
+          options: [],
+          answers: [],
+          textAnswers: textAnswers,
+          type: type,
+          constraint: constraint,
+          imageAssetPath: imageAssetPath,
+          diagramTitle: diagramTitle,
         ));
       case final _ when type.startsWith("input-"):
         final items = body["items"] as List;
