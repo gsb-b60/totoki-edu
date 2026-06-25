@@ -22,9 +22,18 @@ class ParagraphGroup {
   });
 }
 
+class ArticleFragment {
+  final String type; // "text" or "image"
+  final String? text;
+  final String? imageAssetPath;
+
+  ArticleFragment({required this.type, this.text, this.imageAssetPath});
+}
+
 class ReadingNoti extends ChangeNotifier {
   String title = "";
   String articleText = "";
+  List<ArticleFragment> articleFragments = [];
   List<ParagraphGroup> questions = [];
   bool isLoading = false;
   Map<String, dynamic> _dictionary = {};
@@ -61,19 +70,44 @@ class ReadingNoti extends ChangeNotifier {
     title = article["title"] as String;
     final sections = article["sections"] as List;
 
+    final fragments = <ArticleFragment>[];
     final buffer = StringBuffer();
     for (final section in sections) {
       for (final item in section["items"]) {
-        for (final paragraph in item["items"]) {
-          for (final sentence in paragraph["items"]) {
-            buffer.write(sentence["sentence_raw"] as String);
-            buffer.write(" ");
+        if (item["type"] == "image") {
+          final text = buffer.toString().trim();
+          if (text.isNotEmpty) {
+            fragments.add(ArticleFragment(type: "text", text: text));
           }
-          buffer.write("\n\n");
+          buffer.clear();
+          final filenames = (item["items"] as List).cast<String>();
+          for (final filename in filenames) {
+            final cleaned = filename.replaceAll('.jpg', '.jpeg');
+            fragments.add(ArticleFragment(
+              type: "image",
+              imageAssetPath: "assets/ielts/picture/$seriesId/$cleaned",
+            ));
+          }
+        } else {
+          for (final paragraph in item["items"]) {
+            for (final sentence in paragraph["items"]) {
+              buffer.write(sentence["sentence_raw"] as String);
+              buffer.write(" ");
+            }
+            buffer.write("\n\n");
+          }
         }
       }
     }
-    articleText = buffer.toString().trim();
+    final remaining = buffer.toString().trim();
+    if (remaining.isNotEmpty) {
+      fragments.add(ArticleFragment(type: "text", text: remaining));
+    }
+    articleFragments = fragments;
+    articleText = fragments
+        .where((f) => f.type == "text")
+        .map((f) => f.text!)
+        .join("\n\n");
 
     final readingAnswers = answerData["reading"] as List;
     final answerLookup = <int, int>{};

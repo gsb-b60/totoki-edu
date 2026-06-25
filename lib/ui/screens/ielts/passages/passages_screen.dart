@@ -122,7 +122,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
     overlay.insert(_overlayEntry!);
   }
 
-  List<InlineSpan> _buildArticleSpans(ReadingNoti noti) {
+  List<InlineSpan> _buildArticleSpans(String text, ReadingNoti noti) {
     for (final r in _recognizers) {
       r.dispose();
     }
@@ -131,7 +131,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
     final spans = <InlineSpan>[];
     final wordRegex = RegExp(r"[A-Za-z]+(?:[''][A-Za-z]+)*");
     int lastEnd = 0;
-    for (final match in wordRegex.allMatches(noti.articleText)) {
+    for (final match in wordRegex.allMatches(text)) {
       if (match.start > lastEnd) {
         spans.add(TextSpan(text: noti.articleText.substring(lastEnd, match.start)));
       }
@@ -151,8 +151,8 @@ class _PassagesScreenState extends State<PassagesScreen> {
       ));
       lastEnd = match.end;
     }
-    if (lastEnd < noti.articleText.length) {
-      spans.add(TextSpan(text: noti.articleText.substring(lastEnd)));
+    if (lastEnd < text.length) {
+      spans.add(TextSpan(text: text.substring(lastEnd)));
     }
     return spans;
   }
@@ -506,12 +506,31 @@ class _PassagesScreenState extends State<PassagesScreen> {
                               style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 16),
-                            RichText(
-                              text: TextSpan(
-                                style: AppTheme.bodyLargeStyle.copyWith(height: 1.6),
-                                children: _buildArticleSpans(noti),
-                              ),
-                            ),
+                            ...noti.articleFragments.map((fragment) {
+                              if (fragment.type == "text") {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: AppTheme.bodyLargeStyle.copyWith(height: 1.6),
+                                      children: _buildArticleSpans(fragment.text!, noti),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.asset(
+                                      fragment.imageAssetPath!,
+                                      fit: BoxFit.contain,
+                                      width: double.infinity,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }),
                           ],
                         ),
                       ),
