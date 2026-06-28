@@ -10,6 +10,7 @@ import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_answ
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_table.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_diagram.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_given_diagram.dart';
+import 'package:totoki_extract/ui/screens/ielts/widgets/picture_viewer.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:flutter/gestures.dart';
 
@@ -705,14 +706,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
                               } else {
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 12),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      fragment.imageAssetPath!,
-                                      fit: BoxFit.contain,
-                                      width: double.infinity,
-                                    ),
-                                  ),
+                                  child: PictureViewer(imageAssetPath: fragment.imageAssetPath!),
                                 );
                               }
                             }),

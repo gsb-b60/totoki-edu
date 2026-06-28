@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/ui/screens/ielts/widgets/picture_viewer.dart';
 
 class InputDiagram extends StatelessWidget {
   final String questionText;
@@ -65,14 +66,7 @@ class InputDiagram extends StatelessWidget {
                 ],
                 if (imageAssetPath != null) ...[
                   const SizedBox(height: 12),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      imageAssetPath!,
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                    ),
-                  ),
+                  PictureViewer(imageAssetPath: imageAssetPath!),
                 ],
                 const SizedBox(height: 16),
                 for (int i = 0; i < inputs.length; i++)

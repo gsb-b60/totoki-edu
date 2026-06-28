@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_summary_given_list.dart';
+import 'package:totoki_extract/ui/screens/ielts/widgets/picture_viewer.dart';
 
 class SelectGivenDiagram extends StatelessWidget {
   final String questionText;
@@ -30,6 +30,49 @@ class SelectGivenDiagram extends StatelessWidget {
     this.constraint,
   });
 
+  void _showOptionsDialog(BuildContext context, int blankIdx) {
+    final usedByOthers = <int>{...usedOptionIndices};
+    for (int i = 0; i < selected.length; i++) {
+      if (i != blankIdx && selected[i] != null) {
+        usedByOthers.add(selected[i]!);
+      }
+    }
+
+    final available = <int>[];
+    for (int i = 0; i < options.length; i++) {
+      if (!usedByOthers.contains(i) || (selected.length > blankIdx && selected[blankIdx] == i)) {
+        available.add(i);
+      }
+    }
+
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        backgroundColor: AppTheme.darkSurface,
+        title: Text('Select an option', style: AppTheme.sectionHeaderStyle),
+        children: available.map((i) {
+          final isSelected = selected.length > blankIdx && selected[blankIdx] == i;
+          return SimpleDialogOption(
+            onPressed: () {
+              Navigator.pop(ctx);
+              onSelect(blankIdx, i);
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(
+                options[i],
+                style: AppTheme.bodyLargeStyle.copyWith(
+                  color: isSelected ? AppTheme.greenPrimary : AppTheme.lightText,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -40,6 +83,24 @@ class SelectGivenDiagram extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Text(
+                  "Question $questionIndex/$totalQuestions",
+                  style: AppTheme.captionStyle.copyWith(fontSize: 13),
+                ),
+                if (constraint != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    constraint!,
+                    style: AppTheme.captionStyle.copyWith(color: Colors.orangeAccent, fontSize: 12),
+                  ),
+                ],
+                if (questionText.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    questionText,
+                    style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 14),
+                  ),
+                ],
                 if (diagramTitle != null && diagramTitle!.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(
@@ -52,31 +113,91 @@ class SelectGivenDiagram extends StatelessWidget {
                 ],
                 if (imageAssetPath != null) ...[
                   const SizedBox(height: 12),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      imageAssetPath!,
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                    ),
-                  ),
+                  PictureViewer(imageAssetPath: imageAssetPath!),
                 ],
                 const SizedBox(height: 16),
-                SelectSummaryGivenList(
-                  questionText: questionText,
-                  options: options,
-                  selected: selected,
-                  answered: answered,
-                  questionIndex: questionIndex,
-                  totalQuestions: totalQuestions,
-                  usedOptionIndices: usedOptionIndices,
-                  onSelect: onSelect,
-                ),
+                for (int i = 0; i < selected.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 28,
+                          child: Text(
+                            "${i + 1}.",
+                            style: AppTheme.bodyLargeStyle.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.greenPrimary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: answered
+                              ? _buildAnsweredField(i)
+                              : _buildDropdownField(context, i),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAnsweredField(int index) {
+    final sel = index < selected.length ? selected[index] : null;
+    final text = sel != null ? options[sel] : "";
+    return Text(
+      text.isEmpty ? " ___ " : text,
+      style: TextStyle(
+        color: text.isEmpty ? Colors.redAccent : AppTheme.greenPrimary,
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+    );
+  }
+
+  Widget _buildDropdownField(BuildContext context, int index) {
+    final sel = index < selected.length ? selected[index] : null;
+    return SizedBox(
+      height: 32,
+      child: GestureDetector(
+        onTap: () => _showOptionsDialog(context, index),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: sel != null ? AppTheme.greenPrimary : AppTheme.darkBorder,
+              width: sel != null ? 2 : 1.5,
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  sel != null ? options[sel] : " ___ ",
+                  style: const TextStyle(
+                    color: AppTheme.greenPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.arrow_drop_down,
+                color: AppTheme.greenPrimary,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
