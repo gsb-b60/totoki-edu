@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/ui/screens/ielts/passages/noti/readingNoti.dart';
+import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
+import 'package:totoki_extract/features/ielts/models/paragraph_group.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_summary_given_list.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/option_choice.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/checkbox_widget.dart';
@@ -30,6 +31,7 @@ class PassagesScreen extends StatefulWidget {
 }
 
 class _PassagesScreenState extends State<PassagesScreen> {
+  ReadingNoti? _noti;
   int _currentParagraph = 0;
   List<int?> _selections = [];
   List<String> _textInputs = [];
@@ -39,15 +41,6 @@ class _PassagesScreenState extends State<PassagesScreen> {
   final Set<int> _submittedParagraphs = {};
   final List<TapGestureRecognizer> _recognizers = [];
   OverlayEntry? _overlayEntry;
-
-  @override
-  void dispose() {
-    _removeOverlay();
-    for (final r in _recognizers) {
-      r.dispose();
-    }
-    super.dispose();
-  }
 
   void _removeOverlay() {
     _overlayEntry?.remove();
@@ -162,13 +155,72 @@ class _PassagesScreenState extends State<PassagesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ReadingNoti>().loadPassage(
+      _noti = context.read<ReadingNoti>();
+      _noti!.addListener(_onNotiError);
+      _noti!.loadPassage(
         seriesId: widget.seriesId,
         testId: widget.testId,
         part: widget.part,
         questionGroup: widget.questionGroup,
       );
     });
+  }
+
+  void _onNotiError() {
+    if (!mounted || _noti == null) return;
+    if (_noti!.hasError) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: AppTheme.darkSurface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: Colors.redAccent, width: 2),
+          ),
+          title: Row(
+            children: [
+              const Icon(Icons.error_outline, color: Colors.redAccent, size: 28),
+              const SizedBox(width: 10),
+              Text("Loading Error", style: AppTheme.sectionHeaderStyle.copyWith(color: Colors.redAccent, fontSize: 18)),
+            ],
+          ),
+          content: Container(
+            constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+            child: SingleChildScrollView(
+              child: SelectableText(
+                _noti!.errorMessage!,
+                style: const TextStyle(fontFamily: 'monospace', fontSize: 13, color: AppTheme.lightText, height: 1.5),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("DISMISS", style: TextStyle(color: AppTheme.greenPrimary)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                Navigator.pop(context);
+              },
+              child: const Text("GO BACK", style: TextStyle(color: Colors.redAccent)),
+            ),
+          ],
+        ),
+      );
+      _noti!.removeListener(_onNotiError);
+    }
+  }
+
+  @override
+  void dispose() {
+    _noti?.removeListener(_onNotiError);
+    _removeOverlay();
+    for (final r in _recognizers) {
+      r.dispose();
+    }
+    super.dispose();
   }
 
   void _submit() {
@@ -424,14 +476,42 @@ class _PassagesScreenState extends State<PassagesScreen> {
       );
     }
 
-    return const Center(child: Text("Unknown question type", style: TextStyle(color: Colors.redAccent)));
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.darkCard,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.redAccent.withAlpha(80), width: 1),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Row(
+            children: [
+              Icon(Icons.warning_amber_rounded, color: Colors.orangeAccent, size: 20),
+              SizedBox(width: 8),
+              Text("Unhandled question type", style: TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          SelectableText(
+            "type: ${pg.type}\n"
+            "constraint: ${pg.constraint ?? "—"}\n"
+            "options: [${pg.options.join(", ")}]\n"
+            "textAnswers: [${pg.textAnswers.join(", ")}]\n"
+            "displayText: ${pg.displayText}",
+            style: const TextStyle(fontFamily: 'monospace', fontSize: 12, color: AppTheme.lightText, height: 1.5),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final noti = context.watch<ReadingNoti>();
 
-    if (noti.isLoading || noti.articleText.isEmpty) {
+    if (noti.isLoading && !noti.hasError) {
       return Scaffold(
         backgroundColor: AppTheme.darkBase,
         appBar: AppBar(
@@ -445,6 +525,64 @@ class _PassagesScreenState extends State<PassagesScreen> {
           centerTitle: true,
         ),
         body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (noti.hasError) {
+      return Scaffold(
+        backgroundColor: AppTheme.darkBase,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text("Reading", style: AppTheme.screenTitleStyle),
+          backgroundColor: AppTheme.darkBase,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.error_outline, color: Colors.redAccent, size: 64),
+                const SizedBox(height: 16),
+                Text("Failed to load passage", style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 18, color: Colors.redAccent)),
+                const SizedBox(height: 8),
+                Container(
+                  constraints: const BoxConstraints(maxHeight: 300, maxWidth: 400),
+                  child: SingleChildScrollView(
+                    child: SelectableText(
+                      noti.errorMessage!,
+                      style: const TextStyle(fontFamily: 'monospace', fontSize: 13, color: AppTheme.lightText, height: 1.5),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (noti.articleText.isEmpty && noti.questions.isEmpty) {
+      return Scaffold(
+        backgroundColor: AppTheme.darkBase,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text("Reading", style: AppTheme.screenTitleStyle),
+          backgroundColor: AppTheme.darkBase,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        body: const Center(
+          child: Text("No content available.", style: TextStyle(color: AppTheme.darkBorder)),
+        ),
       );
     }
 

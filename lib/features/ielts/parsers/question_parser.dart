@@ -1,0 +1,330 @@
+import '../models/paragraph_group.dart';
+import 'question_normalizer.dart';
+
+class QuestionParser {
+  static final _inputRegex = RegExp(r'<input(?:=[^>]*)?>');
+
+  static List<ParagraphGroup> parse({
+    required Map<String, dynamic> qGroup,
+    required Map<int, int> answerLookup,
+    required Map<int, String> textAnswerLookup,
+    required int seriesId,
+  }) {
+    final type = qGroup["type"] as String? ?? "unknown";
+    if (!QuestionNormalizer.knownTypes.contains(type)) {
+      throw UnsupportedError("Unknown question type: $type");
+    }
+    final body = qGroup["body"] as Map<String, dynamic>? ?? {};
+    final start = qGroup["start"] as int? ?? 0;
+
+    switch (type) {
+      case "select-flowchart-given-list":
+      case final _ when type.startsWith("select-"):
+        return _parseSelect(body: body, start: start, answerLookup: answerLookup, type: type);
+      case "option-abc":
+        return _parseOptionAbc(body: body, start: start, answerLookup: answerLookup);
+      case "option-true-false":
+      case "option-yes-no":
+        return _parseOptionTfYn(body: body, type: type, start: start, textAnswerLookup: textAnswerLookup);
+      case "checkbox":
+        return _parseCheckbox(body: body, qGroup: qGroup, start: start, answerLookup: answerLookup);
+      case "input-table":
+        return _parseInputTable(body: body, qGroup: qGroup, start: start, textAnswerLookup: textAnswerLookup);
+      case "input-diagram":
+        return _parseInputDiagram(
+          body: body, qGroup: qGroup, start: start,
+          textAnswerLookup: textAnswerLookup, seriesId: seriesId,
+        );
+      case final _ when type.startsWith("input-"):
+        return _parseInputGeneric(body: body, qGroup: qGroup, start: start, textAnswerLookup: textAnswerLookup, type: type);
+      default:
+        throw UnsupportedError("Unknown question type: $type");
+    }
+  }
+
+  static List<ParagraphGroup> _parseSelect({
+    required Map<String, dynamic> body,
+    required int start,
+    required Map<int, int> answerLookup,
+    required String type,
+  }) {
+    final list = (body["list"] as List?)?.map((e) => e.toString().trim()).toList() ?? [];
+    final items = body["items"] as List? ?? [];
+    int qNum = start;
+    final result = <ParagraphGroup>[];
+
+    for (final item in items) {
+      if (item is Map && item["type"] == "example") continue;
+      if (item is! String) continue;
+
+      final matches = _inputRegex.allMatches(item).toList();
+      if (matches.isEmpty) continue;
+
+      final displayText = item
+          .replaceAll(_inputRegex, '___')
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim();
+
+      final answers = <int>[];
+      for (int i = 0; i < matches.length; i++) {
+        answers.add(answerLookup[qNum] ?? 0);
+        qNum++;
+      }
+
+      result.add(ParagraphGroup(
+        displayText: displayText,
+        options: List<String>.from(list),
+        answers: answers,
+        type: type,
+      ));
+    }
+
+    return result;
+  }
+
+  static List<ParagraphGroup> _parseOptionAbc({
+    required Map<String, dynamic> body,
+    required int start,
+    required Map<int, int> answerLookup,
+  }) {
+    final items = body["items"] as List? ?? [];
+    int qNum = start;
+    final result = <ParagraphGroup>[];
+
+    for (final item in items) {
+      if (item is! Map) continue;
+      final title = item["title"] as String? ?? "";
+      final options = (item["options"] as List?)?.map((e) => e.toString()).toList() ?? [];
+
+      result.add(ParagraphGroup(
+        displayText: title,
+        options: options,
+        answers: [answerLookup[qNum] ?? 0],
+        type: "option-abc",
+      ));
+      qNum++;
+    }
+
+    return result;
+  }
+
+  static List<ParagraphGroup> _parseOptionTfYn({
+    required Map<String, dynamic> body,
+    required String type,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+  }) {
+    final items = body["items"] as List? ?? [];
+    const tfOptions = ["True", "False", "Not Given"];
+    const ynOptions = ["Yes", "No", "Not Given"];
+    final options = type == "option-true-false" ? tfOptions : ynOptions;
+    int qNum = start;
+    final result = <ParagraphGroup>[];
+
+    for (final item in items) {
+      if (item is! String) continue;
+
+      final textAns = textAnswerLookup[qNum]?.toUpperCase() ?? "";
+      int answerIdx;
+      if (textAns == "TRUE" || textAns == "YES") {
+        answerIdx = 0;
+      } else if (textAns == "FALSE" || textAns == "NO") {
+        answerIdx = 1;
+      } else {
+        answerIdx = 2;
+      }
+
+      result.add(ParagraphGroup(
+        displayText: item,
+        options: List<String>.from(options),
+        answers: [answerIdx],
+        type: type,
+      ));
+      qNum++;
+    }
+
+    return result;
+  }
+
+  static List<ParagraphGroup> _parseCheckbox({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, int> answerLookup,
+  }) {
+    final title = body["title"] as String? ?? "";
+    final opts = (body["options"] as List?)?.map((e) => e.toString()).toList() ?? [];
+    final quantity = (qGroup["desc"]["quantity"] as int?) ?? 1;
+    int qNum = start;
+
+    final answers = <int>[];
+    for (int i = 0; i < quantity; i++) {
+      answers.add(answerLookup[qNum] ?? 0);
+      qNum++;
+    }
+
+    return [
+      ParagraphGroup(
+        displayText: title,
+        options: opts,
+        answers: answers,
+        type: "checkbox",
+      ),
+    ];
+  }
+
+  static List<ParagraphGroup> _parseInputTable({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+  }) {
+    final items = body["items"] as List? ?? [];
+    final constraint = qGroup["desc"]["constraint"] as String?;
+    int qNum = start;
+
+    final headerText = items.isNotEmpty && items[0] is List && (items[0] as List).length > 1
+        ? ((items[0] as List)[1] as String? ?? "")
+        : "";
+    final rowLabels = <String>[];
+    final textAnswers = <String>[];
+
+    for (int i = 1; i < items.length; i++) {
+      final row = items[i] as List? ?? [];
+      if (row.isEmpty) continue;
+      final label = row[0];
+      String labelText;
+      if (label is List) {
+        labelText = (label).map((e) => e.toString().trim()).join(" / ");
+      } else {
+        labelText = label.toString().trim();
+      }
+      rowLabels.add(labelText);
+      textAnswers.add(textAnswerLookup[qNum] ?? "");
+      qNum++;
+    }
+
+    return [
+      ParagraphGroup(
+        displayText: headerText,
+        options: [],
+        answers: [],
+        textAnswers: textAnswers,
+        type: "input-table",
+        constraint: constraint,
+        rowLabels: rowLabels,
+      ),
+    ];
+  }
+
+  static List<ParagraphGroup> _parseInputDiagram({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+    required int seriesId,
+  }) {
+    final imgFilename = body["img"] as String? ?? "";
+    final cleaned = imgFilename.replaceAll('.jpg', '.jpeg');
+    final imageAssetPath = cleaned.isNotEmpty ? "assets/ielts/picture/$seriesId/$cleaned" : null;
+    final diagramTitle = body["title"] as String?;
+    final constraint = qGroup["desc"]["constraint"] as String?;
+    final descText = qGroup["desc"]["text"] as List?;
+    final instruction = (descText != null && descText.isNotEmpty) ? descText[0] as String : "";
+    final inputItems = body["items"] as List? ?? [];
+    int qNum = start;
+    final textAnswers = <String>[];
+
+    for (final item in inputItems) {
+      if (item is Map) {
+        if (item["type"] == "example") continue;
+        final text = (item["title"] as String?) ?? (item["prefix"] as String?) ?? "";
+        final matches = _inputRegex.allMatches(text).toList();
+        for (int i = 0; i < matches.length; i++) {
+          textAnswers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+      } else if (item is List) {
+        for (final inner in item) {
+          if (inner is String) {
+            final matches = _inputRegex.allMatches(inner).toList();
+            for (int i = 0; i < matches.length; i++) {
+              textAnswers.add(textAnswerLookup[qNum] ?? "");
+              qNum++;
+            }
+          }
+        }
+      } else if (item is String) {
+        final matches = _inputRegex.allMatches(item).toList();
+        for (int i = 0; i < matches.length; i++) {
+          textAnswers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+      }
+    }
+
+    return [
+      ParagraphGroup(
+        displayText: instruction,
+        options: [],
+        answers: [],
+        textAnswers: textAnswers,
+        type: "input-diagram",
+        constraint: constraint,
+        imageAssetPath: imageAssetPath,
+        diagramTitle: diagramTitle,
+      ),
+    ];
+  }
+
+  static List<ParagraphGroup> _parseInputGeneric({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+    required String type,
+  }) {
+    final items = body["items"] as List? ?? [];
+    final constraint = qGroup["desc"]["constraint"] as String?;
+    int qNum = start;
+    final result = <ParagraphGroup>[];
+
+    for (final item in items) {
+      if (item is Map && item["type"] == "example") continue;
+
+      String text;
+      if (item is String) {
+        text = item;
+      } else if (item is Map) {
+        text = (item["title"] as String?) ?? (item["prefix"] as String?) ?? "";
+      } else {
+        continue;
+      }
+
+      final matches = _inputRegex.allMatches(text).toList();
+      if (matches.isEmpty) continue;
+
+      final displayText = text
+          .replaceAll(_inputRegex, '___')
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim();
+
+      final textAnswers = <String>[];
+      for (int i = 0; i < matches.length; i++) {
+        textAnswers.add(textAnswerLookup[qNum] ?? "");
+        qNum++;
+      }
+
+      result.add(ParagraphGroup(
+        displayText: displayText,
+        options: [],
+        answers: [],
+        textAnswers: textAnswers,
+        type: type, // preserves the input-* subtype
+        constraint: constraint,
+      ));
+    }
+
+    return result;
+  }
+}

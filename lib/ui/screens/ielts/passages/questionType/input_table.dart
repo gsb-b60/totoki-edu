@@ -53,7 +53,7 @@ class InputTable extends StatelessWidget {
                       style: AppTheme.sectionHeaderStyle.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppTheme.darkBorder,
+                        color: AppTheme.lightText,
                       ),
                     ),
                   ),

@@ -6,7 +6,7 @@ import 'package:totoki_extract/business/flashcard/Deck.dart';
 import 'package:totoki_extract/theme/appTheme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/ui/screens/home/home_screen.dart';
-import 'package:totoki_extract/ui/screens/ielts/passages/noti/readingNoti.dart';
+import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
 
 
 
