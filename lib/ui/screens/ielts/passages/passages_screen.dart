@@ -9,6 +9,7 @@ import 'package:totoki_extract/ui/screens/ielts/passages/questionType/checkbox_w
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_answer.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_table.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/questionType/input_diagram.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/questionType/select_given_diagram.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
 import 'package:flutter/gestures.dart';
 
@@ -368,6 +369,33 @@ class _PassagesScreenState extends State<PassagesScreen> {
         questionIndex: qIdx,
         totalQuestions: totalQ,
         usedOptionIndices: usedOptionIndices,
+        onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
+      );
+    }
+
+    if (pg.type == "select-given-diagram" && pg.imageAssetPath != null) {
+      final usedOptionIndices = <int>{};
+      for (int i = 0; i < noti.questions.length; i++) {
+        if (i == _currentParagraph) continue;
+        final saved = _savedSelections[i];
+        if (saved != null) {
+          for (final sel in saved) {
+            if (sel != null) usedOptionIndices.add(sel);
+          }
+        }
+      }
+
+      return SelectGivenDiagram(
+        questionText: pg.displayText,
+        options: pg.options,
+        selected: _selections,
+        answered: _answered,
+        questionIndex: qIdx,
+        totalQuestions: totalQ,
+        usedOptionIndices: usedOptionIndices,
+        imageAssetPath: pg.imageAssetPath,
+        diagramTitle: pg.diagramTitle,
+        constraint: pg.constraint,
         onSelect: (blankIdx, optIdx) => setState(() => _selections[blankIdx] = optIdx),
       );
     }

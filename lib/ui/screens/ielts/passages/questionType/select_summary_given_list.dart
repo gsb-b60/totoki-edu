@@ -30,16 +30,24 @@ class SelectSummaryGivenList extends StatefulWidget {
 class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          "Question ${widget.questionIndex}/${widget.totalQuestions}",
-          style: AppTheme.captionStyle.copyWith(fontSize: 13),
-        ),
-        const SizedBox(height: 8),
-        Expanded(child: _buildSummaryText()),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final hasBoundedHeight = constraints.maxHeight < double.infinity;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              "Question ${widget.questionIndex}/${widget.totalQuestions}",
+              style: AppTheme.captionStyle.copyWith(fontSize: 13),
+            ),
+            const SizedBox(height: 8),
+            if (hasBoundedHeight)
+              Expanded(child: _buildSummaryText())
+            else
+              _buildSummaryText(),
+          ],
+        );
+      },
     );
   }
 

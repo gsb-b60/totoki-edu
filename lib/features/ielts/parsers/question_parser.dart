@@ -19,6 +19,11 @@ class QuestionParser {
     final start = qGroup["start"] as int? ?? 0;
 
     switch (type) {
+      case "select-given-diagram":
+        return _parseSelectDiagram(
+          body: body, qGroup: qGroup, start: start,
+          answerLookup: answerLookup, seriesId: seriesId,
+        );
       case "select-flowchart-given-list":
       case final _ when type.startsWith("select-"):
         return _parseSelect(body: body, start: start, answerLookup: answerLookup, type: type);
@@ -81,6 +86,51 @@ class QuestionParser {
     }
 
     return result;
+  }
+
+  static List<ParagraphGroup> _parseSelectDiagram({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, int> answerLookup,
+    required int seriesId,
+  }) {
+    final imgFilename = body["img"] as String? ?? "";
+    final imageAssetPath = imgFilename.isNotEmpty ? AssetHelper.imageAssetPath(seriesId, imgFilename) : null;
+    final list = (body["list"] as List?)?.map((e) => e.toString().trim()).toList() ?? [];
+    final items = body["items"] as List? ?? [];
+    final descText = qGroup["desc"]["text"] as List?;
+    final instruction = (descText != null && descText.isNotEmpty) ? descText[0] as String : "";
+    final diagramTitle = body["title"] as String?;
+
+    int qNum = start;
+    final answers = <int>[];
+    final labelParts = <String>[];
+
+    for (final item in items) {
+      if (item is Map && item["type"] == "example") continue;
+      if (item is! String) continue;
+
+      final matches = _inputRegex.allMatches(item).toList();
+      for (int i = 0; i < matches.length; i++) {
+        answers.add(answerLookup[qNum] ?? 0);
+        labelParts.add("$qNum.");
+        qNum++;
+      }
+    }
+
+    final displayText = labelParts.join(" ___ ");
+
+    return [
+      ParagraphGroup(
+        displayText: displayText,
+        options: List<String>.from(list),
+        answers: answers,
+        type: "select-given-diagram",
+        imageAssetPath: imageAssetPath,
+        diagramTitle: instruction.isNotEmpty ? instruction : diagramTitle,
+      ),
+    ];
   }
 
   static List<ParagraphGroup> _parseOptionAbc({
