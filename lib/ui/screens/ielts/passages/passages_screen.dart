@@ -434,7 +434,9 @@ class _PassagesScreenState extends State<PassagesScreen> {
     if (pg.type == "input-table") {
       return InputTable(
         headerText: pg.displayText,
-        rowLabels: pg.rowLabels ?? [],
+        tableHeaders: pg.tableHeaders,
+        tableCells: pg.tableCells,
+        tableInputCounts: pg.tableInputCounts,
         inputs: _textInputs,
         constraint: pg.constraint,
         answered: _answered,

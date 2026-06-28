@@ -1,3 +1,4 @@
+import '../helpers/asset_helper.dart';
 import '../models/article_fragment.dart';
 
 class ArticleParser {
@@ -22,10 +23,9 @@ class ArticleParser {
           buffer.clear();
           final filenames = (item["items"] as List?)?.cast<String>() ?? [];
           for (final filename in filenames) {
-            final cleaned = filename.replaceAll('.jpg', '.jpeg');
             fragments.add(ArticleFragment(
               type: "image",
-              imageAssetPath: "assets/ielts/picture/$seriesId/$cleaned",
+              imageAssetPath: AssetHelper.imageAssetPath(seriesId, filename),
             ));
           }
         } else {

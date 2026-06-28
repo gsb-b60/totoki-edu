@@ -78,12 +78,14 @@ class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        widget.options[sel],
-                        style: const TextStyle(
-                          color: AppTheme.greenPrimary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                      Flexible(
+                        child: Text(
+                          widget.options[sel],
+                          style: const TextStyle(
+                            color: AppTheme.greenPrimary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       Icon(Icons.arrow_drop_down, color: AppTheme.greenPrimary, size: 20),
@@ -113,19 +115,21 @@ class _SelectSummaryGivenListState extends State<SelectSummaryGivenList> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      ' ___ ',
-                      style: TextStyle(
-                        color: AppTheme.greenPrimary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Flexible(
+                        child: Text(
+                          ' ___ ',
+                          style: TextStyle(
+                            color: AppTheme.greenPrimary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
-                    ),
-                    Icon(Icons.arrow_drop_down, color: AppTheme.greenPrimary, size: 20),
-                  ],
-                ),
+                      Icon(Icons.arrow_drop_down, color: AppTheme.greenPrimary, size: 20),
+                    ],
+                  ),
               ),
             ),
           ));

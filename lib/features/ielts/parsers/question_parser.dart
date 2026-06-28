@@ -1,3 +1,4 @@
+import '../helpers/asset_helper.dart';
 import '../models/paragraph_group.dart';
 import 'question_normalizer.dart';
 
@@ -183,36 +184,144 @@ class QuestionParser {
     final constraint = qGroup["desc"]["constraint"] as String?;
     int qNum = start;
 
-    final headerText = items.isNotEmpty && items[0] is List && (items[0] as List).length > 1
-        ? ((items[0] as List)[1] as String? ?? "")
-        : "";
-    final rowLabels = <String>[];
+    final tableInputRegex = RegExp(r'<input(?:\[\]|)(?:=[^>]*)?>');
+
+    bool isExample(Object? cell) => cell is Map && cell["type"] == "example";
+
+    bool isSpanLabel(Object? cell) =>
+        cell is Map && cell["type"] != "example" && (cell["rowspan"] != null || cell["title"] != null || cell["prefix"] != null);
+
+    (String, int) replaceInputs(String text) {
+      int count = 0;
+      final result = text.replaceAllMapped(tableInputRegex, (m) {
+        final isDouble = m.group(0)!.contains("[]");
+        count += isDouble ? 2 : 1;
+        return isDouble ? "___ ___" : "___";
+      });
+      return (result.trim(), count);
+    }
+
+    final headers = <String>[];
+    if (items.isNotEmpty && items[0] is List) {
+      for (final h in (items[0] as List)) {
+        headers.add(h.toString().trim());
+      }
+    }
+
+    final tableCells = <List<String>>[];
+    final tableInputCounts = <List<int>>[];
     final textAnswers = <String>[];
+    final displayText = body["title"] as String? ?? "";
+
+    final numCols = headers.length;
+    final spanRemaining = <int, int>{};
 
     for (int i = 1; i < items.length; i++) {
       final row = items[i] as List? ?? [];
       if (row.isEmpty) continue;
-      final label = row[0];
-      String labelText;
-      if (label is List) {
-        labelText = (label).map((e) => e.toString().trim()).join(" / ");
-      } else {
-        labelText = label.toString().trim();
+
+      final cells = <String>[];
+      final counts = <int>[];
+
+      spanRemaining.forEach((col, remaining) {
+        if (remaining <= 0) spanRemaining.remove(col);
+      });
+
+      int dataIdx = 0;
+      for (int col = 0; col < numCols; col++) {
+        if (spanRemaining[col] != null && spanRemaining[col]! > 0) {
+          cells.add("");
+          counts.add(0);
+          spanRemaining[col] = spanRemaining[col]! - 1;
+          continue;
+        }
+
+        if (dataIdx >= row.length) {
+          cells.add("");
+          counts.add(0);
+          continue;
+        }
+
+        final cell = row[dataIdx];
+        dataIdx++;
+
+        if (isExample(cell)) {
+          final items = cell["items"] as String? ?? "";
+          final display = items.replaceAllMapped(tableInputRegex, (m) {
+            final raw = m.group(0)!;
+            final eqIdx = raw.indexOf("=");
+            if (eqIdx != -1) return raw.substring(eqIdx + 1, raw.length - 1);
+            return "";
+          }).trim();
+          cells.add(display);
+          counts.add(0);
+          continue;
+        }
+
+        if (isSpanLabel(cell)) {
+          final label = (cell["title"] as String?) ?? (cell["prefix"] as String?) ?? "";
+          cells.add(label.trim());
+          counts.add(0);
+          final span = cell["rowspan"] as int? ?? 1;
+          if (span > 1) spanRemaining[col] = span - 1;
+          continue;
+        }
+
+        if (cell is List) {
+          final parts = <String>[];
+          int totalInputs = 0;
+          for (final sub in cell) {
+            final subStr = sub.toString();
+            final (display, cnt) = replaceInputs(subStr);
+            totalInputs += cnt;
+            parts.add(display);
+          }
+          cells.add(parts.join("\n"));
+          counts.add(totalInputs);
+          for (int k = 0; k < totalInputs; k++) {
+            textAnswers.add(textAnswerLookup[qNum] ?? "");
+            qNum++;
+          }
+          continue;
+        }
+
+        if (cell is String) {
+          final (display, cnt) = replaceInputs(cell);
+          cells.add(display);
+          counts.add(cnt);
+          for (int k = 0; k < cnt; k++) {
+            textAnswers.add(textAnswerLookup[qNum] ?? "");
+            qNum++;
+          }
+          continue;
+        }
+
+        if (cell is Map) {
+          final txt = (cell["title"] as String?) ?? (cell["prefix"] as String?) ?? cell.toString();
+          cells.add(txt.trim());
+          counts.add(0);
+          continue;
+        }
+
+        cells.add(cell.toString().trim());
+        counts.add(0);
       }
-      rowLabels.add(labelText);
-      textAnswers.add(textAnswerLookup[qNum] ?? "");
-      qNum++;
+
+      tableCells.add(cells);
+      tableInputCounts.add(counts);
     }
 
     return [
       ParagraphGroup(
-        displayText: headerText,
+        displayText: displayText,
         options: [],
         answers: [],
         textAnswers: textAnswers,
         type: "input-table",
         constraint: constraint,
-        rowLabels: rowLabels,
+        tableHeaders: headers.isNotEmpty ? headers : null,
+        tableCells: tableCells.isNotEmpty ? tableCells : null,
+        tableInputCounts: tableInputCounts.isNotEmpty ? tableInputCounts : null,
       ),
     ];
   }
@@ -225,8 +334,7 @@ class QuestionParser {
     required int seriesId,
   }) {
     final imgFilename = body["img"] as String? ?? "";
-    final cleaned = imgFilename.replaceAll('.jpg', '.jpeg');
-    final imageAssetPath = cleaned.isNotEmpty ? "assets/ielts/picture/$seriesId/$cleaned" : null;
+    final imageAssetPath = imgFilename.isNotEmpty ? AssetHelper.imageAssetPath(seriesId, imgFilename) : null;
     final diagramTitle = body["title"] as String?;
     final constraint = qGroup["desc"]["constraint"] as String?;
     final descText = qGroup["desc"]["text"] as List?;
