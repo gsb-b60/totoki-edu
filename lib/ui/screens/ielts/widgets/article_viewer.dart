@@ -159,7 +159,20 @@ class _ArticleViewerState extends State<ArticleViewer> {
                   ),
                 ),
               );
-            } else {
+            } 
+            else if (fragment.type == "heading") {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8, top: 8),
+                child: Text(
+                  fragment.text!,
+                  style: AppTheme.sectionHeaderStyle.copyWith(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            } 
+            else {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: PictureViewer(imageAssetPath: fragment.imageAssetPath!),

@@ -13,6 +13,16 @@ class ArticleParser {
     final buffer = StringBuffer();
 
     for (final section in sections) {
+      final sectionTitle = section["title"] as String?;
+      // if (sectionTitle != null && sectionTitle.isNotEmpty) {
+      //   final text = buffer.toString().trim();
+      //   if (text.isNotEmpty) {
+      //     fragments.add(ArticleFragment(type: "text", text: text));
+      //   }
+      //   buffer.clear();
+      //   fragments.add(ArticleFragment(type: "heading", text: sectionTitle));
+      // }
+
       final sectionItems = section["items"] as List? ?? [];
       for (final item in sectionItems) {
         if (item["type"] == "image") {
@@ -51,7 +61,7 @@ class ArticleParser {
     }
 
     final articleText = fragments
-        .where((f) => f.type == "text")
+        .where((f) => f.type == "text" || f.type == "heading")
         .map((f) => f.text!)
         .join("\n\n");
 
