@@ -35,6 +35,26 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/passages_screen.dart';
 
 class AppRouter {
+  static CustomTransitionPage<void> _fadeTransition(
+    BuildContext context,
+    GoRouterState state,
+    Widget child,
+  ) {
+    return CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInOut,
+          ),
+          child: child,
+        );
+      },
+    );
+  }
+
   static final GoRouter router = GoRouter(
     initialLocation: '/decks',
     routes: [
@@ -87,80 +107,114 @@ class AppRouter {
 
       GoRoute(
         path: '/decks/:deckId/cards',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final deckId = int.parse(state.pathParameters['deckId']!);
           final extra = state.extra as Map<String, dynamic>?;
           final deckName = extra?['deckName'] as String?;
-          return ChangeNotifierProvider<Cardmodel>(
-            create: (_) => Cardmodel(),
-            child: CardListScreen(deckId: deckId, deckName: deckName),
+          return _fadeTransition(
+            context,
+            state,
+            ChangeNotifierProvider<Cardmodel>(
+              create: (_) => Cardmodel(),
+              child: CardListScreen(deckId: deckId, deckName: deckName),
+            ),
           );
         },
       ),
 
       GoRoute(
         path: '/decks/:deckId/cards/study/:mode',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final deckId = int.parse(state.pathParameters['deckId']!);
           final mode = state.pathParameters['mode']!;
           final cardModel = (state.extra as Cardmodel?) ?? Cardmodel();
           final screen = _buildStudyModeScreen(mode, deckId);
-          return ChangeNotifierProvider<Cardmodel>.value(
-            value: cardModel,
-            child: screen,
+          return _fadeTransition(
+            context,
+            state,
+            ChangeNotifierProvider<Cardmodel>.value(
+              value: cardModel,
+              child: screen,
+            ),
           );
         },
       ),
 
       GoRoute(
         path: '/learn/lesson',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final fetchMode = state.extra as LearnMode;
-          return LessonScreen(fetchMode: fetchMode);
+          return _fadeTransition(
+            context,
+            state,
+            LessonScreen(fetchMode: fetchMode),
+          );
         },
       ),
 
       GoRoute(
         path: '/learn/level/:level',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final level = int.parse(state.pathParameters['level']!);
-          return Learnlevel(level: level);
+          return _fadeTransition(
+            context,
+            state,
+            Learnlevel(level: level),
+          );
         },
       ),
 
       GoRoute(
         path: '/learn/mode',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final mode = state.extra as StudyMode;
-          return LessLearnMode(st: mode);
+          return _fadeTransition(
+            context,
+            state,
+            LessLearnMode(st: mode),
+          );
         },
       ),
 
       GoRoute(
         path: '/stats/card',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final card = state.extra as Flashcard;
-          return CardInforScreen(card: card);
+          return _fadeTransition(
+            context,
+            state,
+            CardInforScreen(card: card),
+          );
         },
       ),
 
       GoRoute(
         path: '/ielts/reading',
-        builder: (context, state) => const PassagesScreen(),
+        pageBuilder: (context, state) {
+          return _fadeTransition(
+            context,
+            state,
+            const PassagesScreen(),
+          );
+        },
       ),
 
       GoRoute(
         path: '/ielts/reading/:series/:test/:part/:group',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final series = int.parse(state.pathParameters['series']!);
           final test = int.parse(state.pathParameters['test']!);
           final part = int.parse(state.pathParameters['part']!);
           final group = int.parse(state.pathParameters['group']!);
-          return PassagesScreen(
-            seriesId: series,
-            testId: test,
-            part: part,
-            questionGroup: group,
+          return _fadeTransition(
+            context,
+            state,
+            PassagesScreen(
+              seriesId: series,
+              testId: test,
+              part: part,
+              questionGroup: group,
+            ),
           );
         },
       ),

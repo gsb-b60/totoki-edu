@@ -193,9 +193,9 @@ class ChoiceBtn extends StatelessWidget {
         textColor = AppTheme.bluePrimary;
         break;
       case ButtonState.done:
-        backgroundColor = AppTheme.darkCard.withOpacity(0.5);
+        backgroundColor = AppTheme.darkCard.withValues(alpha:0.5);
         borderColor = AppTheme.darkCard;
-        textColor = AppTheme.lightText.withOpacity(0.2);
+        textColor = AppTheme.lightText.withValues(alpha:0.2);
         break;
       case ButtonState.normal:
         backgroundColor = AppTheme.darkSurface;

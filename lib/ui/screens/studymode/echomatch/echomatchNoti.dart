@@ -54,7 +54,14 @@ class EchoMatchNoti extends ChangeNotifier {
     notifyListeners();
   }
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   Future<void> playSound() async {
     if (media != "") {
       try {
@@ -64,7 +71,7 @@ class EchoMatchNoti extends ChangeNotifier {
           ),
         );
       } catch (e) {
-        print(e);
+        debugPrint('$e');
       }
     }
   }

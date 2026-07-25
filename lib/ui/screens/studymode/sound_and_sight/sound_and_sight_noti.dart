@@ -24,6 +24,7 @@ class SoundNSightNoti extends ChangeNotifier {
   bool answered = false;
 
   Future<void> SetNext() async {
+    if (currentCardIdx >= _cards.length - 1) return;
     trueList.clear();
     listWord = null;
     list = null;
@@ -118,7 +119,14 @@ class SoundNSightNoti extends ChangeNotifier {
     return "";
   }
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   Future<void> playSound() async {
     if (media != "") {
       try {
@@ -128,7 +136,7 @@ class SoundNSightNoti extends ChangeNotifier {
           ),
         );
       } catch (e) {
-        print(e);
+        debugPrint('$e');
       }
     }
   }

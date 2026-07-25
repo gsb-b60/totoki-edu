@@ -6,7 +6,7 @@ class Questnoti extends ChangeNotifier {
   int totalCards = 0;
 
   void printHello() {
-    print("helloworld");
+    debugPrint("helloworld");
   }
 
   Future<void> SetToDB(int rep, int lapse, int cardno) async {

@@ -137,7 +137,7 @@ class _InfoCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.15),
+              color: color.withValues(alpha:0.15),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: color, size: 28),
@@ -165,7 +165,7 @@ class _InfoCard extends StatelessWidget {
                 Text(
                   description,
                   style: AppTheme.bodyMediumStyle.copyWith(
-                    color: AppTheme.lightText.withOpacity(0.7),
+                    color: AppTheme.lightText.withValues(alpha:0.7),
                   ),
                 ),
               ],

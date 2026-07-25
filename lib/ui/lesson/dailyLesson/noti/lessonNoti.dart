@@ -127,11 +127,11 @@ class LessonNoti extends ChangeNotifier {
       } else {
         soundController?.playCorrect();
       }
-      print("suc $_acc rep :$totalRep");
+      debugPrint("suc $_acc rep :$totalRep");
     } else {
       inARow = 0;
       soundController?.playWrong();
-      print("false $_acc rep :$totalRep");
+      debugPrint("false $_acc rep :$totalRep");
       _acc++;
       totalLapse++;
     }
@@ -184,7 +184,7 @@ class LessonNoti extends ChangeNotifier {
     _cards.addAll(data);
     mode = SetUpLessonList[currentLessIdx]["mode"];
     for (var c in _cards) {
-      print("${c.word} - ${c.due}");
+      debugPrint("${c.word} - ${c.due}");
     }
     await fetchMedia();
     createRateCard();
@@ -201,7 +201,7 @@ class LessonNoti extends ChangeNotifier {
     _cards.clear();
     _cards.addAll(data);
     for (var c in _cards) {
-      print("${c.word} - ${c.due}");
+      debugPrint("${c.word} - ${c.due}");
     }
     await fetchMedia();
     mode = SetUpLessonList[currentLessIdx]["mode"];
@@ -219,7 +219,7 @@ class LessonNoti extends ChangeNotifier {
     _cards.clear();
     _cards.addAll(data);
     for (var c in _cards) {
-      print("${c.word} - ${c.due}");
+      debugPrint("${c.word} - ${c.due}");
     }
     await fetchMedia();
     SetUpLessonList = lessonNotiHelper.createListForLevel(14, st);
@@ -396,7 +396,15 @@ class LessonNoti extends ChangeNotifier {
     notifyListeners();
   }
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    stt.cancel();
+    super.dispose();
+  }
+
   Future<void> playSound() async {
     if (media != "") {
       try {
@@ -406,7 +414,7 @@ class LessonNoti extends ChangeNotifier {
           ),
         );
       } catch (e) {
-        print(e);
+        debugPrint('$e');
       }
     }
   }
@@ -467,7 +475,7 @@ class LessonNoti extends ChangeNotifier {
     }
     List<String> shuffle = List.from(strs)..shuffle(rand);
     statesBool = List.generate(shuffle.length, (_) => false);
-    print(shuffle);
+    debugPrint('$shuffle');
     return shuffle;
   }
 
@@ -508,7 +516,7 @@ class LessonNoti extends ChangeNotifier {
         return md;
       }
     } catch (e) {
-      print(e);
+        debugPrint('$e');
       return "";
     }
   }
@@ -686,12 +694,12 @@ class LessonNoti extends ChangeNotifier {
   //
   Future<void> initSTT() async {
     bool available = await stt.initialize(
-      onStatus: (status) => print('STT status: $status'),
-      onError: (errorNotification) => print('STT error: $errorNotification'),
+      onStatus: (status) => debugPrint('STT status: $status'),
+      onError: (errorNotification) => debugPrint('STT error: $errorNotification'),
     );
 
     if (!available) {
-      print('STT not available or permission denied');
+      debugPrint('STT not available or permission denied');
     }
   }
 
@@ -707,7 +715,7 @@ class LessonNoti extends ChangeNotifier {
     await stt.listen(
       onResult: (result) {
         if (result.finalResult) {
-          print("user said ${result.recognizedWords}");
+          debugPrint("user said ${result.recognizedWords}");
           re = result.recognizedWords;
           hasFinal = true;
 
@@ -751,7 +759,7 @@ class LessonNoti extends ChangeNotifier {
 
   void callDone() {
     answered = true;
-    print("answer up");
+    debugPrint("answer up");
     notifyListeners();
   }
 
@@ -828,7 +836,7 @@ class LessonNoti extends ChangeNotifier {
         int currentRate = updateCard["rate"] ?? 0;
         updateCard["rate"] = currentRate + (rating ? 1 : -1);
       } catch (e) {
-        print(e);
+        debugPrint('$e');
       }
     }
   }

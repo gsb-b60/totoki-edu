@@ -5,8 +5,6 @@ import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:provider/provider.dart';
 
-AudioPlayer audioPlayer = AudioPlayer();
-
 class BlankWordScreen extends StatefulWidget {
   final int deck_id;
   const BlankWordScreen({super.key, required this.deck_id});
@@ -18,6 +16,7 @@ class BlankWordScreen extends StatefulWidget {
 class _BlankWordScreenState extends State<BlankWordScreen> {
   late Future<List<Flashcard>> futureCard;
   late String media;
+
   Future<List<Flashcard>> _loadDueCard() async {
     final cardModel = Provider.of<Cardmodel>(context, listen: false);
     media = cardModel.media ?? "";
@@ -28,22 +27,43 @@ class _BlankWordScreenState extends State<BlankWordScreen> {
   void initState() {
     super.initState();
     futureCard = _loadDueCard();
-    print(widget.deck_id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("blank")),
+      backgroundColor: AppTheme.darkBase,
+      appBar: AppBar(
+        title: const Text(
+          'Blank Fill',
+          style: TextStyle(color: AppTheme.lightText),
+        ),
+        backgroundColor: AppTheme.darkBase,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: FutureBuilder(
         future: futureCard,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+                  const SizedBox(height: 16),
+                  Text("Error: ${snapshot.error}", style: const TextStyle(color: AppTheme.lightText)),
+                ],
+              ),
+            );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("No cards found"));
+            return const Center(
+              child: Text("No cards found", style: TextStyle(color: AppTheme.lightText)),
+            );
           }
 
           final list = snapshot.data!;
@@ -108,6 +128,14 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
   List<bool> visible = [];
   List<bool> trueList = [];
   bool finish = false;
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -136,46 +164,38 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
         });
 
         if (curIdx <= wordList.length && curIdx == wordList.length) {
-          print("in wait list");
-          if (media != "" || card.sound != null || card.sound != '') {
+          if (media.isNotEmpty && card.sound != null && card.sound!.isNotEmpty) {
             try {
-              await audioPlayer.play(
+              await _audioPlayer.play(
                 DeviceFileSource(
                   PathService.getFilePath(media, card.sound ?? ""),
                 ),
               );
             } catch (e) {
-              print(e);
+              debugPrint('Unable to play sound: $e');
             }
           }
-          print("done sound");
           setState(() {
             finish = true;
           });
-          Future.delayed(Duration(milliseconds: 1000), () {
-            setState(() {
-              finish = false;
-            });
+          Future.delayed(const Duration(milliseconds: 1000), () {
+            if (mounted) setState(() => finish = false);
           });
           await Future.delayed(const Duration(seconds: 1));
           if (mounted) widget.onComplete();
         }
         return true;
       } else {
-        setState(() {
-          trueList[index] = false;
-        });
+        setState(() => trueList[index] = false);
 
-        Future.delayed(Duration(milliseconds: 400), () {
+        Future.delayed(const Duration(milliseconds: 400), () {
           if (!mounted) return;
-          setState(() {
-            trueList[index] = true;
-          });
+          setState(() => trueList[index] = true);
         });
         return false;
       }
     } catch (e) {
-      print(e);
+      debugPrint('Error checking answer: $e');
       return false;
     }
   }
@@ -209,37 +229,42 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
       children: [
         Column(
           children: [
-            Center(
-              child: Container(
-                width: 800,
-                height: 200,
-                decoration: BoxDecoration(color: AppTheme.blueist),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          card.meaning ?? "",
-                          style: TextStyle(color: Colors.white, fontSize: 30),
-                          textAlign: TextAlign.center,
-                        ),
-                        Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
-                          alignment: WrapAlignment.center,
-                          children: blanks.asMap().entries.map((entry) {
-                            return Text(
-                              "${entry.value} ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
+            Container(
+              width: double.infinity,
+              height: 200,
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppTheme.darkCard,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppTheme.darkBorder),
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        card.meaning ?? "",
+                        style: AppTheme.sectionHeaderStyle.copyWith(color: AppTheme.lightText),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        alignment: WrapAlignment.center,
+                        children: blanks.asMap().entries.map((entry) {
+                          return Text(
+                            "${entry.value} ",
+                            style: AppTheme.bodyLargeStyle.copyWith(
+                              color: AppTheme.primaryTeal,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -247,8 +272,8 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
             Expanded(
               child: Center(
                 child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
+                  spacing: 12,
+                  runSpacing: 12,
                   alignment: WrapAlignment.center,
                   children: List.generate(list.length, (index) {
                     final value = list[index];
@@ -259,12 +284,18 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
                         onPressed: () => checkAnswer(value, index),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: trueList[index]
-                              ? Colors.blue
-                              : Colors.red,
+                              ? AppTheme.primaryTeal
+                              : AppTheme.redPrimary,
+                          minimumSize: const Size(64, 64),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                         child: Text(
                           value,
-                          style: TextStyle(color: Colors.white, fontSize: 30),
+                          style: AppTheme.sectionHeaderStyle.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     );
@@ -279,13 +310,13 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 300,
+              height: 250,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
                 ),
-                color: AppTheme.blueist,
+                color: AppTheme.darkCard,
               ),
               child: Center(
                 child: Padding(
@@ -295,17 +326,14 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
                     children: [
                       Text(
                         card.word ?? "",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTheme.heroStyle.copyWith(color: AppTheme.greenPrimary),
                         textAlign: TextAlign.center,
                       ),
+                      const SizedBox(height: 8),
                       Text(
                         card.meaning ?? "",
                         overflow: TextOverflow.clip,
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: AppTheme.bodyMediumStyle.copyWith(color: AppTheme.lightText),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -319,6 +347,3 @@ class _BlankWordQuizzState extends State<BlankWordQuizz> {
     );
   }
 }
-
-
-

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 
 class CheckBtn extends StatelessWidget {
-  bool isChecked;
-  VoidCallback? onCheck;
-  CheckBtn({super.key, required this.isChecked, required this.onCheck});
+  final bool isChecked;
+  final VoidCallback? onCheck;
+  const CheckBtn({super.key, required this.isChecked, required this.onCheck});
 
   @override
   Widget build(BuildContext context) {

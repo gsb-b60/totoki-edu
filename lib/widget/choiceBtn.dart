@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 
 class ChoiceBtn extends StatelessWidget {
-  String value;
-  bool isSelected;
-  VoidCallback? onPressed;
-  ChoiceBtn({
+  final String value;
+  final bool isSelected;
+  final VoidCallback? onPressed;
+  const ChoiceBtn({
     super.key,
     required this.isSelected,
     required this.value,

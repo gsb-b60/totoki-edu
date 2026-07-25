@@ -23,12 +23,12 @@ class DeckListTab extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: AppTheme.darkSurface,
         border: Border.all(
-          color: AppTheme.darkBorder.withOpacity(0.2),
+          color: AppTheme.darkBorder.withValues(alpha:0.2),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withValues(alpha:0.4),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),
@@ -50,11 +50,34 @@ class DeckListTab extends StatelessWidget {
         trailing: IconButton(
           onPressed: () {
             if (deck.id != null) {
-              deckModel.deleteDeck(deck.id!);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.red.shade800,
-                  content: Text('Deck "${deck.name}" deleted'),
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  backgroundColor: const Color(0xFF1E1E1E),
+                  title: const Text('Delete Deck?', style: TextStyle(color: Colors.white)),
+                  content: Text(
+                    'This will permanently delete "${deck.name}" and all its cards.',
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                        deckModel.deleteDeck(deck.id!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red.shade800,
+                            content: Text('Deck "${deck.name}" deleted'),
+                          ),
+                        );
+                      },
+                      child: const Text('Delete', style: TextStyle(color: Colors.redAccent)),
+                    ),
+                  ],
                 ),
               );
             }
@@ -87,7 +110,7 @@ class DeckListTab extends StatelessWidget {
         if (deckModel.isLoading)
           Positioned.fill(
             child: Container(
-              color: Colors.black.withOpacity(0.4),
+              color: Colors.black.withValues(alpha:0.4),
               child: const Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -153,7 +176,7 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha:0.2),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -167,7 +190,7 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   decoration: InputDecoration(
                     labelText: "New deck name",
-                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                    labelStyle: TextStyle(color: Colors.white.withValues(alpha:0.7)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(color: AppTheme.primaryTeal),
@@ -175,7 +198,7 @@ class _CreateNewDeckState extends State<CreateNewDeck> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: AppTheme.primaryTeal.withOpacity(0.5),
+                        color: AppTheme.primaryTeal.withValues(alpha:0.5),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(

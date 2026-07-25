@@ -242,7 +242,7 @@ class CardLabel extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
         decoration: BoxDecoration(
-          color: AppTheme.darkBase.withOpacity(0.8),
+          color: AppTheme.darkBase.withValues(alpha:0.8),
           border: Border.all(color: color, width: 4),
           borderRadius: BorderRadius.circular(20),
         ),

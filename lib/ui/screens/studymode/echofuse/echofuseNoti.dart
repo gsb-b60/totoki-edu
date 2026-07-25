@@ -72,7 +72,14 @@ class EchoFuseNoti extends ChangeNotifier{
     }
     return ipa!;
   }
-  AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   Future<void> playSound() async {
     if (media != "") {
       try {
@@ -82,7 +89,7 @@ class EchoFuseNoti extends ChangeNotifier{
           ),
         );
       } catch (e) {
-        print(e);
+        debugPrint('$e');
       }
     }
   }

@@ -169,7 +169,7 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     elevation: 8,
-                    shadowColor: AppTheme.greenAccent.withOpacity(0.5),
+                    shadowColor: AppTheme.greenAccent.withValues(alpha:0.5),
                   ),
                   child: Text(
                     "START DAILY SESSION",
@@ -192,9 +192,9 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
                     await launchUrl(url, mode: LaunchMode.externalApplication);
                   }, // Action to be connected, // Feedback link
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: AppTheme.lightText.withOpacity(0.7),
+                    foregroundColor: AppTheme.lightText.withValues(alpha:0.7),
                     side: BorderSide(
-                      color: AppTheme.darkBorder.withOpacity(0.5),
+                      color: AppTheme.darkBorder.withValues(alpha:0.5),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -239,7 +239,7 @@ class _StatCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.darkBase,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.2)),
+        border: Border.all(color: AppTheme.darkBorder.withValues(alpha:0.2)),
       ),
       child: Column(
         children: [
@@ -258,7 +258,7 @@ class _StatCard extends StatelessWidget {
             style: AppTheme.captionStyle.copyWith(
               fontSize: 9,
               fontWeight: FontWeight.w600,
-              color: AppTheme.lightText.withOpacity(0.4),
+              color: AppTheme.lightText.withValues(alpha:0.4),
             ),
           ),
         ],
@@ -285,9 +285,9 @@ class _InfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.darkBase.withOpacity(0.8),
+        color: AppTheme.darkBase.withValues(alpha:0.8),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.1)),
+        border: Border.all(color: AppTheme.darkBorder.withValues(alpha:0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +310,7 @@ class _InfoCard extends StatelessWidget {
           Text(
             content,
             style: AppTheme.bodySmallStyle.copyWith(
-              color: AppTheme.lightText.withOpacity(0.7),
+              color: AppTheme.lightText.withValues(alpha:0.7),
               height: 1.5,
             ),
           ),

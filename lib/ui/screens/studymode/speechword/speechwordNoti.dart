@@ -26,12 +26,9 @@ class SpeechWordNoti extends ChangeNotifier {
   }
 
   Future<void> SetNext() async {
+    if (currentCardIdx >= _cards.length - 1) return;
     answered = false;
-
     currentCardIdx++;
-    if (currentCardIdx == _cards.length) {
-      //Navigator.pop();
-    }
     notifyListeners();
   }
 
@@ -64,12 +61,12 @@ class SpeechWordNoti extends ChangeNotifier {
 
   Future<void> initSTT() async {
     bool available = await stt.initialize(
-      onStatus: (status) => print('STT status: $status'),
-      onError: (errorNotification) => print('STT error: $errorNotification'),
+      onStatus: (status) => debugPrint('STT status: $status'),
+      onError: (errorNotification) => debugPrint('STT error: $errorNotification'),
     );
 
     if (!available) {
-      print('STT not available or permission denied');
+      debugPrint('STT not available or permission denied');
     }
   }
 
@@ -83,7 +80,7 @@ class SpeechWordNoti extends ChangeNotifier {
     await stt.listen(
       onResult: (result) {
         if (result.finalResult) {
-          print("user said ${result.recognizedWords}");
+          debugPrint("user said ${result.recognizedWords}");
           re = result.recognizedWords;
           hasFinal = true;
 
@@ -123,11 +120,17 @@ class SpeechWordNoti extends ChangeNotifier {
     await stt.stop();
   }
 
+  @override
+  void dispose() {
+    stt.cancel();
+    super.dispose();
+  }
+
   // void startListening() async {
   //   String re = "";
   //   await stt.listen(
   //     onResult: (result) {
-  //       print("user said ${result.recognizedWords}");
+  //       debugPrint("user said ${result.recognizedWords}");
   //       re = result.recognizedWords;
   //     },
   //     localeId: "en_US",

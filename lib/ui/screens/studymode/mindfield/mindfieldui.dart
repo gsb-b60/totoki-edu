@@ -72,7 +72,7 @@ class _MindFeildUIState extends State<MindFeildUI> {
                         child: Text(
                           card.meaning ?? "No meaning available",
                           style: AppTheme.sectionHeaderStyle.copyWith(
-                            color: AppTheme.lightText.withOpacity(0.9),
+                            color: AppTheme.lightText.withValues(alpha:0.9),
                             fontStyle: FontStyle.italic,
                           ),
                           textAlign: TextAlign.center,

@@ -146,9 +146,9 @@ class PhoneMatchBtn extends StatelessWidget {
         textColor = AppTheme.bluePrimary;
         break;
       case ButtonState.done:
-        backgroundColor = AppTheme.darkSurface.withOpacity(0.5);
-        borderColor = AppTheme.darkBorder.withOpacity(0.3);
-        textColor = AppTheme.darkBorder.withOpacity(0.5);
+        backgroundColor = AppTheme.darkSurface.withValues(alpha:0.5);
+        borderColor = AppTheme.darkBorder.withValues(alpha:0.3);
+        textColor = AppTheme.darkBorder.withValues(alpha:0.5);
         break;
       case ButtonState.normal:
         backgroundColor = AppTheme.darkSurface;

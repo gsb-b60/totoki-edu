@@ -70,7 +70,7 @@ class _WordSnapUIState extends State<WordSnapUI> {
                         child: Text(
                           mean,
                           style: AppTheme.sectionHeaderStyle.copyWith(
-                            color: AppTheme.lightText.withOpacity(0.9),
+                            color: AppTheme.lightText.withValues(alpha:0.9),
                             fontStyle: FontStyle.italic,
                           ),
                           textAlign: TextAlign.center,

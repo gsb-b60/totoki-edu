@@ -80,7 +80,7 @@ class _IeltsTrainingState extends State<IeltsTraining> {
                         style: AppTheme.bodyMediumStyle.copyWith(
                           color: selected
                               ? AppTheme.bluePrimary
-                              : AppTheme.lightText.withOpacity(0.5),
+                              : AppTheme.lightText.withValues(alpha:0.5),
                           fontWeight: selected ? FontWeight.bold : FontWeight.normal,
                           fontSize: selected ? 15 : 13,
                         ),

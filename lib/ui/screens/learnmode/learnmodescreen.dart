@@ -52,7 +52,7 @@ class _LearnModeScreenState extends State<LearnModeScreen> {
                         style: AppTheme.bodyMediumStyle.copyWith(
                           color: selected
                               ? AppTheme.greenPrimary
-                              : AppTheme.lightText.withOpacity(0.5),
+                              : AppTheme.lightText.withValues(alpha:0.5),
                           fontWeight: selected ? FontWeight.bold : FontWeight.normal,
                           fontSize: selected ? 15 : 13,
                         ),
@@ -237,7 +237,7 @@ class LearnModeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha:0.2),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),

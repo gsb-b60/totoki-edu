@@ -47,7 +47,14 @@ class Meanfusenoti extends ChangeNotifier {
     notifyListeners();
   }
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   Future<void> playSound() async {
     if (media != "") {
       try {
@@ -57,7 +64,7 @@ class Meanfusenoti extends ChangeNotifier {
           ),
         );
       } catch (e) {
-        print(e);
+        debugPrint('$e');
       }
     }
   }
@@ -83,6 +90,7 @@ class Meanfusenoti extends ChangeNotifier {
   }
 
   Future<void> SetNext() async {
+    if (currentCardIdx >= _cards.length - 1) return;
     ipa = null;
     trueList = null;
     listWord = null;

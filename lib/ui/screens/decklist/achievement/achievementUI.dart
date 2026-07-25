@@ -35,7 +35,7 @@ class _AchievementState extends State<AchievementUI> {
           ? Center(
               child: Text(
                 "No achievement cards found.",
-                style: AppTheme.bodyLargeStyle.copyWith(color: AppTheme.lightText.withOpacity(0.7)),
+                style: AppTheme.bodyLargeStyle.copyWith(color: AppTheme.lightText.withValues(alpha:0.7)),
               ),
             )
           : Column(
@@ -67,7 +67,7 @@ class _AchievementState extends State<AchievementUI> {
                                   ),
                                   Text(
                                     "Page ${provider.currentPage} of ${provider.totalPages} (${provider.totalCards} cards)",
-                                    style: TextStyle(color: AppTheme.lightText.withOpacity(0.5), fontSize: 13),
+                                    style: TextStyle(color: AppTheme.lightText.withValues(alpha:0.5), fontSize: 13),
                                   ),
                                   IconButton(
                                     onPressed: provider.hasNext ? () => provider.nextPage() : null,
@@ -118,13 +118,13 @@ class _AchievementState extends State<AchievementUI> {
                                   fontWeight: FontWeight.bold,
                                   color: learned ? levelColor : AppTheme.darkBorder,
                                   shadows: learned ? [
-                                    Shadow(color: levelColor.withOpacity(0.5), blurRadius: 8),
+                                    Shadow(color: levelColor.withValues(alpha:0.5), blurRadius: 8),
                                   ] : [],
                                 ),
                               ),
                               subtitle: Text(
                                 'Due: ${due.day}/${due.month}/${due.year}',
-                                style: TextStyle(color: AppTheme.lightText.withOpacity(0.4), fontSize: 12),
+                                style: TextStyle(color: AppTheme.lightText.withValues(alpha:0.4), fontSize: 12),
                               ),
                               trailing: Text(
                                 "Lvl $level",
@@ -179,7 +179,7 @@ class CardInforScreen extends StatelessWidget {
                     "/${card.ipa!}/",
                     style: AppTheme.sectionHeaderStyle.copyWith(
                       fontStyle: FontStyle.italic,
-                      color: AppTheme.lightText.withOpacity(0.7),
+                      color: AppTheme.lightText.withValues(alpha:0.7),
                     ),
                   ),
               ],
@@ -209,7 +209,7 @@ class _InfoSection extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: AppTheme.lightText.withOpacity(0.5),
+            color: AppTheme.lightText.withValues(alpha:0.5),
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
             fontSize: 14,

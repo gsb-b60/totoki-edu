@@ -67,7 +67,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                           Text(
                             provider.ipa,
                             style: AppTheme.sectionHeaderStyle.copyWith(
-                              color: AppTheme.lightText.withOpacity(0.7),
+                              color: AppTheme.lightText.withValues(alpha:0.7),
 
                             ),
                             textAlign: TextAlign.center,
@@ -89,7 +89,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                           border: Border.all(color: AppTheme.bluePrimary, width: 2),
                           boxShadow: [
                             BoxShadow(
-                              color: AppTheme.bluePrimary.withOpacity(0.2),
+                              color: AppTheme.bluePrimary.withValues(alpha:0.2),
                               blurRadius: 12,
                               spreadRadius: 2,
                             ),

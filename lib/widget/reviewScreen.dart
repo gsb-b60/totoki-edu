@@ -24,7 +24,7 @@ class ReviewScreen extends StatelessWidget {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withValues(alpha:0.5),
               blurRadius: 20,
               offset: const Offset(0, -5),
             )
@@ -56,7 +56,7 @@ class ReviewScreen extends StatelessWidget {
               Text(
                 "Correct answer:",
                 style: AppTheme.bodyMediumStyle.copyWith(
-                  color: AppTheme.lightText.withOpacity(0.7),
+                  color: AppTheme.lightText.withValues(alpha:0.7),
                 ),
               ),
               const SizedBox(height: 4),

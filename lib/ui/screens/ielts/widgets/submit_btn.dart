@@ -22,7 +22,7 @@ class SubmitBtn extends StatelessWidget {
           child: Text(
             label,
             style: AppTheme.bodyLargeStyle.copyWith(
-              color: active ? AppTheme.darkBase : AppTheme.lightText.withOpacity(0.5),
+              color: active ? AppTheme.darkBase : AppTheme.lightText.withValues(alpha:0.5),
               fontWeight: FontWeight.bold,
               fontSize: 13,
               letterSpacing: 1.5,

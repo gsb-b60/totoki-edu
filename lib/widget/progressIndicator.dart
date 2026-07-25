@@ -5,9 +5,9 @@ import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:vibration/vibration.dart';
 
 class ProgressBar extends StatefulWidget {
-  ProgressBar({super.key, required this.value, required this.inARow});
-  double value;
-  int inARow;
+  final double value;
+  final int inARow;
+  const ProgressBar({super.key, required this.value, required this.inARow});
   @override
   State<ProgressBar> createState() => _ProgressBarState();
 }
@@ -57,7 +57,7 @@ class _ProgressBarState extends State<ProgressBar> {
                             BoxShadow(
                               color: streakColor(
                                 widget.inARow,
-                              ).withOpacity(0.5),
+                              ).withValues(alpha:0.5),
                               blurRadius: 12,
                               spreadRadius: 2,
                             ),
@@ -84,10 +84,10 @@ class _ProgressBarState extends State<ProgressBar> {
 }
 
 class TextAnime extends StatefulWidget {
-  TextAnime({super.key, required this.streak, required this.co});
+  const TextAnime({super.key, required this.streak, required this.co});
 
-  final streak;
-  Color co;
+  final int streak;
+  final Color co;
   @override
   State<TextAnime> createState() => _TextAnimeState();
 }

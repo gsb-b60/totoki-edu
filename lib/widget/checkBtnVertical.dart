@@ -18,7 +18,7 @@ class CheckBtnVertical extends StatelessWidget {
           color: isChecked ? AppTheme.greenPrimary : AppTheme.darkCard,
           boxShadow: isChecked ? [
             BoxShadow(
-              color: AppTheme.greenPrimary.withOpacity(0.3),
+              color: AppTheme.greenPrimary.withValues(alpha:0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             )
@@ -28,7 +28,7 @@ class CheckBtnVertical extends StatelessWidget {
           child: Text(
             "CHECK",
             style: AppTheme.bodyLargeStyle.copyWith(
-              color: isChecked ? AppTheme.darkBase : AppTheme.lightText.withOpacity(0.5),
+              color: isChecked ? AppTheme.darkBase : AppTheme.lightText.withValues(alpha:0.5),
               fontWeight: FontWeight.bold,
               letterSpacing: 2,
             ),

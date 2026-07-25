@@ -62,7 +62,7 @@ class _EndScreenState extends State<EndScreen> {
                   Text(
                     elipse,
                     style: AppTheme.bodyMediumStyle.copyWith(
-                      color: AppTheme.lightText.withOpacity(0.7),
+                      color: AppTheme.lightText.withValues(alpha:0.7),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -247,7 +247,7 @@ class AnalystWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: AppTheme.darkBase,
-                    border: Border.all(color: co.withOpacity(0.45)),
+                    border: Border.all(color: co.withValues(alpha:0.45)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

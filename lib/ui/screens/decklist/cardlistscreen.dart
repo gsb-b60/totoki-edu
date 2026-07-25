@@ -190,7 +190,7 @@ class FlashCardItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.darkSurface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.1), width: 1),
+        border: Border.all(color: AppTheme.darkBorder.withValues(alpha: 0.1), width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.4),
@@ -395,7 +395,7 @@ class PictureHolder extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.darkBase,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppTheme.darkBorder.withOpacity(0.3)),
+          border: Border.all(color: AppTheme.darkBorder.withValues(alpha: 0.3)),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
@@ -424,7 +424,7 @@ class SoundTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (value != '' || value.isNotEmpty) {
+    if (value.isNotEmpty) {
       return Column(
         children: [
           IconButton(
