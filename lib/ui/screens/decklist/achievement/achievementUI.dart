@@ -31,7 +31,32 @@ class _AchievementState extends State<AchievementUI> {
               ),
             )
           : null,
-      body: flashcards.isEmpty && !provider.isLoading
+      body: provider.hasError
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+                    const SizedBox(height: 16),
+                    Text(
+                      provider.error ?? 'An error occurred',
+                      style: const TextStyle(color: AppTheme.lightText),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: () => provider.fetchCard(),
+                      icon: const Icon(Icons.refresh, color: AppTheme.darkSurface),
+                      label: const Text('Retry', style: TextStyle(color: AppTheme.darkSurface)),
+                      style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primaryTeal),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : flashcards.isEmpty && !provider.isLoading
           ? Center(
               child: Text(
                 "No achievement cards found.",
@@ -49,97 +74,104 @@ class _AchievementState extends State<AchievementUI> {
                     ),
                     child: provider.isLoading && flashcards.isEmpty
                         ? const Center(key: ValueKey('spinner'), child: CircularProgressIndicator())
-                        : ListView.builder(
-                            key: ValueKey(provider.currentPage),
-                            itemCount: flashcards.length + 1,
-                            itemBuilder: (context, index) {
-                          if (index == flashcards.length) {
-                            return Container(
-                              color: AppTheme.darkBase,
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                    onPressed: provider.hasPrev ? () => provider.prevPage() : null,
-                                    icon: const Icon(Icons.chevron_left),
-                                    color: provider.hasPrev ? Colors.white : AppTheme.darkBorder,
-                                  ),
-                                  Text(
-                                    "Page ${provider.currentPage} of ${provider.totalPages} (${provider.totalCards} cards)",
-                                    style: TextStyle(color: AppTheme.lightText.withValues(alpha:0.5), fontSize: 13),
-                                  ),
-                                  IconButton(
-                                    onPressed: provider.hasNext ? () => provider.nextPage() : null,
-                                    icon: const Icon(Icons.chevron_right),
-                                    color: provider.hasNext ? Colors.white : AppTheme.darkBorder,
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          final card = flashcards[index];
-                          final due = card.due ?? DateTime.now();
-                          final level = card.complexity ?? 1;
-                          final learned = card.reps != null && card.reps! > 0;
-                          final reps = (card.reps != null && card.reps! >= 0 && card.reps! <= 5)
-                              ? card.reps
-                              : 0;
-                          final path = 'assets/rep/rep$reps.png';
+                        : RefreshIndicator(
+                            key: ValueKey('refresh_${provider.currentPage}'),
+                            onRefresh: () async {
+                              await provider.fetchCard();
+                            },
+                            child: ListView.builder(
+                              key: ValueKey(provider.currentPage),
+                              itemCount: flashcards.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index == flashcards.length) {
+                                  return Container(
+                                    color: AppTheme.darkBase,
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        IconButton(
+                                          onPressed: provider.hasPrev ? () => provider.prevPage() : null,
+                                          icon: const Icon(Icons.chevron_left),
+                                          color: provider.hasPrev ? Colors.white : AppTheme.darkBorder,
+                                        ),
+                                        Text(
+                                          "Page ${provider.currentPage} of ${provider.totalPages} (${provider.totalCards} cards)",
+                                          style: TextStyle(color: AppTheme.lightText.withValues(alpha:0.5), fontSize: 13),
+                                        ),
+                                        IconButton(
+                                          onPressed: provider.hasNext ? () => provider.nextPage() : null,
+                                          icon: const Icon(Icons.chevron_right),
+                                          color: provider.hasNext ? Colors.white : AppTheme.darkBorder,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                                final card = flashcards[index];
+                                final due = card.due ?? DateTime.now();
+                                final level = card.complexity ?? 1;
+                                final learned = card.reps != null && card.reps! > 0;
+                                final reps = (card.reps != null && card.reps! >= 0 && card.reps! <= 5)
+                                    ? card.reps
+                                    : 0;
+                                final path = 'assets/rep/rep$reps.png';
 
-                          final Color levelColor;
-                          switch (card.complexity) {
-                            case 1: levelColor = AppTheme.bronze; break;
-                            case 2: levelColor = AppTheme.silver; break;
-                            case 3: levelColor = AppTheme.amberRank; break;
-                            case 4: levelColor = AppTheme.platinum; break;
-                            case 5: levelColor = AppTheme.diamond; break;
-                            case 6: levelColor = AppTheme.master; break;
-                            case 7: levelColor = AppTheme.challenger; break;
-                            default: levelColor = Colors.grey;
-                          }
+                                final Color levelColor;
+                                switch (card.complexity) {
+                                  case 1: levelColor = AppTheme.bronze; break;
+                                  case 2: levelColor = AppTheme.silver; break;
+                                  case 3: levelColor = AppTheme.amberRank; break;
+                                  case 4: levelColor = AppTheme.platinum; break;
+                                  case 5: levelColor = AppTheme.diamond; break;
+                                  case 6: levelColor = AppTheme.master; break;
+                                  case 7: levelColor = AppTheme.challenger; break;
+                                  default: levelColor = Colors.grey;
+                                }
 
-                          return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: AppTheme.darkBase,
-                              border: Border.all(color: AppTheme.darkBorder, width: 1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ListTile(
-                              onTap: () {
-                                context.push('/stats/card', extra: card);
+                                return Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.darkBase,
+                                    border: Border.all(color: AppTheme.darkBorder, width: 1),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: ListTile(
+                                    onTap: () {
+                                      context.push('/stats/card', extra: card);
+                                    },
+                                    leading: Image.asset(path, width: 32, height: 32),
+                                    title: Text(
+                                      card.word!,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: learned ? levelColor : AppTheme.darkBorder,
+                                        shadows: learned ? [
+                                          Shadow(color: levelColor.withValues(alpha:0.5), blurRadius: 8),
+                                        ] : [],
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      'Due: ${due.day}/${due.month}/${due.year}',
+                                      style: TextStyle(color: AppTheme.lightText.withValues(alpha:0.4), fontSize: 12),
+                                    ),
+                                    trailing: Text(
+                                      "Lvl $level",
+                                      style: TextStyle(
+                                        color: learned ? levelColor : AppTheme.darkBorder,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                );
                               },
-                              leading: Image.asset(path, width: 32, height: 32),
-                              title: Text(
-                                card.word!,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: learned ? levelColor : AppTheme.darkBorder,
-                                  shadows: learned ? [
-                                    Shadow(color: levelColor.withValues(alpha:0.5), blurRadius: 8),
-                                  ] : [],
-                                ),
-                              ),
-                              subtitle: Text(
-                                'Due: ${due.day}/${due.month}/${due.year}',
-                                style: TextStyle(color: AppTheme.lightText.withValues(alpha:0.4), fontSize: 12),
-                              ),
-                              trailing: Text(
-                                "Lvl $level",
-                                style: TextStyle(
-                                  color: learned ? levelColor : AppTheme.darkBorder,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
                             ),
-                          );
-                        },
-                      ),
-                    ),)
-                  ]
+                          ),
+                  ),
                 ),
+              ],
+            ),
     );
   }
 }

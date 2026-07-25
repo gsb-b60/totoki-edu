@@ -72,15 +72,23 @@ class Deckmodel with ChangeNotifier {
   List<Deck> get deck => _decks;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  String? _error;
+  bool get hasError => _error != null;
+  String? get error => _error;
 
   Future<void> fetchDecks() async {
     _isLoading = true;
+    _error = null;
     notifyListeners();
-    final data = await _dbhelper.getDecks();
-    _decks.clear();
-    _decks.addAll(data);
-    _decks.sort((a, b) =>
-        Deck.extractCardName(a.name).compareTo(Deck.extractCardName(b.name)));
+    try {
+      final data = await _dbhelper.getDecks();
+      _decks.clear();
+      _decks.addAll(data);
+      _decks.sort((a, b) =>
+          Deck.extractCardName(a.name).compareTo(Deck.extractCardName(b.name)));
+    } catch (e) {
+      _error = 'Failed to load decks: ${e.toString()}';
+    }
     _isLoading = false;
     notifyListeners();
   }

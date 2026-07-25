@@ -26,7 +26,7 @@ class _Newwayreview extends State<Newwayreview> {
     final cardModel = Provider.of<Cardmodel>(context, listen: false);
     _dueCards = await cardModel.getDueCards(widget.deckId);
     cardWidgets = _dueCards.map((card) {
-      return FlashCardItem(card: card, media: cardModel.media);
+      return FlipCardItem(card: card, media: cardModel.media);
     }).toList();
     if (mounted) {
       setState(() {
@@ -258,16 +258,16 @@ class CardLabel extends StatelessWidget {
   }
 }
 
-class FlashCardItem extends StatefulWidget {
+class FlipCardItem extends StatefulWidget {
   final Flashcard? card;
   final String? media;
-  const FlashCardItem({super.key, required this.card, required this.media});
+  const FlipCardItem({super.key, required this.card, required this.media});
 
   @override
-  State<FlashCardItem> createState() => _FlashCardItemState();
+  State<FlipCardItem> createState() => _FlipCardItemState();
 }
 
-class _FlashCardItemState extends State<FlashCardItem> {
+class _FlipCardItemState extends State<FlipCardItem> {
   @override
   Widget build(BuildContext context) {
     final backKey = GlobalKey<BackSideState>();

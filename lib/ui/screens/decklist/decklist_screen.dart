@@ -91,22 +91,78 @@ class DeckListTab extends StatelessWidget {
   Widget _buildDecksTab(dynamic deckModel) {
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: deckModel.deck.length,
-                  itemBuilder: (context, index) {
-                    final deck = deckModel.deck[index];
-                    return _buildAnimatedTile(context, deck, deckModel, index);
-                  },
-                ),
+        if (deckModel.hasError)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+                  const SizedBox(height: 16),
+                  Text(
+                    deckModel.error ?? 'An error occurred',
+                    style: const TextStyle(color: AppTheme.lightText),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () => deckModel.fetchDecks(),
+                    icon: const Icon(Icons.refresh, color: AppTheme.darkSurface),
+                    label: const Text('Retry', style: TextStyle(color: AppTheme.darkSurface)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.primaryTeal,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
+          )
+        else if (!deckModel.isLoading && deckModel.deck.isEmpty)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.layers_outlined, color: AppTheme.lightText, size: 64),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'No decks yet',
+                    style: TextStyle(color: AppTheme.lightText, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Import an Anki deck to get started',
+                    style: TextStyle(color: AppTheme.lightText, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+            child: Column(
+              children: [
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      await deckModel.fetchDecks();
+                    },
+                    child: ListView.builder(
+                      itemCount: deckModel.deck.length,
+                      itemBuilder: (context, index) {
+                        final deck = deckModel.deck[index];
+                        return _buildAnimatedTile(context, deck, deckModel, index);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
         if (deckModel.isLoading)
           Positioned.fill(
             child: Container(

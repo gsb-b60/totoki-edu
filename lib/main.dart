@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
 import 'package:totoki_extract/router/app_router.dart';
+import 'package:totoki_extract/ui/screens/onboarding/onboarding_screen.dart';
 
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PathService.init();
+  final prefs = await SharedPreferences.getInstance();
+  final onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
 
   runApp(
     MultiProvider(
@@ -24,7 +28,7 @@ void main() async {
       ],
       child: PathService.initError != null
           ? ErrorApp(PathService.initError!)
-          : const MyApp(),
+          : MyApp(onboardingCompleted: onboardingCompleted),
     ),
   );
 }
@@ -54,11 +58,47 @@ class ErrorApp extends StatelessWidget {
   }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  final bool onboardingCompleted;
+  const MyApp({super.key, required this.onboardingCompleted});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late bool _onboardingCompleted;
+
+  @override
+  void initState() {
+    super.initState();
+    _onboardingCompleted = widget.onboardingCompleted;
+  }
+
+  void _onOnboardingComplete() {
+    setState(() => _onboardingCompleted = true);
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (!_onboardingCompleted) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: AppTheme.darkBase,
+          primaryColor: AppTheme.primaryTeal,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppTheme.primaryTeal,
+            brightness: Brightness.dark,
+            surface: AppTheme.darkSurface,
+          ),
+        ),
+        home: OnboardingScreen(onComplete: _onOnboardingComplete),
+      );
+    }
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,

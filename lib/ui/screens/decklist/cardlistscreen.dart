@@ -4,6 +4,7 @@ import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
+import 'package:totoki_extract/widget/nav_page_button.dart';
 
 import 'package:totoki_extract/ui/screens/decklist/learnModeMenu.dart';
 
@@ -29,6 +30,8 @@ class CardListScreen extends StatefulWidget {
 }
 
 class _CardListScreenState extends State<CardListScreen> {
+  bool _isInitialLoad = true;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +39,7 @@ class _CardListScreenState extends State<CardListScreen> {
       if (widget.deckId != null) {
         final cardModel = Provider.of<Cardmodel>(context, listen: false);
         cardModel.fetchCards(widget.deckId!);
+        setState(() => _isInitialLoad = false);
       }
     });
   }
@@ -105,9 +109,82 @@ class _CardListScreenState extends State<CardListScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
+      body: _buildCardListBody(cardModel, cardWidgets),
+    );
+  }
+
+  Widget _buildCardListBody(Cardmodel cardModel, List<Widget> cardWidgets) {
+    if (_isInitialLoad && cardModel.card.isEmpty && !cardModel.hasError) {
+      return const Center(child: CircularProgressIndicator(color: AppTheme.primaryTeal));
+    }
+
+    if (cardModel.hasError) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+              const SizedBox(height: 16),
+              Text(
+                cardModel.error ?? 'An error occurred',
+                style: const TextStyle(color: AppTheme.lightText),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: () {
+                  if (widget.deckId != null) {
+                    final cm = Provider.of<Cardmodel>(context, listen: false);
+                    cm.fetchCards(widget.deckId!);
+                  }
+                },
+                icon: const Icon(Icons.refresh, color: AppTheme.darkSurface),
+                label: const Text('Retry', style: TextStyle(color: AppTheme.darkSurface)),
+                style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primaryTeal),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (!cardModel.hasError && cardModel.card.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.credit_card_outlined, color: AppTheme.lightText, size: 64),
+              SizedBox(height: 16),
+              Text(
+                'No cards in this deck yet',
+                style: TextStyle(color: AppTheme.lightText, fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Add cards or study a different deck',
+                style: TextStyle(color: AppTheme.lightText, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              final cardModel = Provider.of<Cardmodel>(context, listen: false);
+              if (widget.deckId != null) {
+                await cardModel.fetchCards(widget.deckId!);
+              }
+            },
             child: ListView.builder(
               itemCount: cardWidgets.length,
               itemBuilder: (context, index) {
@@ -115,65 +192,13 @@ class _CardListScreenState extends State<CardListScreen> {
               },
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-class NavPageBtn extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final String routePath;
-
-  const NavPageBtn({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.routePath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      child: InkWell(
-        onTap: () {
-          final cardModel = Provider.of<Cardmodel>(context, listen: false);
-          context.push(routePath, extra: cardModel);
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppTheme.darkSurface,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, color: color, size: 28),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  label,
-                  style: AppTheme.bodyMediumStyle.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Icon(Icons.chevron_right, color: AppTheme.lightText.withValues(alpha: 0.3)),
-            ],
-          ),
         ),
-      ),
+      ],
     );
   }
 }
+
+
 
 class FlashCardItem extends StatelessWidget {
   final Flashcard card;

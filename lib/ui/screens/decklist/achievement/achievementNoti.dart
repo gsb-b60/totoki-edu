@@ -11,6 +11,9 @@ class Achievementnoti extends ChangeNotifier {
   int _totalCards = 0;
   int _totalPages = 1;
   bool isLoading = false;
+  String? _error;
+  bool get hasError => _error != null;
+  String? get error => _error;
 
   int get currentPage => _currentPage;
   int get totalCards => _totalCards;
@@ -22,15 +25,20 @@ class Achievementnoti extends ChangeNotifier {
 
   Future<void> fetchPage(int page) async {
     isLoading = true;
+    _error = null;
     notifyListeners();
-    final total = await _dbhelper.getCardCount();
-    _totalCards = total;
-    _totalPages = (total / pageSize).ceil().clamp(1, 999999);
-    _currentPage = page.clamp(1, _totalPages);
-    final data = await _dbhelper.getCardPage(_currentPage, pageSize);
-    _cards
-      ..clear()
-      ..addAll(data);
+    try {
+      final total = await _dbhelper.getCardCount();
+      _totalCards = total;
+      _totalPages = (total / pageSize).ceil().clamp(1, 999999);
+      _currentPage = page.clamp(1, _totalPages);
+      final data = await _dbhelper.getCardPage(_currentPage, pageSize);
+      _cards
+        ..clear()
+        ..addAll(data);
+    } catch (e) {
+      _error = 'Failed to load achievements: ${e.toString()}';
+    }
     isLoading = false;
     notifyListeners();
   }

@@ -147,11 +147,21 @@ class Cardmodel with ChangeNotifier {
 
   List<Flashcard> get card => _cards;
   String? get media => _media;
+  String? _error;
+  bool get hasError => _error != null;
+  String? get error => _error;
+
   Future<void> fetchCards(int deckId) async {
-    final data = await _dbhelper.getCardForDeck(deckId);
-    _cards.clear();
-    _cards.addAll(data);
-    _media = await _dbhelper.getMediaFile(deckId);
+    _error = null;
+    try {
+      final data = await _dbhelper.getCardForDeck(deckId);
+      _cards.clear();
+      _cards.addAll(data);
+      _media = await _dbhelper.getMediaFile(deckId);
+    } catch (e) {
+      _error = 'Failed to load cards: ${e.toString()}';
+      _media = null;
+    }
     notifyListeners();
   }
 
