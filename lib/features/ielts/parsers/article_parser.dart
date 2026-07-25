@@ -13,15 +13,17 @@ class ArticleParser {
     final buffer = StringBuffer();
 
     for (final section in sections) {
+      //bug here 
       final sectionTitle = section["title"] as String?;
-      // if (sectionTitle != null && sectionTitle.isNotEmpty) {
-      //   final text = buffer.toString().trim();
-      //   if (text.isNotEmpty) {
-      //     fragments.add(ArticleFragment(type: "text", text: text));
-      //   }
-      //   buffer.clear();
-      //   fragments.add(ArticleFragment(type: "heading", text: sectionTitle));
-      // }
+      if (sectionTitle != null && sectionTitle.isNotEmpty) {
+        final text = buffer.toString().trim();
+        if (text.isNotEmpty) {
+          fragments.add(ArticleFragment(type: "text", text: text));
+        }
+        buffer.clear();
+        fragments.add(ArticleFragment(type: "heading", text: sectionTitle));
+      }
+      //if i comment this bug stop
 
       final sectionItems = section["items"] as List? ?? [];
       for (final item in sectionItems) {
@@ -53,6 +55,7 @@ class ArticleParser {
           }
         }
       }
+      
     }
 
     final remaining = buffer.toString().trim();

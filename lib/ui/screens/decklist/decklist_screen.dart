@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Deck.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/deck.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/ui/screens/decklist/cardlistscreen.dart';
 
 class DeckListTab extends StatelessWidget {
@@ -44,15 +45,7 @@ class DeckListTab extends StatelessWidget {
         ),
         leading: const Icon(Icons.layers, color: AppTheme.greenPrimary),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider<Cardmodel>(
-                create: (_) => Cardmodel(),
-                child: CardListScreen(deckId: deck.id, deckName: deck.name),
-              ),
-            ),
-          );
+          context.push('/decks/${deck.id}/cards', extra: {'deckName': deck.name});
         },
         trailing: IconButton(
           onPressed: () {

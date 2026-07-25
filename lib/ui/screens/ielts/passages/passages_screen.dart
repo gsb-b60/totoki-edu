@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/article_viewer.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/question_panel.dart';
@@ -86,7 +87,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
-                Navigator.pop(context);
+                context.pop();
               },
               child: const Text("GO BACK", style: TextStyle(color: Colors.redAccent)),
             ),
@@ -189,7 +190,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
           ),
           title: Text("Reading", style: AppTheme.screenTitleStyle),
           backgroundColor: AppTheme.darkBase,
@@ -206,7 +207,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
           ),
           title: Text("Reading", style: AppTheme.screenTitleStyle),
           backgroundColor: AppTheme.darkBase,
@@ -245,7 +246,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
           ),
           title: Text("Reading", style: AppTheme.screenTitleStyle),
           backgroundColor: AppTheme.darkBase,
@@ -301,7 +302,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: Text("Reading", style: AppTheme.screenTitleStyle),
         backgroundColor: AppTheme.darkBase,

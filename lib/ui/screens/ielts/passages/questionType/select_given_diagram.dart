@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/picture_viewer.dart';
 
 class SelectGivenDiagram extends StatelessWidget {

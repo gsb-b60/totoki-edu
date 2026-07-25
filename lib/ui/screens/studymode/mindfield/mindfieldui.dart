@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/widget/choiceBtnVertical.dart';
 import 'package:totoki_extract/widget/checkBtnVertical.dart';
@@ -34,7 +35,7 @@ class _MindFeildUIState extends State<MindFeildUI> {
             color: AppTheme.lightText,
             size: 24,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
           value: progress,

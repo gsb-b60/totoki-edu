@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/business/flashcard/Deck.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
 import 'package:totoki_extract/ui/screens/decklist/learnModeMenu.dart';
 
@@ -60,9 +61,9 @@ class _CardListScreenState extends State<CardListScreen> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
-          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
+          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
         ),
         title: Text(
           displayName,
@@ -126,14 +127,14 @@ class NavPageBtn extends StatelessWidget {
   final String label;
   final IconData icon;
   final Color color;
-  final Widget Function() screenBuilder;
+  final String routePath;
 
   const NavPageBtn({
     super.key,
     required this.label,
     required this.icon,
     required this.color,
-    required this.screenBuilder,
+    required this.routePath,
   });
 
   @override
@@ -143,15 +144,7 @@ class NavPageBtn extends StatelessWidget {
       child: InkWell(
         onTap: () {
           final cardModel = Provider.of<Cardmodel>(context, listen: false);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider<Cardmodel>.value(
-                value: cardModel,
-                child: screenBuilder(),
-              ),
-            ),
-          );
+          context.push(routePath, extra: cardModel);
         },
         borderRadius: BorderRadius.circular(12),
         child: Container(

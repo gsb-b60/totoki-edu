@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/ielts/tabs/reading_tab.dart';
 import 'package:totoki_extract/ui/screens/ielts/tabs/listening_tab.dart';
 import 'package:totoki_extract/ui/screens/ielts/tabs/writing_tab.dart';
@@ -39,7 +40,7 @@ class _IeltsTrainingState extends State<IeltsTraining> {
               backgroundColor: AppTheme.darkBase,
               elevation: 0,
               leading: IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   color: AppTheme.lightText,

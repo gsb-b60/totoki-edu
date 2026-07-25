@@ -1,4 +1,4 @@
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/data/findComplexity.dart';
 
 typedef AnkiFieldMapper = Flashcard? Function(List<String> fields, int deckId);

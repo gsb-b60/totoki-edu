@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/studymode/meanfuse/meanfuseNoti.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
@@ -54,7 +55,7 @@ class MeanfuseUI extends StatelessWidget {
             color: AppTheme.lightText,
             size: 24,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
           value: provider.value,

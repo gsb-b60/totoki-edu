@@ -9,8 +9,8 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:totoki_extract/business/flashcard/Deck.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/deck.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/data/flashCard_Mapper.dart';
 
@@ -416,8 +416,6 @@ class DatabaseHelper {
     return outputDir;
   }
 
-  Future<Directory> CreateUnZipFolder() => createUnZipFolder();
-
   Future<Directory> createDeckFolder() async {
     final folderName = DateTime.now().millisecondsSinceEpoch.toString();
     final outputDir = Directory(PathService.getDeckMediaPath(folderName));
@@ -426,8 +424,6 @@ class DatabaseHelper {
     }
     return outputDir;
   }
-
-  Future<Directory> CreateDeckFolder() => createDeckFolder();
 
   Future<void> importDataFromAnki(String ankiDbPath) async {
     final ankiDb = await openDatabase(ankiDbPath, readOnly: true);
@@ -439,7 +435,7 @@ class DatabaseHelper {
 
     final deckMap =
         jsonDecode(jsonDeck.first['decks'] as String) as Map<String, dynamic>;
-    final folderName = await MoveMediaFile();
+    final folderName = await moveMediaFile();
 
     for (final deck in deckMap.entries) {
       final deckId = int.tryParse(deck.key);
@@ -487,7 +483,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<String> MoveMediaFile() async {
+  Future<String> moveMediaFile() async {
     final unzipDir = await createUnZipFolder();
     final mediaFile = File(p.join(unzipDir.path, 'media'));
     if (!mediaFile.existsSync()) {

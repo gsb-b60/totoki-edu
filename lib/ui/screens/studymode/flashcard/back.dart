@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'newwayreview.dart';

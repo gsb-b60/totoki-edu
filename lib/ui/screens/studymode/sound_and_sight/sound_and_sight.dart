@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/ui/screens/studymode/sound&sight/sound&sightNoti.dart';
-import 'package:totoki_extract/ui/screens/studymode/sound&sight/sound&sightUI.dart';
+import 'package:totoki_extract/ui/screens/studymode/sound_and_sight/sound_and_sight_noti.dart';
+import 'package:totoki_extract/ui/screens/studymode/sound_and_sight/sound_and_sight_ui.dart';
 import 'package:provider/provider.dart';
 
 class SoundNSight extends StatefulWidget {

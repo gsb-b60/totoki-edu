@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/picture_viewer.dart';
 
@@ -112,7 +112,7 @@ class _ArticleViewerState extends State<ArticleViewer> {
     final noti = widget.noti;
     for (final match in wordRegex.allMatches(text)) {
       if (match.start > lastEnd) {
-        spans.add(TextSpan(text: noti.articleText.substring(lastEnd, match.start)));
+        spans.add(TextSpan(text: text.substring(lastEnd, match.start)));
       }
       final word = match.group(0)!;
       final recognizer = TapGestureRecognizer()

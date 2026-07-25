@@ -1,5 +1,5 @@
 import 'package:totoki_extract/ui/lesson/config/threshold.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
 enum StudyMode {
   meanfuse, //meaning - fuse

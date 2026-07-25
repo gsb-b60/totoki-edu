@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -51,7 +52,7 @@ class _Newwayreview extends State<Newwayreview> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText, size: 24),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: Text(
           'Review Cards',

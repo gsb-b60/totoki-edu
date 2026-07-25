@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/business/flashcard/Deck.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/business/flashcard/deck.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
-import 'package:totoki_extract/ui/screens/home/home_screen.dart';
 import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
+import 'package:totoki_extract/router/app_router.dart';
 
 
 
@@ -59,9 +59,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routerConfig: AppRouter.router,
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
@@ -84,7 +84,6 @@ class MyApp extends StatelessWidget {
           displayColor: AppTheme.lightText,
         ),
       ),
-      home: const HomeScreen(),
     );
   }
 }

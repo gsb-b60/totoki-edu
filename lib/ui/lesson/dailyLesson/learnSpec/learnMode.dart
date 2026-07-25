@@ -13,7 +13,7 @@ import 'package:totoki_extract/ui/lesson/studymodeForLesson/mindfieldui.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/neuropickUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/phonemixUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/reviewUI.dart';
-import 'package:totoki_extract/ui/lesson/studymodeForLesson/sound&sightUI.dart';
+import 'package:totoki_extract/ui/lesson/studymodeForLesson/sound_and_sight_ui.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/speechwordUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/synonymfeildUI.dart';
 import 'package:totoki_extract/ui/lesson/studymodeForLesson/synonympickUI.dart';

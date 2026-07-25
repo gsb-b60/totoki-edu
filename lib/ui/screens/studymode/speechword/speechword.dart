@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
 import 'package:totoki_extract/ui/screens/studymode/speechword/speechwordNoti.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
             color: AppTheme.lightText,
             size: 24,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
           value: provider.value,

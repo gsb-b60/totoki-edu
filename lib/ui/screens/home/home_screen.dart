@@ -1,77 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Deck.dart';
-import 'package:totoki_extract/ui/screens/dashboard/dashBoard.dart';
-import 'package:totoki_extract/ui/screens/decklist/achievement/achievement.dart';
-import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
-import 'package:totoki_extract/ui/screens/decklist/decklist_screen.dart';
-import 'package:totoki_extract/ui/screens/ielts/ielts_training.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/deck.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeShell extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  Color get _selectedColor {
-    switch (_selectedIndex) {
-      case 0:
-      case 1:
-        return AppTheme.greenPrimary;
-      case 2:
-        return AppTheme.pinkPrimary;
-      case 3:
-        return AppTheme.redPrimary;
-      case 4:
-        return AppTheme.bluePrimary;
-      default:
-        return AppTheme.greenPrimary;
-    }
-  }
-
-  static const List<String> _tabTitles = [
-    'All Decks',
-    'Learn',
-    'Stats',
-    'Dashboard',
-    'IELTS',
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    final deckModel = Provider.of<Deckmodel>(context, listen: false);
-    deckModel.hadDB().then((hadDB) {
-      if (!hadDB) {
-        deckModel.filePicker().then((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Import process finished.'),
-            ),
-          );
-        });
-      }
-    });
-  }
+  const HomeShell({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = navigationShell.currentIndex;
+
+    Color selectedColor;
+    switch (currentIndex) {
+      case 0:
+      case 1:
+        selectedColor = AppTheme.greenPrimary;
+        break;
+      case 2:
+        selectedColor = AppTheme.pinkPrimary;
+        break;
+      case 3:
+        selectedColor = AppTheme.redPrimary;
+        break;
+      case 4:
+        selectedColor = AppTheme.bluePrimary;
+        break;
+      default:
+        selectedColor = AppTheme.greenPrimary;
+    }
+
+    const tabTitles = [
+      'All Decks',
+      'Learn',
+      'Stats',
+      'Dashboard',
+      'IELTS',
+    ];
+
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: AppTheme.darkBase,
-              title: Text(
-                _tabTitles[_selectedIndex],
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              actions: _selectedIndex == 0
+        title: Text(
+          tabTitles[currentIndex],
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: currentIndex == 0
             ? [
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
@@ -82,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? null
                           : () async {
                               await deckModel.filePicker();
-                              if (mounted) {
+                              if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Import process finished.'),
@@ -102,43 +84,37 @@ class _HomeScreenState extends State<HomeScreen> {
               ]
             : null,
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          const DeckListTab(),
-          const LearnModeScreen(),
-          const Achievement(showAppBar: false),
-          const DueDayDashBoard(showAppBar: false),
-          const IeltsTraining(showAppBar: false),
-        ],
-      ),
+      body: navigationShell,
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: AppTheme.darkSurface,
-          indicatorColor: _selectedColor.withOpacity(0.18),
-          labelTextStyle: MaterialStateProperty.resolveWith((states) {
-            final selected = states.contains(MaterialState.selected);
+          indicatorColor: selectedColor.withValues(alpha: 0.18),
+          labelTextStyle: WidgetStateProperty.resolveWith((states) {
+            final selected = states.contains(WidgetState.selected);
             return AppTheme.captionStyle.copyWith(
               color: selected
-                  ? _selectedColor
-                  : AppTheme.lightText.withOpacity(0.55),
+                  ? selectedColor
+                  : AppTheme.lightText.withValues(alpha: 0.55),
               fontWeight: selected ? FontWeight.bold : FontWeight.w600,
               letterSpacing: 0,
             );
           }),
-          iconTheme: MaterialStateProperty.resolveWith((states) {
-            final selected = states.contains(MaterialState.selected);
+          iconTheme: WidgetStateProperty.resolveWith((states) {
+            final selected = states.contains(WidgetState.selected);
             return IconThemeData(
               color: selected
-                  ? _selectedColor
-                  : AppTheme.lightText.withOpacity(0.55),
+                  ? selectedColor
+                  : AppTheme.lightText.withValues(alpha: 0.55),
             );
           }),
         ),
         child: NavigationBar(
-          selectedIndex: _selectedIndex,
+          selectedIndex: currentIndex,
           onDestinationSelected: (index) {
-            setState(() => _selectedIndex = index);
+            navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            );
           },
           destinations: const [
             NavigationDestination(

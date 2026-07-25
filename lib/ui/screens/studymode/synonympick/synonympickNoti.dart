@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/data/database_helper.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
 class SynonympickNoti extends ChangeNotifier {
   static final _dbhelper = DatabaseHelper.instance;

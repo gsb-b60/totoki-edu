@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
-import 'package:totoki_extract/widget/progessIndicator.dart';
+import 'package:totoki_extract/widget/progressIndicator.dart';
 import 'package:totoki_extract/widget/reviewScreen.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 import 'package:totoki_extract/widget/skipBtn.dart';
@@ -31,7 +32,7 @@ class _ReviewUIState extends State<ReviewUI> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: ProgressBar(value: provider.value, inARow: provider.inARow),
         actions: [

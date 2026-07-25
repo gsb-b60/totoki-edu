@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/lesson/config/storage.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnLevel.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 
 
 
@@ -84,61 +81,61 @@ class LearnByMode extends StatelessWidget {
         LearnModeCard(
           co: AppTheme.meanFuse,
           line: "Mean Fuse",
-          screenBuilder: () => LessLearnMode(st: StudyMode.meanfuse),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.meanfuse),
           aPath: "assets/illumode/fitness-1-44.png",
         ),
         LearnModeCard(
           co: AppTheme.wordSnap,
           line: "Word Snap",
-          screenBuilder: () => LessLearnMode(st: StudyMode.wordsnap),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.wordsnap),
           aPath: "assets/illumode/surfing-91.png",
         ),
         LearnModeCard(
           co: AppTheme.mindField,
           line: "Mind Field",
-          screenBuilder: () => LessLearnMode(st: StudyMode.mindField),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.mindField),
           aPath: "assets/illumode/baseball-22.png",
         ),
         LearnModeCard(
           co: AppTheme.echoSpell,
           line: "Echo Spell",
-          screenBuilder: () => LessLearnMode(st: StudyMode.echoSpell),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.echoSpell),
           aPath: "assets/illumode/coach-82.png",
         ),
         LearnModeCard(
           co: AppTheme.echoMatch,
           line: "Echo Match",
-          screenBuilder: () => LessLearnMode(st: StudyMode.echoMatch),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.echoMatch),
           aPath: "assets/illumode/diving-71.png",
         ),
         LearnModeCard(
           co: AppTheme.echoFuse,
           line: "Echo Fuse",
-          screenBuilder: () => LessLearnMode(st: StudyMode.echofuse),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.echofuse),
           aPath: "assets/illumode/soccer-64.png",
         ),
         LearnModeCard(
           co: AppTheme.neuroPick,
           line: "Neuro Pick",
-          screenBuilder: () => LessLearnMode(st: StudyMode.neuropick),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.neuropick),
           aPath: "assets/illumode/parachute-11.png",
         ),
         LearnModeCard(
           co: AppTheme.wordPulse,
           line: "Word Pulse",
-          screenBuilder: () => LessLearnMode(st: StudyMode.wordpulse),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.wordpulse),
           aPath: "assets/illumode/video-call-1-72.png",
         ),
         LearnModeCard(
           co: AppTheme.soundSight,
           line: "Sound and Sight",
-          screenBuilder: () => LessLearnMode(st: StudyMode.soundAndSight),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.soundAndSight),
           aPath: "assets/illumode/fitness-99.png",
         ),
         LearnModeCard(
           co: AppTheme.phoneMix,
           line: "Phonemix",
-          screenBuilder: () => LessLearnMode(st: StudyMode.phonemix),
+          onTap: () => context.push('/learn/mode', extra: StudyMode.phonemix),
           aPath: "assets/illumode/rocket-launch-59.png",
         ),
       ],
@@ -168,7 +165,7 @@ class LevelLearnScreenNav extends StatelessWidget {
         return LearnModeCard(
           co: _levels[i]["co"],
           line: "Level ${_levels[i]["level"]}",
-          screenBuilder: () => Learnlevel(level: _levels[i]["level"]),
+          onTap: () => context.push('/learn/level/${_levels[i]["level"]}'),
           aPath: _levels[i]["path"],
         );
       },
@@ -187,25 +184,25 @@ class DailyLearnScreenNav extends StatelessWidget {
         LearnModeCard(
           co: AppTheme.greenAccent,
           line: "DAILY LEARN",
-          screenBuilder: () => LessonScreen(fetchMode: LearnMode.daily),
+          onTap: () => context.push('/learn/lesson', extra: LearnMode.daily),
           aPath: "assets/illumode/school-75.png",
         ),
         LearnModeCard(
           co: AppTheme.yellowAccent,
           line: "Super Memo 2",
-          screenBuilder: () => LessonScreen(fetchMode: LearnMode.sm),
+          onTap: () => context.push('/learn/lesson', extra: LearnMode.sm),
           aPath: "assets/illumode/team-brainstorming-5-1.png",
         ),
         LearnModeCard(
           co: AppTheme.pinkPrimary,
           line: "ALL MODE",
-          screenBuilder: () => LessonScreen(fetchMode: LearnMode.all),
+          onTap: () => context.push('/learn/lesson', extra: LearnMode.all),
           aPath: "assets/illumode/super-dad-28.png",
         ),
         LearnModeCard(
           co: AppTheme.bluePrimary,
           line: "SHUFFLE MODE",
-          screenBuilder: () => LessonScreen(fetchMode: LearnMode.shuffle),
+          onTap: () => context.push('/learn/lesson', extra: LearnMode.shuffle),
           aPath: "assets/illumode/twitter-66.png",
         ),
       ],
@@ -218,13 +215,13 @@ class LearnModeCard extends StatelessWidget {
     super.key,
     required this.co,
     required this.line,
-    required this.screenBuilder,
+    required this.onTap,
     required this.aPath,
   });
 
   final Color co;
   final String line;
-  final Widget Function() screenBuilder;
+  final VoidCallback onTap;
   final String aPath;
 
   @override
@@ -233,12 +230,7 @@ class LearnModeCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       height: 120,
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => screenBuilder()),
-          );
-        },
+        onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
             color: co,

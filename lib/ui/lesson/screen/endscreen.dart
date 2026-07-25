@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/timerNoti.dart';
 
@@ -170,7 +171,7 @@ class _EndScreenState extends State<EndScreen> {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.pop(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.bluePrimary,
                       foregroundColor: AppTheme.lightText,

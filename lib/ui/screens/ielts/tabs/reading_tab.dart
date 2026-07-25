@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/ielts_card.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/passages_screen.dart';
 
@@ -21,7 +22,7 @@ class ReadingTab extends StatelessWidget {
           co: const Color(0xFF2E5C8A),
           line: "Passages",
           aPath: "assets/illumode/alien-2-87.png",
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PassagesScreen())),
+          onTap: () => context.push('/ielts/reading'),
         ),
         IeltsCard(
           co: const Color(0xFF3A7CA5),
@@ -72,17 +73,7 @@ class ReadingTab extends StatelessWidget {
                     _GridCell(
                       label: "S$s-T$t-P$p-G$g",
                       color: _seriesColors[s - 1],
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => PassagesScreen(
-                            seriesId: s,
-                            testId: t,
-                            part: p,
-                            questionGroup: g,
-                          ),
-                        ),
-                      ),
+                      onTap: () => context.push('/ielts/reading/$s/$t/$p/$g'),
                     ),
           ],
         ),

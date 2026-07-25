@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
-import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DueDayDashBoard extends StatefulWidget {
@@ -36,7 +35,7 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
               elevation: 0,
               backgroundColor: AppTheme.darkBase,
               leading: IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   color: AppTheme.lightText,
@@ -160,11 +159,8 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
                 // Thumb Zone Actions
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => LearnModeScreen()),
-                    ); // Placeholder navigation
-                  }, // Action to be connected
+                    context.go('/learn');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.greenPrimary,
                     foregroundColor: AppTheme.darkBase,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/data/database_helper.dart';
 
 class Achievementnoti extends ChangeNotifier {

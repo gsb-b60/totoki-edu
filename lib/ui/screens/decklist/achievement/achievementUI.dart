@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievementNoti.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class _AchievementState extends State<AchievementUI> {
               title: Text("Achievement", style: AppTheme.screenTitleStyle),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
               ),
             )
           : null,
@@ -107,12 +108,7 @@ class _AchievementState extends State<AchievementUI> {
                             ),
                             child: ListTile(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CardInforScreen(card: card),
-                                  ),
-                                );
+                                context.push('/stats/card', extra: card);
                               },
                               leading: Image.asset(path, width: 32, height: 32),
                               title: Text(
@@ -158,7 +154,7 @@ class CardInforScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.darkBase,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder),
         ),
       ),
