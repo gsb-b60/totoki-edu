@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:totoki_extract/business/calendar/calendar_model.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => Cardmodel()),
         ChangeNotifierProvider(create: (_) => SoundController()),
         ChangeNotifierProvider(create: (_) => ReadingNoti()),
+        ChangeNotifierProvider(create: (_) => CalendarModel()..init()),
       ],
       child: PathService.initError != null
           ? ErrorApp(PathService.initError!)
