@@ -37,8 +37,7 @@ class CalendarScreen extends StatelessWidget {
       case CalendarFormat.week:
         return const WeekView();
       case CalendarFormat.day:
-        return const DayView(
-        );
+        return const DayView();
     }
   }
 }

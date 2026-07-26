@@ -44,6 +44,7 @@ class CalendarModel extends ChangeNotifier {
 
   void selectDay(DateTime day) {
     _selectedDay = day;
+    _focusedDay = day;
     notifyListeners();
   }
 
