@@ -33,6 +33,7 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnLevel.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 
 import 'package:totoki_extract/ui/screens/ielts/passages/passages_screen.dart';
+import 'package:totoki_extract/ui/screens/calendar/calendar_screen.dart';
 
 class AppRouter {
   static CustomTransitionPage<void> _fadeTransition(
@@ -99,6 +100,14 @@ class AppRouter {
               GoRoute(
                 path: '/ielts',
                 builder: (context, state) => const IeltsTraining(showAppBar: false),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/calendar',
+                builder: (context, state) => const CalendarScreen(),
               ),
             ],
           ),

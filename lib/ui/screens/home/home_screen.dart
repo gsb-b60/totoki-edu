@@ -28,6 +28,9 @@ class HomeShell extends StatelessWidget {
       case 4:
         selectedColor = AppTheme.bluePrimary;
         break;
+      case 5:
+        selectedColor = AppTheme.primaryTeal;
+        break;
       default:
         selectedColor = AppTheme.greenPrimary;
     }
@@ -38,6 +41,7 @@ class HomeShell extends StatelessWidget {
       'Stats',
       'Dashboard',
       'IELTS',
+      'Calendar',
     ];
 
     return Scaffold(
@@ -141,6 +145,11 @@ class HomeShell extends StatelessWidget {
               icon: Icon(Icons.language_outlined),
               selectedIcon: Icon(Icons.language_rounded),
               label: 'IELTS',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.calendar_month_outlined),
+              selectedIcon: Icon(Icons.calendar_month),
+              label: 'Calendar',
             ),
           ],
         ),
