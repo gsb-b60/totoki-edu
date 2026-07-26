@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/calendar/calendar_model.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/calendar/month_view.dart';
+import 'package:totoki_extract/ui/screens/calendar/week_view.dart';
 import 'package:intl/intl.dart';
 
 class CalendarScreen extends StatelessWidget {
@@ -33,12 +34,7 @@ class CalendarScreen extends StatelessWidget {
       case CalendarFormat.month:
         return const MonthView();
       case CalendarFormat.week:
-        return const Center(
-          child: Text(
-            'Week View',
-            style: TextStyle(color: AppTheme.lightText, fontSize: 18),
-          ),
-        );
+        return const WeekView();
       case CalendarFormat.day:
         return const Center(
           child: Text(

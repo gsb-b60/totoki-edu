@@ -49,7 +49,7 @@ class CalendarModel extends ChangeNotifier {
 
   void setFormat(CalendarFormat format) {
     _format = format;
-    notifyListeners();
+    _loadForCurrentFormat();
   }
 
   void goToToday() {
