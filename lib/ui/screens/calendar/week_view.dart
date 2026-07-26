@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/calendar/calendar_model.dart';
 import 'package:totoki_extract/business/calendar/session.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/ui/screens/calendar/session_detail_sheet.dart';
 
 class WeekView extends StatelessWidget {
   const WeekView({super.key});
@@ -155,7 +156,10 @@ class _WeekSessionList extends StatelessWidget {
         final dateStr = DateFormat('EEE, MMM d').format(
           DateTime.parse(session.date),
         );
-        return _SessionCard(session: session, dateStr: dateStr);
+        return GestureDetector(
+          onTap: () => showSessionDetailSheet(context, session),
+          child: _SessionCard(session: session, dateStr: dateStr),
+        );
       },
     );
   }

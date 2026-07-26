@@ -4,14 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/calendar/calendar_model.dart';
 import 'package:totoki_extract/business/calendar/session.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/ui/screens/calendar/session_detail_sheet.dart';
 
 const double _hourHeight = 60.0;
 const double _leftMargin = 50.0;
 
 class DayView extends StatefulWidget {
-  final void Function(Session session)? onSessionTap;
-
-  const DayView({super.key, this.onSessionTap});
+  const DayView({super.key});
 
   @override
   State<DayView> createState() => _DayViewState();
@@ -158,7 +157,7 @@ class _DayViewState extends State<DayView> {
           right: 8,
           height: height.clamp(24, height),
           child: GestureDetector(
-            onTap: () => widget.onSessionTap?.call(session),
+            onTap: () => showSessionDetailSheet(context, session),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(

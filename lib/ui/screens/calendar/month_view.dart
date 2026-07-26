@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/calendar/calendar_model.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/ui/screens/calendar/session_detail_sheet.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({super.key});
@@ -22,6 +23,11 @@ class MonthView extends StatelessWidget {
               isSameDay(model.selectedDay, day),
           onDaySelected: (selectedDay, focusedDay) {
             model.selectDay(selectedDay);
+            final key = DateFormat('yyyy-MM-dd').format(selectedDay);
+            final sessions = model.sessionsByDate[key];
+            if (sessions != null && sessions.isNotEmpty) {
+              showDaySessionsSheet(context, key, sessions);
+            }
           },
           onPageChanged: (focusedDay) {
             model.selectDay(focusedDay);
