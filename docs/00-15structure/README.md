@@ -22,7 +22,8 @@ docs/00-15structure/
 │   ├── 09-roadmap.md          # Project roadmap: Done, Doing, and Next
 │   ├── 10-ielts.md            # IELTS training: assets, UI structure, data flow
 │   ├── 11-sound.md            # Sound effects: controller, registration, events
-│   └── 12-assets.md           # Asset directory map (sound, anki, icons, etc.)
+│   ├── 12-assets.md           # Asset directory map (sound, anki, icons, etc.)
+│   └── 13-calendar.md         # Learning session calendar: views, data flow, auto-logging
 │
 ├── spec/                      # Screen-by-screen specific UI & UX specs
 │   ├── home.md                # Dashboard, Deck list, and DB Import
@@ -30,7 +31,8 @@ docs/00-15structure/
 │   ├── lesson.md              # Daily guided vocabulary lessons
 │   ├── deck.md                # Deck viewer and card editor
 │   ├── profile.md             # User statistics and streak status
-│   └── achievement.md         # Badges and leaderboard structure
+│   ├── achievement.md         # Badges and leaderboard structure
+│   └── calendar.md            # Calendar screen: layout, interactions, 3 views
 │
 ├── tasks/                     # Task management
 │   ├── today.md               # Work checklist for today

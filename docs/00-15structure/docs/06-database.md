@@ -37,3 +37,23 @@ Stores flashcards associated with decks.
 | `last_review` | INTEGER | Timestamp of the last review date |
 | `lapses` | INTEGER | Number of times card was forgotten |
 | `ease_factor` | REAL | SM-2 multiplier (defaults to 2.5) |
+
+---
+
+## Table: `sessions`
+Tracks completed learning sessions for the calendar view.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | INTEGER PRIMARY KEY AUTOINCREMENT | Unique session ID |
+| `date` | TEXT NOT NULL | Session date in `yyyy-MM-dd` format |
+| `cards_studied` | INTEGER | Total cards answered during session |
+| `correct_count` | INTEGER | Number of correct answers |
+| `wrong_count` | INTEGER | Number of wrong answers |
+| `duration_seconds` | INTEGER | Session duration in seconds |
+| `accuracy` | REAL | Accuracy ratio 0.0–1.0 (correct / total) |
+| `deck_id` | INTEGER | Nullable foreign key referencing `decks(id)` |
+| `study_mode` | TEXT | Learn mode identifier (daily, sm, all, shuffle, devMode) |
+| `created_at` | INTEGER | Epoch millisecond timestamp |
+
+**Schema migration**: Added in version 2 via `_onUpgrade`. Fresh installs create it in `_onCreate`.

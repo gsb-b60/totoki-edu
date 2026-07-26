@@ -4,14 +4,16 @@
 - This is a Flutter mobile application named **Totoki** designed for daily English vocabulary learning using the SuperMemo (SM-2) Spaced Repetition System (SRS).
 - High-level project entry point: `lib/main.dart` (initializes `PathService`, registers `MultiProvider`, launches `MyApp`)
 - Core data models: [Deck.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/flashcard/Deck.dart) (`Deckmodel` ChangeNotifier) and [Flashcard.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/flashcard/Flashcard.dart) (`Cardmodel` ChangeNotifier)
+- Calendar session tracking: [session.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/calendar/session.dart) (`Session` model) and [calendar_model.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/calendar/calendar_model.dart) (`CalendarModel` ChangeNotifier with day/week/month format switching)
 - Primary SM-2 algorithm used by `Cardmodel`: [scheduler.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/flashcard/scheduler.dart) (`computeSM2`); secondary alternate implementation: [supermemo.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/flashcard/supermemo.dart)
-- SQLite Database schema and migrations: [database_helper.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/data/database_helper.dart)
+- SQLite Database schema and migrations: [database_helper.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/data/database_helper.dart) (includes `sessions` table since v2)
 - Anki `.apkg` import pipeline: [flashCard_Mapper.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/data/flashCard_Mapper.dart) and [findComplexity.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/data/findComplexity.dart)
 - File path management: [path_service.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/business/path_service.dart)
-- UI Screens folder: `lib/ui/screens/` (deck list, dashboard, study modes, blank-fill, learn mode)
+- UI Screens folder: `lib/ui/screens/` (deck list, dashboard, study modes, blank-fill, learn mode, calendar)
+- Calendar UI: `lib/ui/screens/calendar/` (3 views: month, week, day + session detail sheet)
 - UI Lesson system: `lib/ui/lesson/` (daily lesson config, notifiers, screens, lesson-specific study modes)
 - Reusable widgets: `lib/widget/` (choice buttons, progress indicator, review screen, skip button)
-- Standard color scheme and text styles: [appTheme.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/theme/appTheme.dart)
+- Standard color scheme and text styles: [app_theme.dart](file:///d:/secobapCoop/totoki_seperate/totoki_extract/lib/theme/app_theme.dart)
 
 ## Rules & Constraints
 - **Read First**: Always read the specifications in `docs/` and `docs/00-15structure/spec/` before coding. Start with [README.md](./README.md) for the full document tree overview.

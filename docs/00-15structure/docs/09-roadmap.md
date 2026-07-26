@@ -6,6 +6,7 @@
 - Package asset extractor (image, audio, zip, DB support).
 - Base Theme definitions (Dark theme, typography scales).
 - Basic deck navigation screens.
+- Learning session calendar with Day, Week, Month views and auto-logging.
 
 ## Doing
 - Refining gameplay for 14 different gamified study modes (MeanFuse, MindField, EchoSpell, etc.).
@@ -13,7 +14,6 @@
 - Fixing UI sizing on tablet devices.
 
 ## Next
-- Streak counter visual calendar.
 - Push notification daily reminders.
 - Voice feedback validation with advanced speech-to-text algorithms.
 - Remote server backup synchronization.
