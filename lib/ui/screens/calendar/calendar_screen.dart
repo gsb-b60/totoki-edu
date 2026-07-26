@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/calendar/calendar_model.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/ui/screens/calendar/month_view.dart';
 import 'package:intl/intl.dart';
 
 class CalendarScreen extends StatelessWidget {
@@ -30,12 +31,7 @@ class CalendarScreen extends StatelessWidget {
 
     switch (model.format) {
       case CalendarFormat.month:
-        return const Center(
-          child: Text(
-            'Month View',
-            style: TextStyle(color: AppTheme.lightText, fontSize: 18),
-          ),
-        );
+        return const MonthView();
       case CalendarFormat.week:
         return const Center(
           child: Text(
