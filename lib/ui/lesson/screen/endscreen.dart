@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/business/calendar/calendar_model.dart';
+import 'package:totoki_extract/business/calendar/session.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
@@ -28,6 +31,23 @@ class _EndScreenState extends State<EndScreen> {
       final lesson = context.read<LessonNoti>();
       lesson.CallQuest(context);
       lesson.updateCard();
+
+      final timer = context.read<TimerNoti>();
+      final totalCards = lesson.totalRep + lesson.totalLapse;
+      if (totalCards > 0) {
+        context.read<CalendarModel>().logSession(Session(
+          date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          cardsStudied: totalCards,
+          correctCount: lesson.totalRep,
+          wrongCount: lesson.totalLapse,
+          durationSeconds: timer.time.inSeconds,
+          accuracy: totalCards > 0
+              ? lesson.totalRep / totalCards
+              : 0.0,
+          studyMode: lesson.how.name,
+        ));
+      }
+
       context.read<SoundController>().playFinish();
     });
   }
