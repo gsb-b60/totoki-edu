@@ -9,6 +9,7 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:totoki_extract/business/calendar/session.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
@@ -34,8 +35,9 @@ class DatabaseHelper {
       final dbPath = p.join(await getDatabasesPath(), 'flashcards.db');
       final db = await openDatabase(
         dbPath,
-        version: 1,
+        version: 2,
         onCreate: _onCreate,
+        onUpgrade: _onUpgrade,
         onConfigure: (db) async => db.execute('PRAGMA foreign_keys = ON'),
       );
       await _reconcileSchema(db);
@@ -81,6 +83,32 @@ class DatabaseHelper {
         lapses INTEGER DEFAULT 0,
         ease_factor REAL DEFAULT 2.5,
         FOREIGN KEY (deck_id) REFERENCES decks (id) ON DELETE CASCADE
+      )
+    ''');
+
+    await _createSessionsTable(db);
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await _createSessionsTable(db);
+    }
+  }
+
+  Future<void> _createSessionsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT NOT NULL,
+        cards_studied INTEGER DEFAULT 0,
+        correct_count INTEGER DEFAULT 0,
+        wrong_count INTEGER DEFAULT 0,
+        duration_seconds INTEGER DEFAULT 0,
+        accuracy REAL DEFAULT 0.0,
+        deck_id INTEGER,
+        study_mode TEXT,
+        created_at INTEGER,
+        FOREIGN KEY (deck_id) REFERENCES decks (id) ON DELETE SET NULL
       )
     ''');
   }
@@ -533,6 +561,87 @@ class DatabaseHelper {
       await importDataFromAnki(dbPath);
     }
   }
+
+  Future<int> insertSession(Session session) async {
+    final db = await database;
+    final row = session.toMap();
+    row['created_at'] ??= DateTime.now().millisecondsSinceEpoch;
+    return db.insert('sessions', row);
+  }
+
+  Future<List<Session>> getSessionsForDate(String date) async {
+    final db = await database;
+    final maps = await db.query(
+      'sessions',
+      where: 'date = ?',
+      whereArgs: [date],
+      orderBy: 'created_at ASC',
+    );
+    return maps.map(Session.fromMap).toList(growable: false);
+  }
+
+  Future<List<Session>> getSessionsForRange(
+    String startDate,
+    String endDate,
+  ) async {
+    final db = await database;
+    final maps = await db.query(
+      'sessions',
+      where: 'date >= ? AND date <= ?',
+      whereArgs: [startDate, endDate],
+      orderBy: 'date ASC, created_at ASC',
+    );
+    return maps.map(Session.fromMap).toList(growable: false);
+  }
+
+  Future<Map<String, int>> getDailyCardCounts(int year) async {
+    final db = await database;
+    final result = await db.rawQuery('''
+      SELECT date, SUM(cards_studied) as total
+      FROM sessions
+      WHERE date LIKE ?
+      GROUP BY date
+    ''', ['$year-%']);
+    final map = <String, int>{};
+    for (final row in result) {
+      final date = row['date'] as String;
+      final total = (row['total'] as num?)?.toInt() ?? 0;
+      if (total > 0) map[date] = total;
+    }
+    return map;
+  }
+
+  Future<int> getCurrentStreak() async {
+    final db = await database;
+    final result = await db.rawQuery('''
+      SELECT DISTINCT date FROM sessions
+      ORDER BY date DESC
+    ''');
+    final dates = result.map((r) => r['date'] as String).toList();
+    if (dates.isEmpty) return 0;
+
+    int streak = 0;
+    final now = DateTime.now();
+    final today = _dateStr(now);
+    final yesterday = _dateStr(now.subtract(const Duration(days: 1)));
+
+    if (dates.first != today && dates.first != yesterday) return 0;
+
+    for (int i = 0; i < dates.length; i++) {
+      final expected = _dateStr(
+        now.subtract(Duration(days: i)),
+      );
+      if (dates[i] == expected) {
+        streak++;
+      } else {
+        break;
+      }
+    }
+    return streak;
+  }
+
+  String _dateStr(DateTime dt) =>
+      '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
 
   Future<List<Map<String, Object?>>> getCardsTableInfo() async {
     final db = await database;
