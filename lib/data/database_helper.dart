@@ -207,6 +207,21 @@ class DatabaseHelper {
     );
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
+  Future<String> getFirstImage(int deckID) async{
+    final db= await database;
+    final maps= await db.rawQuery(
+      '''
+      SELECT img
+      FROM cards
+      WHERE img IS NOT NULL
+      AND deck_id = ? 
+      LIMIT 1
+    ''',
+      [deckID]
+    );
+    
+    return maps.first.toString();
+  }
 
   Future<List<Flashcard>> getDueCards() async {
     final db = await database;

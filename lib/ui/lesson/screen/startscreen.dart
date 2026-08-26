@@ -15,7 +15,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     final provider = context.watch<LessonNoti>();
     provider.countLearn();
-    
+
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       body: SafeArea(
@@ -37,31 +37,27 @@ class _StartScreenState extends State<StartScreen> {
                   child: Column(
                     children: [
                       _InfoCard(
-                        icon: Icons.lightbulb_outline,
                         mode: "Learn",
                         count: provider.learn,
-                        description: "Understand New Words",
+                        description: "New Words",
                         color: FlashcardTheme.getStudyModeColor("meanfuse"),
                       ),
                       _InfoCard(
-                        icon: Icons.psychology_outlined,
                         mode: "Practice",
                         count: provider.practice,
-                        description: "Build Recognition w Images & Audio",
+                        description: "Recognition w Images & Audio",
                         color: FlashcardTheme.getStudyModeColor("wordsnap"),
                       ),
                       _InfoCard(
-                        icon: Icons.record_voice_over_outlined,
                         mode: "Speak",
                         count: provider.speak,
-                        description: "Improve Pronunciation Accuracy",
+                        description: "Pronunciation Accuracy",
                         color: FlashcardTheme.getStudyModeColor("echospell"),
                       ),
                       _InfoCard(
-                        icon: Icons.history,
                         mode: "Review",
                         count: provider.learn,
-                        description: "Reinforce Memory with Review",
+                        description: "",
                         color: FlashcardTheme.getStudyModeColor("neuropick"),
                       ),
                     ],
@@ -108,14 +104,12 @@ class _StartScreenState extends State<StartScreen> {
 }
 
 class _InfoCard extends StatelessWidget {
-  final IconData icon;
   final String mode;
   final int count;
   final String description;
   final Color color;
 
   const _InfoCard({
-    required this.icon,
     required this.mode,
     required this.count,
     required this.description,
@@ -125,23 +119,9 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppTheme.darkSurface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.darkBorder, width: 1),
-      ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha:0.15),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: color, size: 28),
-          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -155,17 +135,14 @@ class _InfoCard extends StatelessWidget {
                         color: AppTheme.yellowPrimary,
                       ),
                     ),
-                    Text(
-                      mode,
-                      style: AppTheme.sectionHeaderStyle,
-                    ),
+                    Text(mode, style: AppTheme.sectionHeaderStyle),
                   ],
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
                   style: AppTheme.bodyMediumStyle.copyWith(
-                    color: AppTheme.lightText.withValues(alpha:0.7),
+                    color: AppTheme.lightText.withValues(alpha: 0.7),
                   ),
                 ),
               ],

@@ -429,7 +429,7 @@ class LessonNoti extends ChangeNotifier {
     String word = _cards[cardIdx].word!;
     final rand = Random();
     strs.add(word);
-    
+
     const String alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
     while (strs.length < 3) {
@@ -516,7 +516,7 @@ class LessonNoti extends ChangeNotifier {
         return md;
       }
     } catch (e) {
-        debugPrint('$e');
+      debugPrint('$e');
       return "";
     }
   }
@@ -693,13 +693,17 @@ class LessonNoti extends ChangeNotifier {
 
   //
   Future<void> initSTT() async {
-    bool available = await stt.initialize(
-      onStatus: (status) => debugPrint('STT status: $status'),
-      onError: (errorNotification) => debugPrint('STT error: $errorNotification'),
-    );
-
-    if (!available) {
-      debugPrint('STT not available or permission denied');
+    try {
+      bool available = await stt.initialize(
+        onStatus: (status) => debugPrint('STT status: $status'),
+        onError: (errorNotification) =>
+            debugPrint('STT error: $errorNotification'),
+      );
+      if (!available) {
+        debugPrint('STT not available or permission denied');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

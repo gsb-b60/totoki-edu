@@ -8,6 +8,7 @@ class Deck {
   DateTime? createdAt;
   DateTime? updatedAt;
   final String? media;
+  final String?  headImage;
 
   Deck({
     this.id,
@@ -16,6 +17,7 @@ class Deck {
     this.createdAt,
     this.updatedAt,
     this.media,
+    this.headImage
   });
   Map<String, dynamic> toMap() {
     return {
@@ -43,11 +45,11 @@ class Deck {
     );
   }
 
- static String extractCardName(String fullName) {
-  final regex = RegExp(r'::(.+)$');
-  final match = regex.firstMatch(fullName);
-  return match?.group(1) ?? fullName;
-}
+  static String extractCardName(String fullName) {
+    final regex = RegExp(r'::\s*(.+?)\s*$');
+    final match = regex.firstMatch(fullName);
+    return (match?.group(1) ?? fullName).trim();
+  }
 
   Future<int> getDueCount() async {
     if (id == null) return 0;
@@ -84,8 +86,11 @@ class Deckmodel with ChangeNotifier {
       final data = await _dbhelper.getDecks();
       _decks.clear();
       _decks.addAll(data);
-      _decks.sort((a, b) =>
-          Deck.extractCardName(a.name).compareTo(Deck.extractCardName(b.name)));
+      _decks.sort(
+        (a, b) => Deck.extractCardName(
+          a.name,
+        ).compareTo(Deck.extractCardName(b.name)),
+      );
     } catch (e) {
       _error = 'Failed to load decks: ${e.toString()}';
     }
@@ -148,5 +153,8 @@ class Deckmodel with ChangeNotifier {
     hadDBsync = await _dbhelper.hasData();
     return hadDBsync;
   }
+
   bool hadDBsync = false;
+
+  //Future<>
 }

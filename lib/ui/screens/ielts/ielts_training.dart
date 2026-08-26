@@ -7,9 +7,7 @@ import 'package:totoki_extract/ui/screens/ielts/tabs/writing_tab.dart';
 import 'package:totoki_extract/ui/screens/ielts/tabs/speaking_tab.dart';
 
 class IeltsTraining extends StatefulWidget {
-  const IeltsTraining({super.key, this.showAppBar = true});
-
-  final bool showAppBar;
+  const IeltsTraining({super.key});
 
   @override
   State<IeltsTraining> createState() => _IeltsTrainingState();
@@ -35,23 +33,6 @@ class _IeltsTrainingState extends State<IeltsTraining> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
-      appBar: widget.showAppBar
-          ? AppBar(
-              backgroundColor: AppTheme.darkBase,
-              elevation: 0,
-              leading: IconButton(
-                onPressed: () => context.pop(),
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: AppTheme.lightText,
-                ),
-              ),
-              title: Text(
-                _titles[index],
-                style: AppTheme.screenTitleStyle,
-              ),
-            )
-          : null,
       body: Column(
         children: [
           Container(

@@ -56,20 +56,12 @@ class AppRouter {
   }
 
   static final GoRouter router = GoRouter(
-    initialLocation: '/decks',
+    initialLocation: '/learn',
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             HomeShell(navigationShell: navigationShell),
         branches: [
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/decks',
-                builder: (context, state) => const DeckListTab(),
-              ),
-            ],
-          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -81,28 +73,27 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/stats',
-                builder: (context, state) => const Achievement(showAppBar: false),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/dashboard',
-                builder: (context, state) => const DueDayDashBoard(showAppBar: false),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
                 path: '/ielts',
-                builder: (context, state) => const IeltsTraining(showAppBar: false),
+                builder: (context, state) => const IeltsTraining(),
               ),
             ],
           ),
         ],
+      ),
+
+      GoRoute(
+        path: '/decks',
+        builder: (context, state) => const DeckListTab(),
+      ),
+
+      GoRoute(
+        path: '/stats',
+        builder: (context, state) => const Achievement(),
+      ),
+
+      GoRoute(
+        path: '/dashboard',
+        builder: (context, state) => const DueDayDashBoard(),
       ),
 
       GoRoute(

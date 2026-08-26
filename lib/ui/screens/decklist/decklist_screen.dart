@@ -12,7 +12,52 @@ class DeckListTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Deckmodel>(
-      builder: (context, deckModel, child) => _buildDecksTab(deckModel),
+      builder: (context, deckModel, child) => Scaffold(
+        backgroundColor: AppTheme.darkBase,
+        appBar: AppBar(
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          backgroundColor: AppTheme.darkBase,
+          title: const Text(
+            'All Decks',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () => context.pop(),
+            icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: IconButton(
+                tooltip: 'Import deck',
+                onPressed: deckModel.isLoading
+                    ? null
+                    : () async {
+                        await deckModel.filePicker();
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Import process finished.'),
+                            ),
+                          );
+                        }
+                      },
+                icon: Icon(
+                  Icons.upload_file,
+                  color: deckModel.isLoading
+                      ? Colors.white38
+                      : Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: _buildDecksTab(deckModel),
+      ),
     );
   }
 

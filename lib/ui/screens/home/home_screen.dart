@@ -16,33 +16,65 @@ class HomeShell extends StatelessWidget {
     Color selectedColor;
     switch (currentIndex) {
       case 0:
-      case 1:
         selectedColor = AppTheme.greenPrimary;
         break;
-      case 2:
-        selectedColor = AppTheme.pinkPrimary;
-        break;
-      case 3:
-        selectedColor = AppTheme.redPrimary;
-        break;
-      case 4:
+      case 1:
         selectedColor = AppTheme.bluePrimary;
         break;
       default:
         selectedColor = AppTheme.greenPrimary;
     }
 
-    const tabTitles = [
-      'All Decks',
-      'Learn',
-      'Stats',
-      'Dashboard',
-      'IELTS',
-    ];
+    const tabTitles = ['Learn', 'IELTS'];
 
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: AppTheme.darkBase,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: AppTheme.darkSurface),
+              child: Text(
+                'TOTOKI',
+                style: AppTheme.sectionHeaderStyle.copyWith(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.layers, color: AppTheme.greenPrimary),
+              title: Text('All Decks', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/decks');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.stars, color: AppTheme.pinkPrimary),
+              title: Text('Stats', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/stats');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.space_dashboard, color: AppTheme.redPrimary),
+              title: Text('Dashboard', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/dashboard');
+              },
+            ),
+          ],
+        ),
+      ),
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: const Icon(Icons.menu, color: Colors.white),
+          ),
+        ),
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: AppTheme.darkBase,
@@ -53,41 +85,12 @@ class HomeShell extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: currentIndex == 0
-            ? [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Consumer<Deckmodel>(
-                    builder: (context, deckModel, child) => IconButton(
-                      tooltip: 'Import deck',
-                      onPressed: deckModel.isLoading
-                          ? null
-                          : () async {
-                              await deckModel.filePicker();
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Import process finished.'),
-                                  ),
-                                );
-                              }
-                            },
-                      icon: Icon(
-                        Icons.upload_file,
-                        color: deckModel.isLoading
-                            ? Colors.white38
-                            : Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ]
-            : null,
+        actions: null,
       ),
       body: navigationShell,
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          backgroundColor: AppTheme.darkSurface,
+          backgroundColor: AppTheme.darkBase,
           indicatorColor: selectedColor.withValues(alpha: 0.18),
           labelTextStyle: WidgetStateProperty.resolveWith((states) {
             final selected = states.contains(WidgetState.selected);
@@ -118,24 +121,9 @@ class HomeShell extends StatelessWidget {
           },
           destinations: const [
             NavigationDestination(
-              icon: Icon(Icons.layers_outlined),
-              selectedIcon: Icon(Icons.layers_rounded),
-              label: 'Decks',
-            ),
-            NavigationDestination(
               icon: Icon(Icons.flash_on_outlined),
               selectedIcon: Icon(Icons.flash_on_rounded),
               label: 'Learn',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.stars_outlined),
-              selectedIcon: Icon(Icons.stars_rounded),
-              label: 'Stats',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.space_dashboard_outlined),
-              selectedIcon: Icon(Icons.space_dashboard_rounded),
-              label: 'Dashboard',
             ),
             NavigationDestination(
               icon: Icon(Icons.language_outlined),

@@ -26,4 +26,5 @@ class ParagraphGroup {
     this.tableCells,
     this.tableInputCounts,
   });
+  
 }

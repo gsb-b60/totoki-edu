@@ -41,6 +41,16 @@ class QuestionParser {
           body: body, qGroup: qGroup, start: start,
           textAnswerLookup: textAnswerLookup, seriesId: seriesId,
         );
+      case "input-note":
+        return _parseInputNote(
+          body: body, qGroup: qGroup, start: start,
+          textAnswerLookup: textAnswerLookup, seriesId: seriesId,
+        );
+      case "input-flowchart":
+        return _parseInputFlowchart(
+          body: body, qGroup: qGroup, start: start,
+          textAnswerLookup: textAnswerLookup, seriesId: seriesId,
+        );
       case final _ when type.startsWith("input-"):
         return _parseInputGeneric(body: body, qGroup: qGroup, start: start, textAnswerLookup: textAnswerLookup, type: type);
       default:
@@ -273,9 +283,13 @@ class QuestionParser {
       final cells = <String>[];
       final counts = <int>[];
 
-      spanRemaining.forEach((col, remaining) {
-        if (remaining <= 0) spanRemaining.remove(col);
-      });
+      final colsToCheck = spanRemaining.keys.toList();
+      for (final col in colsToCheck) {
+        final remaining = spanRemaining[col];
+        if (remaining != null && remaining <= 0) {
+          spanRemaining.remove(col);
+        }
+      }
 
       int dataIdx = 0;
       for (int col = 0; col < numCols; col++) {
@@ -435,6 +449,235 @@ class QuestionParser {
     ];
   }
 
+  static List<ParagraphGroup> _parseInputNote({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+    required int seriesId,
+  }) {
+    final imgFilename = body["img"] as String? ?? "";
+    final imageAssetPath = imgFilename.isNotEmpty ? AssetHelper.imageAssetPath(seriesId, imgFilename) : null;
+    final constraint = qGroup["desc"]["constraint"] as String?;
+    final title = body["title"] as String?;
+    final items = body["items"] as List? ?? [];
+    int qNum = start;
+    final groups = <ParagraphGroup>[];
+
+    // Case 1: items is a flat list of strings (sentences with inputs) - e.g., 10-3-2 qG2
+    if (items.isNotEmpty && items.every((e) => e is String)) {
+      final sentences = items.cast<String>();
+      final displayText = sentences.join(" ");
+      final answers = <String>[];
+      for (final sentence in sentences) {
+        final matches = _inputRegex.allMatches(sentence).toList();
+        for (int i = 0; i < matches.length; i++) {
+          answers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+      }
+      if (answers.isNotEmpty) {
+        groups.add(ParagraphGroup(
+          displayText: displayText,
+          options: [],
+          answers: [],
+          textAnswers: answers,
+          type: "input-note",
+          constraint: constraint,
+          imageAssetPath: imageAssetPath,
+        ));
+      }
+      return groups;
+    }
+
+    // Case 2: items is a list containing a list of strings - e.g., 15-1-1, 18-1-1
+    if (items.length == 1 && items[0] is List) {
+      final sentences = (items[0] as List).cast<String>();
+      final displayText = sentences.join(" ");
+      final answers = <String>[];
+      for (final sentence in sentences) {
+        final matches = _inputRegex.allMatches(sentence).toList();
+        for (int i = 0; i < matches.length; i++) {
+          answers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+      }
+      if (answers.isNotEmpty) {
+        groups.add(ParagraphGroup(
+          displayText: displayText,
+          options: [],
+          answers: [],
+          textAnswers: answers,
+          type: "input-note",
+          constraint: constraint,
+          imageAssetPath: imageAssetPath,
+        ));
+      }
+      return groups;
+    }
+
+    // Case 3: items is a list of maps (mixed: input-table, title+inputs) - e.g., 8-2-1 qG1
+    for (final item in items) {
+      if (item is Map) {
+        if (item["type"] == "example") continue;
+        if (item["type"] == "input-table") {
+          final tableItems = item["items"] as List? ?? [];
+          final tableResult = _parseInputTableFromItems(
+            items: tableItems,
+            qGroup: qGroup,
+            start: qNum,
+            textAnswerLookup: textAnswerLookup,
+          );
+          groups.addAll(tableResult);
+          for (final g in tableResult) {
+            qNum += (g.textAnswers?.length ?? 0) + g.answers.length;
+          }
+        } else {
+          final itemTitle = item["title"] as String?;
+          final itemInputs = item["items"] as List? ?? [];
+          if (itemInputs.isNotEmpty) {
+            final displayText = itemTitle ?? title ?? "";
+            final answers = <String>[];
+            for (final input in itemInputs) {
+              if (input is String && _inputRegex.hasMatch(input)) {
+                answers.add(textAnswerLookup[qNum] ?? "");
+                qNum++;
+              }
+            }
+            if (answers.isNotEmpty) {
+              groups.add(ParagraphGroup(
+                displayText: displayText,
+                options: [],
+                answers: [],
+                textAnswers: answers,
+                type: "input-note",
+                constraint: constraint,
+                imageAssetPath: imageAssetPath,
+              ));
+            }
+          }
+}
+      }
+    }
+    return groups;
+  }
+
+  static List<ParagraphGroup> _parseInputFlowchart({
+    required Map<String, dynamic> body,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+    required int seriesId,
+  }) {
+    final imgFilename = body["img"] as String? ?? "";
+    final imageAssetPath = imgFilename.isNotEmpty ? AssetHelper.imageAssetPath(seriesId, imgFilename) : null;
+    final constraint = qGroup["desc"]["constraint"] as String?;
+    final items = body["items"] as List? ?? [];
+    int qNum = start;
+    final groups = <ParagraphGroup>[];
+
+    // items is a list containing a list of stage strings
+    if (items.length == 1 && items[0] is List) {
+      final stages = (items[0] as List).cast<String>();
+      final displayText = stages.join(" → ");
+      final answers = <String>[];
+      for (final stage in stages) {
+        final matches = _inputRegex.allMatches(stage).toList();
+        for (int i = 0; i < matches.length; i++) {
+          answers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+      }
+      if (answers.isNotEmpty) {
+        groups.add(ParagraphGroup(
+          displayText: displayText,
+          options: [],
+          answers: [],
+          textAnswers: answers,
+          type: "input-flowchart",
+          constraint: constraint,
+          imageAssetPath: imageAssetPath,
+        ));
+      }
+    }
+
+    return groups;
+  }
+
+  static List<ParagraphGroup> _parseInputTableFromItems({
+    required List items,
+    required Map<String, dynamic> qGroup,
+    required int start,
+    required Map<int, String> textAnswerLookup,
+  }) {
+    final constraint = qGroup["desc"]["constraint"] as String?;
+    final tableInputRegex = RegExp(r'<input(?:\[\]|)(?:=[^>]*)?>');
+    int qNum = start;
+    final textAnswers = <String>[];
+    final headers = <String>[];
+    final tableCells = <List<String>>[];
+    final tableInputCounts = <List<int>>[];
+
+    if (items.isNotEmpty && items[0] is List) {
+      for (final h in (items[0] as List)) {
+        headers.add(h.toString().trim());
+      }
+    }
+
+    for (int i = 1; i < items.length; i++) {
+      final row = items[i] as List? ?? [];
+      if (row.isEmpty) continue;
+      final cells = <String>[];
+      final counts = <int>[];
+      for (final cell in row) {
+        String display = "";
+        int cnt = 0;
+        if (cell is String) {
+          cnt = _inputRegex.allMatches(cell).length;
+          display = cell.replaceAllMapped(tableInputRegex, (m) {
+            final isDouble = m.group(0)!.contains("[]");
+            return isDouble ? "___ ___" : "___";
+          }).trim();
+        } else if (cell is List) {
+          final parts = <String>[];
+          for (final sub in cell) {
+            final subStr = sub.toString();
+            cnt += _inputRegex.allMatches(subStr).length;
+            parts.add(subStr.replaceAllMapped(tableInputRegex, (m) {
+              final isDouble = m.group(0)!.contains("[]");
+              return isDouble ? "___ ___" : "___";
+            }).trim());
+          }
+          display = parts.join("\n");
+        } else if (cell is Map) {
+          display = (cell["title"] as String?) ?? (cell["prefix"] as String?) ?? "";
+        }
+        cells.add(display);
+        counts.add(cnt);
+        for (int k = 0; k < cnt; k++) {
+          textAnswers.add(textAnswerLookup[qNum] ?? "");
+          qNum++;
+        }
+      }
+      tableCells.add(cells);
+      tableInputCounts.add(counts);
+    }
+
+    return [
+      ParagraphGroup(
+        displayText: "",
+        options: [],
+        answers: [],
+        textAnswers: textAnswers,
+        type: "input-table",
+        constraint: constraint,
+        tableHeaders: headers.isNotEmpty ? headers : null,
+        tableCells: tableCells.isNotEmpty ? tableCells : null,
+        tableInputCounts: tableInputCounts.isNotEmpty ? tableInputCounts : null,
+      ),
+    ];
+  }
+
   static List<ParagraphGroup> _parseInputGeneric({
     required Map<String, dynamic> body,
     required Map<String, dynamic> qGroup,
@@ -451,21 +694,22 @@ class QuestionParser {
       if (item is Map && item["type"] == "example") continue;
 
       String text;
+      String displayText;
       if (item is String) {
         text = item;
+        displayText = item.replaceAll(_inputRegex, '___').replaceAll(RegExp(r'\s+'), ' ').trim();
       } else if (item is Map) {
-        text = (item["title"] as String?) ?? (item["prefix"] as String?) ?? "";
+        final title = item["title"] as String? ?? "";
+        final prefix = item["prefix"] as String? ?? "";
+        final combined = (title + " " + prefix).trim();
+        text = combined;
+        displayText = combined.replaceAll(_inputRegex, '___').replaceAll(RegExp(r'\s+'), ' ').trim();
       } else {
         continue;
       }
 
       final matches = _inputRegex.allMatches(text).toList();
       if (matches.isEmpty) continue;
-
-      final displayText = text
-          .replaceAll(_inputRegex, '___')
-          .replaceAll(RegExp(r'\s+'), ' ')
-          .trim();
 
       final textAnswers = <String>[];
       for (int i = 0; i < matches.length; i++) {
