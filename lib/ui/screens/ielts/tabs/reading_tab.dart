@@ -24,26 +24,26 @@ class ReadingTab extends StatelessWidget {
           aPath: "assets/illumode/alien-2-87.png",
           onTap: () => context.push('/ielts/reading'),
         ),
-        IeltsCard(
-          co: const Color(0xFF3A7CA5),
-          line: "True / False / Not Given",
-          aPath: "assets/illumode/bran-stark-37.png",
-        ),
-        IeltsCard(
-          co: const Color(0xFF4A90D9),
-          line: "Multiple Choice",
-          aPath: "assets/illumode/balloon-46.png",
-        ),
-        IeltsCard(
-          co: const Color(0xFF5BA3E6),
-          line: "Fill in the Blanks",
-          aPath: "assets/illumode/rocket-launch-61.png",
-        ),
-        IeltsCard(
-          co: const Color(0xFF3D6FA0),
-          line: "Matching Headings",
-          aPath: "assets/illumode/conversation-29.png",
-        ),
+        // IeltsCard(
+        //   co: const Color(0xFF3A7CA5),
+        //   line: "True / False / Not Given",
+        //   aPath: "assets/illumode/bran-stark-37.png",
+        // ),
+        // IeltsCard(
+        //   co: const Color(0xFF4A90D9),
+        //   line: "Multiple Choice",
+        //   aPath: "assets/illumode/balloon-46.png",
+        // ),
+        // IeltsCard(
+        //   co: const Color(0xFF5BA3E6),
+        //   line: "Fill in the Blanks",
+        //   aPath: "assets/illumode/rocket-launch-61.png",
+        // ),
+        // IeltsCard(
+        //   co: const Color(0xFF3D6FA0),
+        //   line: "Matching Headings",
+        //   aPath: "assets/illumode/conversation-29.png",
+        // ),
         const Padding(
           padding: EdgeInsets.only(top: 16, bottom: 12),
           child: Text(
