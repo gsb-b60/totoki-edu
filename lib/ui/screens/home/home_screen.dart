@@ -57,7 +57,7 @@ class HomeShell extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.space_dashboard, color: AppTheme.redPrimary),
+              leading: Icon(Icons.dashboard, color: AppTheme.redPrimary),
               title: Text('Dashboard', style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);

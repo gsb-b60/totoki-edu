@@ -61,6 +61,7 @@ class AppTheme{
   static const soundSight = Color(0xFF2E8B57); // sea green
 
   static const phoneMix = Color(0xFF364958); // dark steel blue
+  static const blockBlast = Color(0xFF5C6BC0); // indigo
 
   static const sciSpark = Color(0xFFE8587A);
 
