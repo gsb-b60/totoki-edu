@@ -5,13 +5,13 @@ import 'review_question_card.dart';
 
 class IeltsPassageReview extends StatelessWidget {
   final List<ReviewItem> items;
-  final VoidCallback onDismiss;
+  final VoidCallback onContinue;
   final VoidCallback? onRetry;
 
   const IeltsPassageReview({
     super.key,
     required this.items,
-    required this.onDismiss,
+    required this.onContinue,
     this.onRetry,
   });
 
@@ -24,10 +24,6 @@ class IeltsPassageReview extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: AppTheme.lightText, size: 28),
-          onPressed: onDismiss,
-        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,18 +42,10 @@ class IeltsPassageReview extends StatelessWidget {
         backgroundColor: AppTheme.darkBase,
         elevation: 0,
         centerTitle: false,
-        actions: [
-          if (onRetry != null)
-            TextButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh, size: 20),
-              label: const Text('RETRY'),
-              style: TextButton.styleFrom(
-                foregroundColor: AppTheme.greenPrimary,
-              ),
-            ),
-          const SizedBox(width: 8),
-        ],
+        leading: IconButton(
+          icon: const Icon(Icons.close, color: AppTheme.lightText, size: 28),
+          onPressed: onRetry,
+        ),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
@@ -73,27 +61,56 @@ class IeltsPassageReview extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: onDismiss,
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (onRetry != null) ...[
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: OutlinedButton(
+                    onPressed: onRetry,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppTheme.lightText,
+                      side: BorderSide(color: AppTheme.darkBorder),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      'RETRY',
+                      style: AppTheme.bodyLargeStyle.copyWith(
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                  ),
                 ),
-                backgroundColor: AppTheme.greenPrimary,
-              ),
-              child: Text(
-                'DISMISS',
-                style: AppTheme.bodyLargeStyle.copyWith(
-                  color: AppTheme.darkBase,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
+                const SizedBox(height: 12),
+              ],
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: onContinue,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    backgroundColor: AppTheme.greenPrimary,
+                  ),
+                  child: Text(
+                    'CONTINUE',
+                    style: AppTheme.bodyLargeStyle.copyWith(
+                      color: AppTheme.darkBase,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

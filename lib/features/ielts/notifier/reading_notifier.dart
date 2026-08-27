@@ -4,6 +4,8 @@ import 'package:totoki_extract/features/ielts/models/paragraph_group.dart';
 import 'package:totoki_extract/features/ielts/models/review_item.dart';
 import 'package:totoki_extract/features/ielts/parsers/reading_passage_parser.dart';
 
+enum PassageState { test, review }
+
 class ReadingNoti extends ChangeNotifier {
   String title = "";
   String articleText = "";
@@ -17,7 +19,7 @@ class ReadingNoti extends ChangeNotifier {
   int currentParagraph = 0;
   List<int?> selections = [];
   List<String> textInputs = [];
-  bool answered = false;
+  PassageState state = PassageState.test;
   final Map<int, List<int?>> savedSelections = {};
   final Map<int, List<String>> savedTextInputs = {};
   final Set<int> submittedParagraphs = {};
@@ -31,10 +33,12 @@ class ReadingNoti extends ChangeNotifier {
       final pg = questions[i];
       if (pg.type.startsWith("input-")) {
         final inputs = i == currentParagraph ? textInputs : savedTextInputs[i];
-        if (inputs == null || inputs.any((s) => s.trim().isEmpty)) return false;
+        // Only check if user has visited this paragraph (inputs != null)
+        if (inputs != null && inputs.any((s) => s.trim().isEmpty)) return false;
       } else {
         final sel = i == currentParagraph ? selections : savedSelections[i];
-        if (sel == null || sel.any((s) => s == null)) return false;
+        // Only check if user has visited this paragraph (sel != null)
+        if (sel != null && sel.any((s) => s == null)) return false;
       }
     }
     return true;
@@ -74,13 +78,7 @@ class ReadingNoti extends ChangeNotifier {
       submittedParagraphs.clear();
       savedSelections.clear();
       savedTextInputs.clear();
-      answered = false;
-
-      for (int i = 0; i < questions.length; i++) {
-        final pg = questions[i];
-        savedSelections[i] = List.filled(pg.answers.length, null);
-        savedTextInputs[i] = List.filled(pg.textAnswers.length, "");
-      }
+      state = PassageState.test;
 
       if (questions.isNotEmpty) {
         final first = questions[0];
@@ -106,7 +104,7 @@ class ReadingNoti extends ChangeNotifier {
     for (int i = 0; i < questions.length; i++) {
       submittedParagraphs.add(i);
     }
-    answered = true;
+    state = PassageState.review;
     notifyListeners();
   }
 
@@ -138,7 +136,7 @@ class ReadingNoti extends ChangeNotifier {
     if (index < 0 || index >= questions.length) return;
     saveCurrentSelections();
     currentParagraph = index;
-    answered = false;
+    state = PassageState.test;
     loadSelectionsFor(index);
     notifyListeners();
   }
@@ -156,7 +154,7 @@ class ReadingNoti extends ChangeNotifier {
   }
 
   void dismissReview() {
-    answered = false;
+    state = PassageState.test;
     notifyListeners();
   }
 
@@ -249,7 +247,27 @@ class ReadingNoti extends ChangeNotifier {
     } else {
       selections = List.filled(pg.answers.length, null);
     }
-    answered = false;
+    submittedParagraphs.remove(currentParagraph);
+    state = PassageState.test;
+    notifyListeners();
+  }
+
+  void continueToNext() {
+    // Clean all state for new passage
+    currentParagraph = 0;
+    submittedParagraphs.clear();
+    savedSelections.clear();
+    savedTextInputs.clear();
+    state = PassageState.test;
+
+    if (questions.isNotEmpty) {
+      final first = questions[0];
+      selections = List.filled(first.answers.length, null);
+      textInputs = List.filled(first.textAnswers.length, "");
+    } else {
+      selections = [];
+      textInputs = [];
+    }
     notifyListeners();
   }
 }

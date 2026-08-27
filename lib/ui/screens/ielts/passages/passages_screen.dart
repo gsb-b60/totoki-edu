@@ -29,18 +29,26 @@ class PassagesScreen extends StatefulWidget {
 
 class _PassagesScreenState extends State<PassagesScreen> {
   ReadingNoti? _noti;
+  late int _seriesId;
+  late int _testId;
+  late int _part;
+  late int _group;
 
   @override
   void initState() {
     super.initState();
+    _seriesId = widget.seriesId;
+    _testId = widget.testId;
+    _part = widget.part;
+    _group = widget.questionGroup;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _noti = context.read<ReadingNoti>();
       _noti!.addListener(_onNotiError);
       _noti!.loadPassage(
-        seriesId: widget.seriesId,
-        testId: widget.testId,
-        part: widget.part,
-        questionGroup: widget.questionGroup,
+        seriesId: _seriesId,
+        testId: _testId,
+        part: _part,
+        questionGroup: _group,
       );
     });
   }
@@ -70,6 +78,35 @@ class _PassagesScreenState extends State<PassagesScreen> {
     super.dispose();
   }
 
+  (int, int, int, int)? _getNextPassage() {
+    // Group 1 -> Group 2
+    if (_group < 2) return (_seriesId, _testId, _part, _group + 1);
+    // End of groups -> next Part
+    if (_part < 3) return (_seriesId, _testId, _part + 1, 1);
+    // End of parts -> next Test
+    if (_testId < 4) return (_seriesId, _testId + 1, 1, 1);
+    // End of tests -> next Series
+    if (_seriesId < 4) return (_seriesId + 1, 1, 1, 1);
+    // End of all -> loop to Series 1
+    return (1, 1, 1, 1);
+  }
+
+  void _handleContinue() {
+    final noti = _noti!;
+    final next = _getNextPassage();
+    if (next != null) {
+      noti.continueToNext();
+      context.push('/ielts/reading/${next.$1}/${next.$2}/${next.$3}/${next.$4}');
+    } else {
+      noti.continueToNext();
+      context.push('/ielts/reading/1/1/1/1');
+    }
+  }
+
+  void _handleRetry() {
+    _noti!.retryCurrentParagraph();
+  }
+
   @override
   Widget build(BuildContext context) {
     final noti = context.watch<ReadingNoti>();
@@ -92,8 +129,9 @@ class _PassagesScreenState extends State<PassagesScreen> {
 
     final pg = noti.questions[noti.currentParagraph];
     final isSubmitted = noti.currentIsSubmitted;
-    noti.checkCurrentAnswer(); // called for side effects if any
+    noti.checkCurrentAnswer();
     final totalParagraphs = noti.questions.length;
+    final isReview = noti.state == PassageState.review;
 
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
@@ -150,7 +188,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
                         pg: pg,
                         selections: noti.selections,
                         textInputs: noti.textInputs,
-                        answered: noti.answered,
+                        answered: isReview,
                         currentParagraph: noti.currentParagraph,
                         savedSelections: noti.savedSelections,
                         totalQuestions: totalParagraphs,
@@ -167,13 +205,13 @@ class _PassagesScreenState extends State<PassagesScreen> {
                   AnswerBottomBar(
                     currentParagraph: noti.currentParagraph,
                     totalParagraphs: totalParagraphs,
-                    answered: noti.answered,
+                    answered: isReview,
                     allParagraphsComplete: noti.allParagraphsComplete,
                     currentIsSubmitted: isSubmitted,
                     onBack: noti.prev,
                     onNext: noti.next,
                     onSubmit: noti.submit,
-                    onDismiss: noti.dismissReview,
+                    onDismiss: isReview ? _handleRetry : noti.dismissReview,
                   ),
                 ],
               ),
@@ -181,12 +219,11 @@ class _PassagesScreenState extends State<PassagesScreen> {
           ],
         ),
       ),
-      // Full-screen review overlay
-      bottomSheet: noti.answered
+      bottomSheet: isReview
           ? IeltsPassageReview(
               items: noti.getReviewItems(),
-              onDismiss: noti.dismissReview,
-              onRetry: noti.retryCurrentParagraph,
+              onContinue: _handleContinue,
+              onRetry: _handleRetry,
             )
           : null,
     );
