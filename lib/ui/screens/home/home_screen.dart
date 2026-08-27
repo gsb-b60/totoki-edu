@@ -64,6 +64,14 @@ class HomeShell extends StatelessWidget {
                 context.push('/dashboard');
               },
             ),
+            ListTile(
+              leading: Icon(Icons.mail, color: AppTheme.sciSpark),
+              title: Text('Penpal', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/penpal');
+              },
+            ),
           ],
         ),
       ),

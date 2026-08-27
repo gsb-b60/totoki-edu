@@ -62,6 +62,8 @@ class AppTheme{
 
   static const phoneMix = Color(0xFF364958); // dark steel blue
 
+  static const sciSpark = Color(0xFFE8587A);
+
   // --- Typography Scale ---
   static TextStyle heroStyle = const TextStyle(
     fontSize: 30,

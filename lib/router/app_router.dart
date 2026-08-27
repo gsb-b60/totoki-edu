@@ -33,6 +33,7 @@ import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnLevel.dart';
 import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
 
 import 'package:totoki_extract/ui/screens/ielts/passages/passages_screen.dart';
+import 'package:totoki_extract/features/penpal/penpal.dart';
 
 class AppRouter {
   static CustomTransitionPage<void> _fadeTransition(
@@ -187,6 +188,13 @@ class AppRouter {
             state,
             const PassagesScreen(),
           );
+        },
+      ),
+
+      GoRoute(
+        path: '/penpal',
+        pageBuilder: (context, state) {
+          return _fadeTransition(context, state, const Penpal());
         },
       ),
 
