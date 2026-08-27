@@ -12,7 +12,32 @@ class ReadingNoti extends ChangeNotifier {
   String? errorMessage;
   Map<String, dynamic> _dictionary = {};
 
+  // UI State
+  int currentParagraph = 0;
+  List<int?> selections = [];
+  List<String> textInputs = [];
+  bool answered = false;
+  final Map<int, List<int?>> savedSelections = {};
+  final Map<int, List<String>> savedTextInputs = {};
+  final Set<int> submittedParagraphs = {};
+
   bool get hasError => errorMessage != null;
+
+  bool get currentIsSubmitted => submittedParagraphs.contains(currentParagraph);
+
+  bool get allParagraphsComplete {
+    for (int i = 0; i < questions.length; i++) {
+      final pg = questions[i];
+      if (pg.type.startsWith("input-")) {
+        final inputs = i == currentParagraph ? textInputs : savedTextInputs[i];
+        if (inputs == null || inputs.any((s) => s.trim().isEmpty)) return false;
+      } else {
+        final sel = i == currentParagraph ? selections : savedSelections[i];
+        if (sel == null || sel.any((s) => s == null)) return false;
+      }
+    }
+    return true;
+  }
 
   String? lookupWord(String word) {
     final entry = _dictionary[word.toLowerCase()];
@@ -42,11 +67,139 @@ class ReadingNoti extends ChangeNotifier {
       questions = result.questions;
       _dictionary = result.dictionary;
       errorMessage = null;
+
+      // Reset UI state
+      currentParagraph = 0;
+      submittedParagraphs.clear();
+      savedSelections.clear();
+      savedTextInputs.clear();
+      answered = false;
+
+      for (int i = 0; i < questions.length; i++) {
+        final pg = questions[i];
+        savedSelections[i] = List.filled(pg.answers.length, null);
+        savedTextInputs[i] = List.filled(pg.textAnswers.length, "");
+      }
+
+      if (questions.isNotEmpty) {
+        final first = questions[0];
+        selections = List.filled(first.answers.length, null);
+        textInputs = List.filled(first.textAnswers.length, "");
+      } else {
+        selections = [];
+        textInputs = [];
+      }
     } on ReadingPassageException catch (e) {
       errorMessage = e.message;
+      questions = [];
+      selections = [];
+      textInputs = [];
     } finally {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void submit() {
+    saveCurrentSelections();
+    for (int i = 0; i < questions.length; i++) {
+      submittedParagraphs.add(i);
+    }
+    answered = true;
+    notifyListeners();
+  }
+
+  void saveCurrentSelections() {
+    final pg = questions[currentParagraph];
+    if (pg.type.startsWith("input-")) {
+      savedTextInputs[currentParagraph] = List.from(textInputs);
+    } else {
+      savedSelections[currentParagraph] = List.from(selections);
+    }
+  }
+
+  void loadSelectionsFor(int index) {
+    final pg = questions[index];
+    if (pg.type.startsWith("input-")) {
+      final saved = savedTextInputs[index];
+      textInputs = saved != null && saved.length == pg.textAnswers.length
+          ? List.from(saved)
+          : List.filled(pg.textAnswers.length, "");
+    } else {
+      final saved = savedSelections[index];
+      selections = saved != null && saved.length == pg.answers.length
+          ? List.from(saved)
+          : List.filled(pg.answers.length, null);
+    }
+  }
+
+  void goToParagraph(int index) {
+    if (index < 0 || index >= questions.length) return;
+    saveCurrentSelections();
+    currentParagraph = index;
+    answered = false;
+    loadSelectionsFor(index);
+    notifyListeners();
+  }
+
+  void next() {
+    if (currentParagraph < questions.length - 1) {
+      goToParagraph(currentParagraph + 1);
+    }
+  }
+
+  void prev() {
+    if (currentParagraph > 0) {
+      goToParagraph(currentParagraph - 1);
+    }
+  }
+
+  void dismissReview() {
+    answered = false;
+    notifyListeners();
+  }
+
+  void updateSelection(int blankIdx, int? optIdx) {
+    if (blankIdx >= 0 && blankIdx < selections.length) {
+      selections[blankIdx] = optIdx;
+      notifyListeners();
+    }
+  }
+
+  void updateTextInput(int idx, String value) {
+    if (idx >= 0 && idx < textInputs.length) {
+      textInputs[idx] = value;
+      notifyListeners();
+    }
+  }
+
+  ({bool allCorrect, String correctAnswerStr}) checkCurrentAnswer() {
+    final pg = questions[currentParagraph];
+    final isSubmitted = submittedParagraphs.contains(currentParagraph);
+    if (!isSubmitted) return (allCorrect: false, correctAnswerStr: '');
+
+    bool allCorrect = true;
+    final parts = <String>[];
+
+    if (pg.type.startsWith("input-")) {
+      for (int i = 0; i < pg.textAnswers.length; i++) {
+        parts.add(pg.textAnswers[i]);
+        if (i >= textInputs.length ||
+            textInputs[i].trim().toLowerCase() != pg.textAnswers[i].trim().toLowerCase()) {
+          allCorrect = false;
+        }
+      }
+    } else {
+      for (int i = 0; i < pg.answers.length; i++) {
+        if (i < pg.options.length) {
+          parts.add(pg.options[pg.answers[i]]);
+        }
+        if (i >= selections.length || selections[i] != pg.answers[i]) {
+          allCorrect = false;
+        }
+      }
+    }
+
+    return (allCorrect: allCorrect, correctAnswerStr: parts.join(', '));
   }
 }
