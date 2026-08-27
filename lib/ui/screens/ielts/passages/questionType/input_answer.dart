@@ -21,6 +21,83 @@ class InputAnswer extends StatelessWidget {
     required this.onChanged,
   });
 
+  static Widget buildReview({
+    required String questionText,
+    required List<String> userInputs,
+    required List<String> correctAnswers,
+    String? constraint,
+  }) {
+    final parts = questionText.split('___');
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (constraint != null) ...[
+          Text(
+            constraint,
+            style: AppTheme.captionStyle.copyWith(color: Colors.orangeAccent, fontSize: 12),
+          ),
+          const SizedBox(height: 8),
+        ],
+        SingleChildScrollView(
+          child: RichText(
+            text: TextSpan(
+              style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 16, height: 1.5),
+              children: _buildReviewSpans(parts, userInputs, correctAnswers),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  static List<InlineSpan> _buildReviewSpans(
+    List<String> parts,
+    List<String> userInputs,
+    List<String> correctAnswers,
+  ) {
+    final spans = <InlineSpan>[];
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].isNotEmpty) {
+        spans.add(TextSpan(text: parts[i]));
+      }
+      if (i < parts.length - 1) {
+        final user = i < userInputs.length ? userInputs[i] : '';
+        final correct = i < correctAnswers.length ? correctAnswers[i] : '';
+        final isCorrect = user.trim().toLowerCase() == correct.trim().toLowerCase();
+        final hasAnswer = user.trim().isNotEmpty;
+
+        if (hasAnswer) {
+          spans.add(TextSpan(
+            text: user,
+            style: TextStyle(
+              color: isCorrect ? AppTheme.greenPrimary : AppTheme.redPrimary,
+              fontWeight: FontWeight.bold,
+              decoration: isCorrect ? null : TextDecoration.lineThrough,
+            ),
+          ));
+          if (!isCorrect) {
+            spans.add(TextSpan(
+              text: ' ($correct)',
+              style: const TextStyle(
+                color: AppTheme.greenPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+            ));
+          }
+        } else {
+          spans.add(TextSpan(
+            text: correct,
+            style: const TextStyle(
+              color: AppTheme.greenPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ));
+        }
+      }
+    }
+    return spans;
+  }
+
   @override
   Widget build(BuildContext context) {
     final parts = questionText.split('___');

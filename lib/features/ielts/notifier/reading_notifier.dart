@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/features/ielts/models/article_fragment.dart';
 import 'package:totoki_extract/features/ielts/models/paragraph_group.dart';
+import 'package:totoki_extract/features/ielts/models/review_item.dart';
 import 'package:totoki_extract/features/ielts/parsers/reading_passage_parser.dart';
 
 class ReadingNoti extends ChangeNotifier {
@@ -201,5 +202,54 @@ class ReadingNoti extends ChangeNotifier {
     }
 
     return (allCorrect: allCorrect, correctAnswerStr: parts.join(', '));
+  }
+
+  List<ReviewItem> getReviewItems() {
+    return questions.asMap().entries.map((e) {
+      final i = e.key;
+      final pg = e.value;
+      final userSel = i == currentParagraph ? selections : (savedSelections[i] ?? []);
+      final userText = i == currentParagraph ? textInputs : (savedTextInputs[i] ?? []);
+      final isCorrect = _checkCorrectForParagraph(pg, userSel, userText);
+      return ReviewItem(
+        index: i,
+        question: pg,
+        userSelections: userSel,
+        userTextInputs: userText,
+        correctSelections: pg.answers,
+        correctTextAnswers: pg.textAnswers,
+        isCorrect: isCorrect,
+      );
+    }).toList();
+  }
+
+  bool _checkCorrectForParagraph(ParagraphGroup pg, List<int?> userSel, List<String> userText) {
+    if (pg.type.startsWith("input-")) {
+      for (int i = 0; i < pg.textAnswers.length; i++) {
+        final user = i < userText.length ? userText[i] : '';
+        if (user.trim().toLowerCase() != pg.textAnswers[i].trim().toLowerCase()) {
+          return false;
+        }
+      }
+      return true;
+    } else {
+      for (int i = 0; i < pg.answers.length; i++) {
+        if (i >= userSel.length || userSel[i] != pg.answers[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
+  void retryCurrentParagraph() {
+    final pg = questions[currentParagraph];
+    if (pg.type.startsWith("input-")) {
+      textInputs = List.filled(pg.textAnswers.length, "");
+    } else {
+      selections = List.filled(pg.answers.length, null);
+    }
+    answered = false;
+    notifyListeners();
   }
 }

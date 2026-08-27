@@ -7,7 +7,7 @@ import 'package:totoki_extract/ui/screens/ielts/widgets/article_viewer.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/question_panel.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/answer_bottom_bar.dart';
 import 'package:totoki_extract/ui/screens/ielts/passages/widgets/passage_states.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart';
+import 'package:totoki_extract/ui/screens/ielts/passages/widgets/ielts_passage_review.dart';
 
 class PassagesScreen extends StatefulWidget {
   final int seriesId;
@@ -92,9 +92,7 @@ class _PassagesScreenState extends State<PassagesScreen> {
 
     final pg = noti.questions[noti.currentParagraph];
     final isSubmitted = noti.currentIsSubmitted;
-    final result = noti.checkCurrentAnswer();
-    final allCorrect = result.allCorrect;
-    final correctAnswerStr = result.correctAnswerStr;
+    noti.checkCurrentAnswer(); // called for side effects if any
     final totalParagraphs = noti.questions.length;
 
     return Scaffold(
@@ -180,22 +178,17 @@ class _PassagesScreenState extends State<PassagesScreen> {
                 ],
               ),
             ),
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOutCubic,
-              bottom: noti.answered ? 0 : -MediaQuery.of(context).size.height,
-              left: 0,
-              right: 0,
-              height: MediaQuery.of(context).size.height,
-              child: ReviewScreen(
-                right: allCorrect,
-                answer: correctAnswerStr,
-                onPressed: noti.dismissReview,
-              ),
-            ),
           ],
         ),
       ),
+      // Full-screen review overlay
+      bottomSheet: noti.answered
+          ? IeltsPassageReview(
+              items: noti.getReviewItems(),
+              onDismiss: noti.dismissReview,
+              onRetry: noti.retryCurrentParagraph,
+            )
+          : null,
     );
   }
 }

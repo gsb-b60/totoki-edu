@@ -23,6 +23,84 @@ class SelectSummaryGivenList extends StatefulWidget {
     this.usedOptionIndices = const {},
   });
 
+  static Widget buildReview({
+    required String questionText,
+    required List<String> options,
+    required List<int?> userSelected,
+    required List<int> correctAnswers,
+  }) {
+    final parts = questionText.split('___');
+    return SingleChildScrollView(
+      child: RichText(
+        text: TextSpan(
+          style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 16, height: 1.5),
+          children: _buildReviewSpans(parts, options, userSelected, correctAnswers),
+        ),
+      ),
+    );
+  }
+
+  static List<InlineSpan> _buildReviewSpans(
+    List<String> parts,
+    List<String> options,
+    List<int?> userSelected,
+    List<int> correctAnswers,
+  ) {
+    final spans = <InlineSpan>[];
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].isNotEmpty) {
+        spans.add(TextSpan(text: parts[i]));
+      }
+      if (i < parts.length - 1) {
+        final userSel = i < userSelected.length ? userSelected[i] : null;
+        final correctSel = i < correctAnswers.length ? correctAnswers[i] : null;
+        final isCorrect = userSel == correctSel && userSel != null;
+        final hasAnswer = userSel != null;
+
+        if (hasAnswer) {
+          final displayText = userSel < options.length ? options[userSel] : '?';
+          spans.add(TextSpan(
+            text: displayText,
+            style: TextStyle(
+              color: isCorrect ? AppTheme.greenPrimary : AppTheme.redPrimary,
+              fontWeight: FontWeight.bold,
+              decoration: isCorrect ? null : TextDecoration.lineThrough,
+            ),
+          ));
+          if (!isCorrect && correctSel != null && correctSel < options.length) {
+            spans.add(TextSpan(
+              text: ' (${options[correctSel]})',
+              style: const TextStyle(
+                color: AppTheme.greenPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+            ));
+          }
+        } else {
+          if (correctSel != null && correctSel < options.length) {
+            spans.add(TextSpan(
+              text: options[correctSel],
+              style: const TextStyle(
+                color: AppTheme.greenPrimary,
+                fontWeight: FontWeight.bold,
+              ),
+            ));
+          } else {
+            spans.add(const TextSpan(
+              text: ' ___ ',
+              style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+            ));
+          }
+        }
+      }
+    }
+    return spans;
+  }
+
   @override
   State<SelectSummaryGivenList> createState() => _SelectSummaryGivenListState();
 }

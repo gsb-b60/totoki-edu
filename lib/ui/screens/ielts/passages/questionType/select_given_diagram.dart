@@ -30,6 +30,128 @@ class SelectGivenDiagram extends StatelessWidget {
     this.constraint,
   });
 
+  static Widget buildReview({
+    required String questionText,
+    required List<String> options,
+    required List<int?> userSelected,
+    required List<int> correctAnswers,
+    String? imageAssetPath,
+    String? diagramTitle,
+    String? constraint,
+  }) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (constraint != null) ...[
+            Text(
+              constraint!,
+              style: AppTheme.captionStyle.copyWith(color: Colors.orangeAccent, fontSize: 12),
+            ),
+            const SizedBox(height: 8),
+          ],
+          if (questionText.isNotEmpty) ...[
+            Text(
+              questionText,
+              style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 14),
+            ),
+            const SizedBox(height: 8),
+          ],
+          if (diagramTitle != null && diagramTitle.isNotEmpty) ...[
+            Text(
+              diagramTitle,
+              style: AppTheme.sectionHeaderStyle.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+          if (imageAssetPath != null) ...[
+            PictureViewer(imageAssetPath: imageAssetPath!),
+            const SizedBox(height: 16),
+          ],
+          for (int i = 0; i < userSelected.length; i++)
+            _buildReviewField(i, userSelected, correctAnswers, options),
+        ],
+      ),
+    );
+  }
+
+  static Widget _buildReviewField(int index, List<int?> userSelected, List<int> correctAnswers, List<String> options) {
+    final userSel = index < userSelected.length ? userSelected[index] : null;
+    final correctSel = index < correctAnswers.length ? correctAnswers[index] : null;
+    final isCorrect = userSel == correctSel && userSel != null;
+    final hasAnswer = userSel != null;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 28,
+            child: Text(
+              "${index + 1}.",
+              style: AppTheme.bodyLargeStyle.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.greenPrimary,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(
+                  color: hasAnswer
+                      ? (isCorrect ? AppTheme.greenPrimary : AppTheme.redPrimary)
+                      : AppTheme.darkBorder,
+                  width: hasAnswer ? 2 : 1.5,
+                ),
+                color: hasAnswer
+                    ? (isCorrect ? AppTheme.greenPrimary.withValues(alpha: 0.1) : AppTheme.redPrimary.withValues(alpha: 0.1))
+                    : null,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      hasAnswer
+                          ? (userSel! < options.length ? options[userSel] : '?')
+                          : (correctSel != null && correctSel < options.length ? options[correctSel] : ' ___ '),
+                      style: TextStyle(
+                        color: hasAnswer
+                            ? (isCorrect ? AppTheme.greenPrimary : AppTheme.redPrimary)
+                            : (correctSel != null ? AppTheme.greenPrimary : AppTheme.lightText.withValues(alpha: 0.5)),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  if (!isCorrect && hasAnswer && correctSel != null && correctSel < options.length)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        '(Correct: ${options[correctSel]})',
+                        style: const TextStyle(
+                          color: AppTheme.greenPrimary,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showOptionsDialog(BuildContext context, int blankIdx) {
     final usedByOthers = <int>{...usedOptionIndices};
     for (int i = 0; i < selected.length; i++) {
