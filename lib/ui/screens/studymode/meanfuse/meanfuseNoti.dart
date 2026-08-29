@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/ui/screens/studymode/echospell/echospellUI.dart';
 
@@ -137,7 +137,3 @@ class Meanfusenoti extends ChangeNotifier {
     return listState!;
   }
 }
-
-
-
-

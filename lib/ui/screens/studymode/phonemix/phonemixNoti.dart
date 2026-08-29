@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:path/path.dart';
@@ -25,11 +25,8 @@ class phoneMixNoti extends ChangeNotifier {
 
   bool answer = false;
 
-  int total=1;
+  int total = 1;
   double get value => (_cards.isEmpty) ? 0 : currentIndex / _cards.length;
-
-
-  
 
   void NextTask() {
     options = null;
@@ -72,6 +69,7 @@ class phoneMixNoti extends ChangeNotifier {
     notifyListeners();
     _checkMath();
   }
+
   void _checkMath() {
     if (selectedIPAIDX != null && selectedWordIDX != null) {
       final correctIPA = options!
@@ -85,21 +83,19 @@ class phoneMixNoti extends ChangeNotifier {
         selectedWordIDX = null;
         selectedIPAIDX = null;
 
-
         answer = !wordState.take(options!.length).contains(ButtonState.normal);
         notifyListeners();
       } else {
-
         ipaState[selectedIPAIDX!] = ButtonState.wrong;
         wordState[selectedWordIDX!] = ButtonState.wrong;
-        notifyListeners(); 
+        notifyListeners();
 
         Future.delayed(Duration(milliseconds: 300), () {
           ipaState[selectedIPAIDX!] = ButtonState.normal;
           wordState[selectedWordIDX!] = ButtonState.normal;
           selectedWordIDX = null;
           selectedIPAIDX = null;
-          notifyListeners(); 
+          notifyListeners();
         });
       }
     }
@@ -112,7 +108,6 @@ class phoneMixNoti extends ChangeNotifier {
       final data = await _dbhelper.getCardLimit(12);
       _cards.clear();
       _cards.addAll(data);
-      
     } else {
       final data = await _dbhelper.getCardForDeck(deckID);
       _cards.clear();
@@ -166,5 +161,3 @@ class phoneMixNoti extends ChangeNotifier {
     return listWord!;
   }
 }
-
-

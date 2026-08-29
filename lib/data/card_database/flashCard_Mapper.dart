@@ -1,5 +1,5 @@
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/findComplexity.dart';
+import 'package:totoki_extract/data/card_database/findComplexity.dart';
 
 typedef AnkiFieldMapper = Flashcard? Function(List<String> fields, int deckId);
 
@@ -29,7 +29,9 @@ final _ipaRegex = RegExp(r'(?<=/)[^/]+(?=/)');
 Flashcard? mapRowToFlashcard(Map<String, Object?> row, int deckId) {
   final flds = row['flds'] as String? ?? '';
   final fields = flds.split('\x1f');
-  final mid = row['mid'] is int ? row['mid'] as int : int.tryParse('${row['mid']}');
+  final mid = row['mid'] is int
+      ? row['mid'] as int
+      : int.tryParse('${row['mid']}');
 
   if (mid != null) {
     for (final mapping in defaultAnkiMappings) {
@@ -91,20 +93,20 @@ Flashcard? _guessMapping(List<String> fields, int deckId) {
 
   final sounds = <String>[
     for (final field in fields)
-      if (_soundRegex.firstMatch(field)?.group(1) case final sound?)
-        sound,
+      if (_soundRegex.firstMatch(field)?.group(1) case final sound?) sound,
   ];
   final images = <String>[
     for (final field in fields)
-      if (_imgRegex.firstMatch(field)?.group(1) case final image?)
-        image,
+      if (_imgRegex.firstMatch(field)?.group(1) case final image?) image,
   ];
   final ipa = fields
       .map((field) => _ipaRegex.firstMatch(field)?.group(0))
       .whereType<String>()
       .firstOrNull;
 
-  final meaning = cleaned.skip(1).firstWhere(
+  final meaning = cleaned
+      .skip(1)
+      .firstWhere(
         (field) =>
             field.trim().isNotEmpty &&
             !field.contains('[sound:') &&

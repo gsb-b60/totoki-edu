@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class WordSnapNoti extends ChangeNotifier {
   static final _dbhelper = DatabaseHelper.instance;
@@ -26,7 +26,6 @@ class WordSnapNoti extends ChangeNotifier {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
-      
     } else {
       final data = await DatabaseHelper.instance.getCardForDeck(deckID);
       _cards.clear();
@@ -102,6 +101,3 @@ class WordSnapNoti extends ChangeNotifier {
     }
   }
 }
-
-
-

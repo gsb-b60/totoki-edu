@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:totoki_extract/business/user/user.dart';
+import 'package:uuid/uuid.dart';
 import 'user_db_helper.dart';
 
 class UserDao {
@@ -17,16 +18,26 @@ class UserDao {
     );
   }
 
-  Future<User?> getUser(String id) async {
-    final db = await _db;
-    final result = await db.query(
-      'app_user',
-      where: 'id = ?',
-      whereArgs: [id],
-      limit: 1,
-    );
-    if (result.isEmpty) return null;
+  Future<User?> getCurrentUser() async {
+    final db = await _database.database;
+
+    final result = await db.query('app_user', limit: 1);
+
+    if (result.isEmpty) {
+      return null;
+    }
+
     return User.fromMap(result.first);
+  }
+
+  Future<User> createLocalUser() async {
+    final db = await _database.database;
+
+    final user = User(id: const Uuid().v4(), createdAt: DateTime.now());
+
+    await db.insert('app_user', user.toMap());
+
+    return user;
   }
 
   Future<void> updatePhoneNumber(String id, String phoneNumber) async {

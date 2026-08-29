@@ -5,10 +5,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class SynonymfieldNoti extends ChangeNotifier {
-    static final _dbhelper = DatabaseHelper.instance;
+  static final _dbhelper = DatabaseHelper.instance;
   List<Flashcard> _cards = [];
   String media = "";
   bool isLoading = false;
@@ -36,7 +36,6 @@ class SynonymfieldNoti extends ChangeNotifier {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
-      
     } else {
       final data = await DatabaseHelper.instance.getCardForDeck(deck_id);
       _cards.clear();
@@ -50,7 +49,7 @@ class SynonymfieldNoti extends ChangeNotifier {
           )
           .toList();
     }
-    media=(await DatabaseHelper.instance.getMediaFile(_cards[0].deckId))!;
+    media = (await DatabaseHelper.instance.getMediaFile(_cards[0].deckId))!;
     isLoading = false;
     notifyListeners();
   }
@@ -77,14 +76,16 @@ class SynonymfieldNoti extends ChangeNotifier {
     }
   }
 
-  Future<void> SetNext() async{
+  Future<void> SetNext() async {
     if (currentCardIdx < _cards.length - 1) {
       ipa = null;
       currentCardIdx++;
       options = null;
       answered = false;
       selectedIndex = null;
-      media=(await DatabaseHelper.instance.getMediaFile(_cards[currentCardIdx].deckId))!;
+      media = (await DatabaseHelper.instance.getMediaFile(
+        _cards[currentCardIdx].deckId,
+      ))!;
       notifyListeners();
       right = true;
       notifyListeners();
@@ -179,15 +180,16 @@ class SynonymfieldNoti extends ChangeNotifier {
       notifyListeners();
     }
   }
-  String getImagePath()
-  {
-    if(File(PathService.getFilePath(media, _cards[currentCardIdx].synonyms ?? "")).existsSync())
-    {
-      return PathService.getFilePath(media, _cards[currentCardIdx].synonyms ?? "");
+
+  String getImagePath() {
+    if (File(
+      PathService.getFilePath(media, _cards[currentCardIdx].synonyms ?? ""),
+    ).existsSync()) {
+      return PathService.getFilePath(
+        media,
+        _cards[currentCardIdx].synonyms ?? "",
+      );
     }
     return "";
   }
 }
-
-
-

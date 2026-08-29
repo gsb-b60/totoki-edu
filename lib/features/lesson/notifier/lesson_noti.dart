@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/features/lesson/notifier/quest_noti.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/business/flashcard/supermemo.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:path/path.dart';

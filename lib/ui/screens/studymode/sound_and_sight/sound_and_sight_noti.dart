@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/ui/screens/studymode/sound_and_sight/sound_and_sight_ui.dart';
 
 class SoundNSightNoti extends ChangeNotifier {
@@ -141,7 +141,3 @@ class SoundNSightNoti extends ChangeNotifier {
     }
   }
 }
-
-
-
-

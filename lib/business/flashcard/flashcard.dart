@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'scheduler.dart';
 
 class Flashcard {
@@ -331,9 +331,9 @@ class Cardmodel with ChangeNotifier {
     return await _dbhelper.getMasterCardsCount();
   }
 
-  int dueCount=0;
-  int learnedCount=0;
-  int masterCount=0;
+  int dueCount = 0;
+  int learnedCount = 0;
+  int masterCount = 0;
 
   Future<void> refreshCounts() async {
     dueCount = await getDueCount();
@@ -341,6 +341,4 @@ class Cardmodel with ChangeNotifier {
     masterCount = await getMasterCount();
     notifyListeners();
   }
-
 }
-

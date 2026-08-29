@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class EchoMatchNoti extends ChangeNotifier {
   static final _dbhelper = DatabaseHelper.instance;
@@ -31,11 +31,10 @@ class EchoMatchNoti extends ChangeNotifier {
   Future<void> getFlashcardList(int deckId) async {
     isLoading = true;
     notifyListeners();
-    if (deckId== 0) {
+    if (deckId == 0) {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
-      
     } else {
       final data = await DatabaseHelper.instance.getCardForDeck(deckId);
       _cards.clear();
@@ -49,7 +48,7 @@ class EchoMatchNoti extends ChangeNotifier {
           )
           .toList();
     }
-    media=(await DatabaseHelper.instance.getMediaFile(_cards[0].deckId))!;
+    media = (await DatabaseHelper.instance.getMediaFile(_cards[0].deckId))!;
     isLoading = false;
     notifyListeners();
   }
@@ -76,14 +75,16 @@ class EchoMatchNoti extends ChangeNotifier {
     }
   }
 
-  Future<void> SetNext() async{
+  Future<void> SetNext() async {
     if (currentCardIdx < _cards.length - 1) {
       ipa = null;
       currentCardIdx++;
       options = null;
       answered = false;
       selectedIndex = null;
-      media=(await DatabaseHelper.instance.getMediaFile(_cards[currentCardIdx].deckId))!;
+      media = (await DatabaseHelper.instance.getMediaFile(
+        _cards[currentCardIdx].deckId,
+      ))!;
       notifyListeners();
       right = true;
       notifyListeners();
@@ -179,7 +180,3 @@ class EchoMatchNoti extends ChangeNotifier {
     }
   }
 }
-
-
-
-

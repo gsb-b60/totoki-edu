@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:path/path.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -62,7 +62,8 @@ class SpeechWordNoti extends ChangeNotifier {
   Future<void> initSTT() async {
     bool available = await stt.initialize(
       onStatus: (status) => debugPrint('STT status: $status'),
-      onError: (errorNotification) => debugPrint('STT error: $errorNotification'),
+      onError: (errorNotification) =>
+          debugPrint('STT error: $errorNotification'),
     );
 
     if (!available) {
@@ -85,7 +86,7 @@ class SpeechWordNoti extends ChangeNotifier {
           hasFinal = true;
 
           timeoutTimer?.cancel();
-          stt.stop(); 
+          stt.stop();
           CheckAnswer(re);
         }
       },
@@ -140,6 +141,3 @@ class SpeechWordNoti extends ChangeNotifier {
   //   CheckAnswer(re);
   // }
 }
-
-
-

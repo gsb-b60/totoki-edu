@@ -12,7 +12,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/data/flashCard_Mapper.dart';
+import 'package:totoki_extract/data/card_database/flashCard_Mapper.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -207,9 +207,10 @@ class DatabaseHelper {
     );
     return maps.map(Flashcard.fromMap).toList(growable: false);
   }
-  Future<String> getFirstImage(int deckID) async{
-    final db= await database;
-    final maps= await db.rawQuery(
+
+  Future<String> getFirstImage(int deckID) async {
+    final db = await database;
+    final maps = await db.rawQuery(
       '''
       SELECT img
       FROM cards
@@ -217,9 +218,9 @@ class DatabaseHelper {
       AND deck_id = ? 
       LIMIT 1
     ''',
-      [deckID]
+      [deckID],
     );
-    
+
     return maps.first.toString();
   }
 
@@ -367,12 +368,16 @@ class DatabaseHelper {
 
   Future<String?> pickApkgFile(bool isTesting) async {
     if (isTesting) {
-      final ByteData byteData = await rootBundle.load('assets/anki/Cambridge_Vocabulary_for_IELTS_-_Advanced_2023_Version.apkg');
+      final ByteData byteData = await rootBundle.load(
+        'assets/anki/Cambridge_Vocabulary_for_IELTS_-_Advanced_2023_Version.apkg',
+      );
 
       // Create temp file
       final tempDir = await getTemporaryDirectory();
 
-      final file = File('${tempDir.path}/Cambridge_Vocabulary_for_IELTS_-_Advanced_2023_Version.apkg');
+      final file = File(
+        '${tempDir.path}/Cambridge_Vocabulary_for_IELTS_-_Advanced_2023_Version.apkg',
+      );
 
       // Write bytes into temp file
       await file.writeAsBytes(byteData.buffer.asUint8List());

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class Mindfieldnoti extends ChangeNotifier {
   static final _dbhelper = DatabaseHelper.instance;
@@ -22,7 +22,6 @@ class Mindfieldnoti extends ChangeNotifier {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
-      
     } else {
       final data = await DatabaseHelper.instance.getCardForDeck(deckID);
       _cards.clear();
@@ -36,24 +35,24 @@ class Mindfieldnoti extends ChangeNotifier {
           )
           .toList();
     }
-    IsLoading=false;
+    IsLoading = false;
     notifyListeners();
   }
 
   void nextCard() {
     if (currentIndex < _cards.length - 1) {
       currentIndex++;
-      options=null;
+      options = null;
       notifyListeners();
     }
   }
-  double getProgress()
-  {
-    return currentIndex/cards.length;
+
+  double getProgress() {
+    return currentIndex / cards.length;
   }
 
   List<String> genOptions() {
-    final List<String> options =[];
+    final List<String> options = [];
     String word = currentCard.word!;
     final letters = word.split('');
     final rand = Random();
@@ -66,15 +65,13 @@ class Mindfieldnoti extends ChangeNotifier {
     List<String> shuffle = List.from(options)..shuffle(rand);
     return shuffle;
   }
-  List<String> get getOptionList{
+
+  List<String> get getOptionList {
     options ??= genOptions();
     return options!;
   }
-  bool checkAnswer(int selectedIndex){
-    return options![selectedIndex]==currentCard.word;
+
+  bool checkAnswer(int selectedIndex) {
+    return options![selectedIndex] == currentCard.word;
   }
-
 }
-
-
-

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class NeuroPickNoti extends ChangeNotifier {
   static final _dbhelper = DatabaseHelper.instance;
@@ -16,10 +16,10 @@ class NeuroPickNoti extends ChangeNotifier {
 
   bool isLoading = false;
   bool answered = false;
-  bool right=true;
+  bool right = true;
   double get value => (_cards.isEmpty) ? 0 : currentCardIdx / _cards.length;
-  bool get checkable=> selectedIndex != null;
-  String get answer=>_cards[currentCardIdx].word!;
+  bool get checkable => selectedIndex != null;
+  String get answer => _cards[currentCardIdx].word!;
   int? selectedIndex;
 
   Future<void> getFlashcardList(int deck_id) async {
@@ -29,7 +29,6 @@ class NeuroPickNoti extends ChangeNotifier {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
-      
     } else {
       final data = await DatabaseHelper.instance.getCardForDeck(deck_id);
       _cards.clear();
@@ -43,8 +42,8 @@ class NeuroPickNoti extends ChangeNotifier {
           )
           .toList();
     }
-    media=(await DatabaseHelper.instance.getMediaFile(_cards[0].deckId))!;
-    isLoading=false;
+    media = (await DatabaseHelper.instance.getMediaFile(_cards[0].deckId))!;
+    isLoading = false;
     notifyListeners();
   }
 
@@ -73,33 +72,33 @@ class NeuroPickNoti extends ChangeNotifier {
     if (options?[selectedIndex] == _cards[currentCardIdx].word) {
       answered = true;
       notifyListeners();
-    }
-    else{
+    } else {
       answered = true;
-      right=false;
+      right = false;
       notifyListeners();
     }
   }
 
-  Future<void> nextCard() async{
+  Future<void> nextCard() async {
     if (currentCardIdx < _cards.length - 1) {
       currentCardIdx++;
       options = null;
       answered = false;
       selectedIndex = null;
-      media=(await DatabaseHelper.instance.getMediaFile(_cards[currentCardIdx].deckId))!;
+      media = (await DatabaseHelper.instance.getMediaFile(
+        _cards[currentCardIdx].deckId,
+      ))!;
       notifyListeners();
-      right=true;
+      right = true;
       notifyListeners();
     }
-
   }
 
   void selectOption(int index) {
     if (selectedIndex == null) {
       selectedIndex = index;
       states?[index] = true;
-    }else{
+    } else {
       states?[selectedIndex!] = false;
       selectedIndex = index;
       states?[index] = true;
@@ -107,16 +106,13 @@ class NeuroPickNoti extends ChangeNotifier {
 
     notifyListeners();
   }
-  String getImagePath()
-  {
-    if(File(PathService.getFilePath(media!, _cards[currentCardIdx].img ?? "")).existsSync())
-    {
+
+  String getImagePath() {
+    if (File(
+      PathService.getFilePath(media!, _cards[currentCardIdx].img ?? ""),
+    ).existsSync()) {
       return PathService.getFilePath(media!, _cards[currentCardIdx].img ?? "");
     }
     return "";
   }
 }
-
-
-
-

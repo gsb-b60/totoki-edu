@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:totoki_extract/data/database_helper.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class Deck {
   final int? id;
@@ -8,7 +8,7 @@ class Deck {
   DateTime? createdAt;
   DateTime? updatedAt;
   final String? media;
-  final String?  headImage;
+  final String? headImage;
 
   Deck({
     this.id,
@@ -17,7 +17,7 @@ class Deck {
     this.createdAt,
     this.updatedAt,
     this.media,
-    this.headImage
+    this.headImage,
   });
   Map<String, dynamic> toMap() {
     return {
