@@ -1,13 +1,13 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
-import 'package:totoki_extract/widget/checkBtnVertical.dart';
-import 'package:totoki_extract/widget/choiceBtnVertical.dart';
-import 'package:totoki_extract/widget/progressIndicator.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart';
-import 'package:totoki_extract/widget/skipBtn.dart';
+import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
+import 'package:totoki_extract/ui/widget/checkBtnVertical.dart';
+import 'package:totoki_extract/ui/widget/choiceBtnVertical.dart';
+import 'package:totoki_extract/ui/widget/progressIndicator.dart';
+import 'package:totoki_extract/ui/widget/reviewScreen.dart';
+import 'package:totoki_extract/ui/widget/skipBtn.dart';
 import 'package:provider/provider.dart';
 
 class SynonympickUI extends StatefulWidget {
@@ -31,13 +31,15 @@ class _SynonympickUIState extends State<SynonympickUI> {
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.darkBorder,
+            size: 24,
+          ),
           onPressed: () => context.pop(),
         ),
         title: ProgressBar(value: provider.value, inARow: provider.inARow),
-        actions: [
-          SkipBtn(onPressed: () => reader.skipLesson()),
-        ],
+        actions: [SkipBtn(onPressed: () => reader.skipLesson())],
         backgroundColor: AppTheme.darkBase,
         elevation: 0,
         centerTitle: true,
@@ -46,7 +48,10 @@ class _SynonympickUIState extends State<SynonympickUI> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 16.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -63,7 +68,10 @@ class _SynonympickUIState extends State<SynonympickUI> {
                         height: MediaQuery.of(context).size.height * 0.25,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppTheme.darkBorder, width: 2),
+                          border: Border.all(
+                            color: AppTheme.darkBorder,
+                            width: 2,
+                          ),
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(14),
@@ -105,7 +113,9 @@ class _SynonympickUIState extends State<SynonympickUI> {
             AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeOutCubic,
-              bottom: provider.answered ? 0 : -MediaQuery.of(context).size.height,
+              bottom: provider.answered
+                  ? 0
+                  : -MediaQuery.of(context).size.height,
               left: 0,
               right: 0,
               height: MediaQuery.of(context).size.height,

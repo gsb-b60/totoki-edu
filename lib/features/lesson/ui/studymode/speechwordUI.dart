@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
-import 'package:totoki_extract/widget/progressIndicator.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart';
-import 'package:totoki_extract/widget/skipBtn.dart';
+import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
+import 'package:totoki_extract/ui/widget/progressIndicator.dart';
+import 'package:totoki_extract/ui/widget/reviewScreen.dart';
+import 'package:totoki_extract/ui/widget/skipBtn.dart';
 import 'package:provider/provider.dart';
 
 class SpeechWordUI extends StatefulWidget {
@@ -25,13 +25,15 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.darkBorder,
+            size: 24,
+          ),
           onPressed: () => context.pop(),
         ),
         title: ProgressBar(value: provider.value, inARow: provider.inARow),
-        actions: [
-          SkipBtn(onPressed: () => reader.skipLesson()),
-        ],
+        actions: [SkipBtn(onPressed: () => reader.skipLesson())],
         backgroundColor: AppTheme.darkBase,
         elevation: 0,
         centerTitle: true,
@@ -40,7 +42,10 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 16.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -67,8 +72,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                           Text(
                             provider.ipa,
                             style: AppTheme.sectionHeaderStyle.copyWith(
-                              color: AppTheme.lightText.withValues(alpha:0.7),
-
+                              color: AppTheme.lightText.withValues(alpha: 0.7),
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -82,14 +86,22 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                     child: GestureDetector(
                       onTap: () => reader.startListening(),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 24,
+                        ),
                         decoration: BoxDecoration(
                           color: AppTheme.darkSurface,
                           borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: AppTheme.bluePrimary, width: 2),
+                          border: Border.all(
+                            color: AppTheme.bluePrimary,
+                            width: 2,
+                          ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppTheme.bluePrimary.withValues(alpha:0.2),
+                              color: AppTheme.bluePrimary.withValues(
+                                alpha: 0.2,
+                              ),
                               blurRadius: 12,
                               spreadRadius: 2,
                             ),
@@ -98,7 +110,11 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.mic, color: AppTheme.bluePrimary, size: 64),
+                            const Icon(
+                              Icons.mic,
+                              color: AppTheme.bluePrimary,
+                              size: 64,
+                            ),
                             const SizedBox(height: 12),
                             Text(
                               "TAP TO SPEAK",
@@ -121,7 +137,9 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
             AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeOutCubic,
-              bottom: provider.answered ? 0 : -MediaQuery.of(context).size.height,
+              bottom: provider.answered
+                  ? 0
+                  : -MediaQuery.of(context).size.height,
               left: 0,
               right: 0,
               height: MediaQuery.of(context).size.height,

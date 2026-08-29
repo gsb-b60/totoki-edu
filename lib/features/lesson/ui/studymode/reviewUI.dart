@@ -1,15 +1,15 @@
-import 'dart:math';
+﻿import 'dart:math';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
-import 'package:totoki_extract/widget/progressIndicator.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart';
+import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
+import 'package:totoki_extract/ui/widget/progressIndicator.dart';
+import 'package:totoki_extract/ui/widget/reviewScreen.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
-import 'package:totoki_extract/widget/skipBtn.dart';
+import 'package:totoki_extract/ui/widget/skipBtn.dart';
 
 class ReviewUI extends StatefulWidget {
   const ReviewUI({super.key});
@@ -31,13 +31,15 @@ class _ReviewUIState extends State<ReviewUI> {
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.darkBorder, size: 24),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppTheme.darkBorder,
+            size: 24,
+          ),
           onPressed: () => context.pop(),
         ),
         title: ProgressBar(value: provider.value, inARow: provider.inARow),
-        actions: [
-          SkipBtn(onPressed: () => reader.skipLesson()),
-        ],
+        actions: [SkipBtn(onPressed: () => reader.skipLesson())],
         backgroundColor: AppTheme.darkBase,
         elevation: 0,
         centerTitle: true,
@@ -46,7 +48,10 @@ class _ReviewUIState extends State<ReviewUI> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 32.0,
+              ),
               child: SwipableStack(
                 onSwipeCompleted: (index, direction) {
                   if (index == list.length - 1) {
@@ -90,7 +95,10 @@ class _ReviewUIState extends State<ReviewUI> {
                         decoration: BoxDecoration(
                           color: AppTheme.darkSurface,
                           borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: AppTheme.darkBorder, width: 2),
+                          border: Border.all(
+                            color: AppTheme.darkBorder,
+                            width: 2,
+                          ),
                         ),
                         child: Center(
                           child: Padding(
@@ -109,7 +117,10 @@ class _ReviewUIState extends State<ReviewUI> {
                         decoration: BoxDecoration(
                           color: AppTheme.darkSurface,
                           borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: AppTheme.primaryTeal, width: 2),
+                          border: Border.all(
+                            color: AppTheme.primaryTeal,
+                            width: 2,
+                          ),
                         ),
                         child: Center(
                           child: Padding(
@@ -117,7 +128,9 @@ class _ReviewUIState extends State<ReviewUI> {
                             child: SingleChildScrollView(
                               child: Text(
                                 list[index].meaning ?? "",
-                                style: AppTheme.sectionHeaderStyle.copyWith(fontSize: 28),
+                                style: AppTheme.sectionHeaderStyle.copyWith(
+                                  fontSize: 28,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -140,7 +153,8 @@ class _ReviewUIState extends State<ReviewUI> {
                     _ActionButton(
                       label: "HARD",
                       color: AppTheme.redPrimary,
-                      onTap: () => controller.next(swipeDirection: SwipeDirection.up),
+                      onTap: () =>
+                          controller.next(swipeDirection: SwipeDirection.up),
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(
@@ -162,7 +176,8 @@ class _ReviewUIState extends State<ReviewUI> {
                     _ActionButton(
                       label: "EASY",
                       color: AppTheme.greenPrimary,
-                      onTap: () => controller.next(swipeDirection: SwipeDirection.down),
+                      onTap: () =>
+                          controller.next(swipeDirection: SwipeDirection.down),
                     ),
                   ],
                 ),
@@ -172,7 +187,9 @@ class _ReviewUIState extends State<ReviewUI> {
             AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeOutCubic,
-              bottom: provider.answered ? 0 : -MediaQuery.of(context).size.height,
+              bottom: provider.answered
+                  ? 0
+                  : -MediaQuery.of(context).size.height,
               left: 0,
               right: 0,
               height: MediaQuery.of(context).size.height,
@@ -230,11 +247,7 @@ class _ActionButton extends StatelessWidget {
 class CardLabel extends StatelessWidget {
   final Color color;
   final String value;
-  const CardLabel({
-    super.key,
-    required this.color,
-    required this.value,
-  });
+  const CardLabel({super.key, required this.color, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +255,7 @@ class CardLabel extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
         decoration: BoxDecoration(
-          color: AppTheme.darkBase.withValues(alpha:0.8),
+          color: AppTheme.darkBase.withValues(alpha: 0.8),
           border: Border.all(color: color, width: 4),
           borderRadius: BorderRadius.circular(20),
         ),
