@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/reviewScreen.dart' as shared;
 import 'package:totoki_extract/ui/screens/studymode/speechword/speechwordNoti.dart';
 import 'package:provider/provider.dart';
 

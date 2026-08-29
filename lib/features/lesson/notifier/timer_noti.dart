@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:totoki_extract/ui/lesson/config/threshold.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:totoki_extract/features/lesson/models/threshold.dart';
 
 
 class TimerNoti extends ChangeNotifier {

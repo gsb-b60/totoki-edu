@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/studymode/sound_and_sight/sound_and_sight_noti.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/reviewScreen.dart' as shared;
 
 enum ButtonState { normal, selected, done, wrong }
 

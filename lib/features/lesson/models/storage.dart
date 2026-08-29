@@ -1,4 +1,4 @@
-import 'package:totoki_extract/ui/lesson/config/threshold.dart';
+﻿import 'package:totoki_extract/features/lesson/models/threshold.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
 enum StudyMode {
@@ -47,7 +47,7 @@ class lessonNotiHelper {
     } else if (acc <= ThresholdAcc.fair) {
       return ThresholdAcc.fairStr;
     } else {
-      return "POOR"; // optional: điểm quá thấp
+      return "POOR"; // optional: Ä‘iá»ƒm quÃ¡ tháº¥p
     }
   }
 

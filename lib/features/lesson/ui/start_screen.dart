@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
+import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
 import 'package:provider/provider.dart';
 
 class StartScreen extends StatefulWidget {

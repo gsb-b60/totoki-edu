@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:flutter/services.dart';
-import 'package:totoki_extract/ui/lesson/config/storage.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/questNoti.dart';
+import 'package:totoki_extract/features/lesson/models/storage.dart';
+import 'package:totoki_extract/features/lesson/notifier/quest_noti.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/data/database_helper.dart';
 import 'package:totoki_extract/business/flashcard/supermemo.dart';
@@ -164,13 +164,13 @@ class LessonNoti extends ChangeNotifier {
         final start = SetUpLessonList.first;
         final end = SetUpLessonList.last;
 
-        // copy phần giữa
+        // copy pháº§n giá»¯a
         final middle = SetUpLessonList.sublist(1, SetUpLessonList.length - 1);
 
-        // shuffle phần giữa
+        // shuffle pháº§n giá»¯a
         middle.shuffle();
 
-        // ghép lại
+        // ghÃ©p láº¡i
         SetUpLessonList = [start, ...middle, end];
         break;
       case LearnMode.devMode:

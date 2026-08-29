@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:totoki_extract/data/database_helper.dart';
-import 'package:totoki_extract/ui/lesson/config/storage.dart';
+import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:path/path.dart';
 

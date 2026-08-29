@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/ui/lesson/config/storage.dart';
+import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/ui/screens/home/home_screen.dart';
 
 import 'package:totoki_extract/ui/screens/decklist/decklist_screen.dart';
@@ -14,7 +14,7 @@ import 'package:totoki_extract/ui/screens/dashboard/dashboard.dart';
 import 'package:totoki_extract/ui/screens/ielts/ielts_training.dart';
 
 import 'package:totoki_extract/ui/screens/studymode/flashcard/newwayreview.dart';
-import 'package:totoki_extract/ui/screens/blankfill/blankwordscreen.dart';
+import 'package:totoki_extract/ui/screens/studymode/blankfill/blankwordscreen.dart';
 import 'package:totoki_extract/ui/screens/studymode/mindfield/mindfeild.dart';
 import 'package:totoki_extract/ui/screens/studymode/wordsnap/wordsnap.dart';
 import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemix.dart';
@@ -28,9 +28,9 @@ import 'package:totoki_extract/ui/screens/studymode/wordpulse/wordpulse.dart';
 import 'package:totoki_extract/ui/screens/studymode/synonympick/synonympick.dart';
 import 'package:totoki_extract/ui/screens/studymode/speechword/speechword.dart';
 
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/lessonScreen.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnLevel.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/learnSpec/learnMode.dart';
+import 'package:totoki_extract/features/lesson/ui/lesson_screen.dart';
+import 'package:totoki_extract/features/lesson/ui/learn_level.dart';
+import 'package:totoki_extract/features/lesson/ui/learn_mode.dart';
 
 import 'package:totoki_extract/ui/screens/ielts/passages/passages_screen.dart';
 import 'package:totoki_extract/features/penpal/penpal.dart';
@@ -46,10 +46,7 @@ class AppRouter {
       child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
-          opacity: CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          ),
+          opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
           child: child,
         );
       },
@@ -82,15 +79,9 @@ class AppRouter {
         ],
       ),
 
-      GoRoute(
-        path: '/decks',
-        builder: (context, state) => const DeckListTab(),
-      ),
+      GoRoute(path: '/decks', builder: (context, state) => const DeckListTab()),
 
-      GoRoute(
-        path: '/stats',
-        builder: (context, state) => const Achievement(),
-      ),
+      GoRoute(path: '/stats', builder: (context, state) => const Achievement()),
 
       GoRoute(
         path: '/dashboard',
@@ -148,11 +139,7 @@ class AppRouter {
         path: '/learn/level/:level',
         pageBuilder: (context, state) {
           final level = int.parse(state.pathParameters['level']!);
-          return _fadeTransition(
-            context,
-            state,
-            Learnlevel(level: level),
-          );
+          return _fadeTransition(context, state, Learnlevel(level: level));
         },
       ),
 
@@ -160,11 +147,7 @@ class AppRouter {
         path: '/learn/mode',
         pageBuilder: (context, state) {
           final mode = state.extra as StudyMode;
-          return _fadeTransition(
-            context,
-            state,
-            LessLearnMode(st: mode),
-          );
+          return _fadeTransition(context, state, LessLearnMode(st: mode));
         },
       ),
 
@@ -172,22 +155,14 @@ class AppRouter {
         path: '/stats/card',
         pageBuilder: (context, state) {
           final card = state.extra as Flashcard;
-          return _fadeTransition(
-            context,
-            state,
-            CardInforScreen(card: card),
-          );
+          return _fadeTransition(context, state, CardInforScreen(card: card));
         },
       ),
 
       GoRoute(
         path: '/ielts/reading',
         pageBuilder: (context, state) {
-          return _fadeTransition(
-            context,
-            state,
-            const PassagesScreen(),
-          );
+          return _fadeTransition(context, state, const PassagesScreen());
         },
       ),
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/widget/choiceBtnVertical.dart';
-import 'package:totoki_extract/widget/checkBtnVertical.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/choiceBtnVertical.dart';
+import 'package:totoki_extract/ui/widget/checkBtnVertical.dart';
+import 'package:totoki_extract/ui/widget/reviewScreen.dart' as shared;
 import 'mindfieldnoti.dart';
 
 class MindFeildUI extends StatefulWidget {
@@ -25,16 +25,12 @@ class _MindFeildUIState extends State<MindFeildUI> {
     final card = provider.currentCard;
     final options = provider.getOptionList;
     final progress = provider.getProgress();
-    
+
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: AppTheme.lightText,
-            size: 24,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText, size: 24),
           onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
@@ -72,7 +68,7 @@ class _MindFeildUIState extends State<MindFeildUI> {
                         child: Text(
                           card.meaning ?? "No meaning available",
                           style: AppTheme.sectionHeaderStyle.copyWith(
-                            color: AppTheme.lightText.withValues(alpha:0.9),
+                            color: AppTheme.lightText.withValues(alpha: 0.9),
                             fontStyle: FontStyle.italic,
                           ),
                           textAlign: TextAlign.center,
@@ -114,7 +110,8 @@ class _MindFeildUIState extends State<MindFeildUI> {
             if (answered)
               shared.ReviewScreen(
                 right: right,
-                answer: "${card.word}${card.ipa != null ? ' - /${card.ipa}/' : ''}",
+                answer:
+                    "${card.word}${card.ipa != null ? ' - /${card.ipa}/' : ''}",
                 onPressed: () {
                   context.read<Mindfieldnoti>().nextCard();
                   setState(() {
@@ -130,6 +127,3 @@ class _MindFeildUIState extends State<MindFeildUI> {
     );
   }
 }
-
-
-

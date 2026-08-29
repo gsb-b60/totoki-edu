@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/lessonNoti.dart';
-import 'package:totoki_extract/ui/lesson/dailyLesson/noti/timerNoti.dart';
+import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
+import 'package:totoki_extract/features/lesson/notifier/timer_noti.dart';
 
 class EndScreen extends StatefulWidget {
   const EndScreen({super.key});

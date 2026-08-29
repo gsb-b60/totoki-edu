@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/studymode/synonymfield/synonymfieldNoti.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/widget/choiceBtnVertical.dart';
-import 'package:totoki_extract/widget/checkBtnVertical.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/choiceBtnVertical.dart';
+import 'package:totoki_extract/ui/widget/checkBtnVertical.dart';
+import 'package:totoki_extract/ui/widget/reviewScreen.dart' as shared;
 
 class Synonymfield extends StatefulWidget {
   final int deckID;
