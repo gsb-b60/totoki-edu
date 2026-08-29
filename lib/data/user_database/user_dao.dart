@@ -46,12 +46,16 @@ class UserDao {
 
   Future<void> updatePhoneNumber(String phoneNumber) async {
     final db = await _db;
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isEmpty) return;
     await db.update(
       'app_user',
       {
         'phone_number': phoneNumber,
         'updated_at': DateTime.now().toIso8601String(),
       },
+      where: 'id = ?',
+      whereArgs: [existing.first['id']],
     );
   }
 
@@ -72,5 +76,41 @@ class UserDao {
     final existing = await db.query('app_user', limit: 1);
     if (existing.isEmpty) return;
     await db.delete('app_user', where: 'id = ?', whereArgs: [existing.first['id']]);
+  }
+
+  Future<void> updateName(String name) async {
+    final db = await _db;
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isEmpty) return;
+    await db.update(
+      'app_user',
+      {'name': name, 'updated_at': DateTime.now().toIso8601String()},
+      where: 'id = ?',
+      whereArgs: [existing.first['id']],
+    );
+  }
+
+  Future<void> updateEmail(String email) async {
+    final db = await _db;
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isEmpty) return;
+    await db.update(
+      'app_user',
+      {'email': email, 'updated_at': DateTime.now().toIso8601String()},
+      where: 'id = ?',
+      whereArgs: [existing.first['id']],
+    );
+  }
+
+  Future<void> updateAvatar(String avatarUrl) async {
+    final db = await _db;
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isEmpty) return;
+    await db.update(
+      'app_user',
+      {'avatar_url': avatarUrl, 'updated_at': DateTime.now().toIso8601String()},
+      where: 'id = ?',
+      whereArgs: [existing.first['id']],
+    );
   }
 }

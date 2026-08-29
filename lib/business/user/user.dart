@@ -5,6 +5,7 @@ class User {
   final String? email;
   final String? phoneNumber;
   final DateTime? updatedAt;
+  final String? name;
 
   User({
     required this.id,
@@ -13,6 +14,7 @@ class User {
     this.email,
     this.phoneNumber,
     this.updatedAt,
+    this.name,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class User {
       'email': email,
       'phone_number': phoneNumber,
       'updated_at': updatedAt?.toIso8601String(),
+      'name': name,
     };
   }
 
@@ -36,6 +39,7 @@ class User {
       updatedAt: map['updated_at'] != null
           ? DateTime.parse(map['updated_at'] as String)
           : null,
+      name: map['name'] as String?,
     );
   }
 
@@ -46,6 +50,7 @@ class User {
     String? email,
     String? phoneNumber,
     DateTime? updatedAt,
+    String? name,
   }) {
     return User(
       id: id ?? this.id,
@@ -54,6 +59,7 @@ class User {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
     );
   }
 }

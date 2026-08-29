@@ -1,17 +1,53 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/business/flashcard/deck.dart';
+import 'package:totoki_extract/features/user/user_notifier.dart';
 
-class HomeShell extends StatelessWidget {
+class HomeShell extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
+  final UserNotifier? userNotifier;
 
-  const HomeShell({super.key, required this.navigationShell});
+  const HomeShell({
+    super.key,
+    required this.navigationShell,
+    this.userNotifier,
+  });
+
+  @override
+  State<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends State<HomeShell> {
+  late UserNotifier _userNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _userNotifier = widget.userNotifier ?? UserNotifier();
+    _userNotifier.initialize();
+  }
+
+  Widget _buildAvatar(String? avatarUrl) {
+    final hasImage =
+        avatarUrl != null &&
+        avatarUrl.isNotEmpty &&
+        File(avatarUrl).existsSync();
+    return CircleAvatar(
+      radius: 45,
+      backgroundColor: AppTheme.darkSurface,
+      backgroundImage: hasImage ? FileImage(File(avatarUrl)) : null,
+      child: hasImage
+          ? null
+          : const Icon(Icons.person, size: 45, color: AppTheme.lightText),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = navigationShell.currentIndex;
+    final currentIndex = widget.navigationShell.currentIndex;
 
     Color selectedColor;
     switch (currentIndex) {
@@ -34,10 +70,35 @@ class HomeShell extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(color: AppTheme.darkSurface),
-              child: Text(
-                'TOTOKI',
-                style: AppTheme.sectionHeaderStyle.copyWith(color: Colors.white),
+              decoration: BoxDecoration(color: AppTheme.darkBase),
+              child: GestureDetector(
+                onTap: () => context.push('/profile'),
+                child: Consumer<UserNotifier>(
+                  builder: (context, userNotifier, child) {
+                    final user = userNotifier.user;
+                    return user != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildAvatar(user.avatarUrl),
+                              const SizedBox(height: 8),
+                              Text(
+                                user.name ?? 'Hello my beauty',
+                                style: AppTheme.sectionHeaderStyle.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Text(
+                            'TOTOKI',
+                            style: AppTheme.sectionHeaderStyle.copyWith(
+                              color: Colors.white,
+                            ),
+                          );
+                  },
+                ),
               ),
             ),
             ListTile(
@@ -95,7 +156,7 @@ class HomeShell extends StatelessWidget {
         ),
         actions: null,
       ),
-      body: navigationShell,
+      body: widget.navigationShell,
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: AppTheme.darkBase,
@@ -122,9 +183,9 @@ class HomeShell extends StatelessWidget {
         child: NavigationBar(
           selectedIndex: currentIndex,
           onDestinationSelected: (index) {
-            navigationShell.goBranch(
+            widget.navigationShell.goBranch(
               index,
-              initialLocation: index == navigationShell.currentIndex,
+              initialLocation: index == widget.navigationShell.currentIndex,
             );
           },
           destinations: const [

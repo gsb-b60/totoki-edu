@@ -14,6 +14,8 @@ class UserNotifier extends ChangeNotifier {
 
   User? _user;
 
+  User? get user => _user;
+
   Future<String?> takePictureAndSaveAvatar({
     ImageSource source = ImageSource.camera,
   }) async {
@@ -36,6 +38,30 @@ class UserNotifier extends ChangeNotifier {
   Future<void> initialize() async {
     _user = await userDao.getCurrentUser();
     _user ??= await userDao.createLocalUser();
+    notifyListeners();
+  }
+
+  Future<void> updateName(String name) async {
+    await userDao.updateName(name);
+    _user = await userDao.getCurrentUser();
+    notifyListeners();
+  }
+
+  Future<void> updateAvatar(String avatarPath) async {
+    await userDao.updateAvatar(avatarPath);
+    _user = await userDao.getCurrentUser();
+    notifyListeners();
+  }
+
+  Future<void> updateProfile({
+    String? name,
+    String? email,
+    String? phoneNumber,
+  }) async {
+    if (name != null) await userDao.updateName(name);
+    if (email != null) await userDao.updateEmail(email);
+    if (phoneNumber != null) await userDao.updatePhoneNumber(phoneNumber);
+    _user = await userDao.getCurrentUser();
     notifyListeners();
   }
 }

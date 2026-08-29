@@ -36,6 +36,7 @@ class UserDatabaseHelper {
       await txn.execute('''
     CREATE TABLE app_user (
       id TEXT PRIMARY KEY,
+      name text,
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       avatar_url TEXT,
       email TEXT,

@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
+import 'package:totoki_extract/features/user/user_notifier.dart';
 import 'package:totoki_extract/ui/screens/home/home_screen.dart';
+import 'package:totoki_extract/ui/screens/profile/profile_screen.dart';
 
 import 'package:totoki_extract/ui/screens/decklist/decklist_screen.dart';
 import 'package:totoki_extract/ui/screens/decklist/cardlistscreen.dart';
@@ -58,7 +60,7 @@ class AppRouter {
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
-            HomeShell(navigationShell: navigationShell),
+            HomeShell(navigationShell: navigationShell, userNotifier: context.read<UserNotifier>()),
         branches: [
           StatefulShellBranch(
             routes: [
@@ -151,6 +153,10 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const ProfileScreen(),
+      ),
       GoRoute(
         path: '/stats/card',
         pageBuilder: (context, state) {
