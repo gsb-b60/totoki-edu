@@ -33,14 +33,18 @@ class UserDao {
   Future<User> createLocalUser() async {
     final db = await _database.database;
 
-    final user = User(id: const Uuid().v4(), createdAt: DateTime.now());
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isNotEmpty) {
+      return User.fromMap(existing.first);
+    }
 
+    final user = User(id: const Uuid().v4(), createdAt: DateTime.now());
     await db.insert('app_user', user.toMap());
 
     return user;
   }
 
-  Future<void> updatePhoneNumber(String id, String phoneNumber) async {
+  Future<void> updatePhoneNumber(String phoneNumber) async {
     final db = await _db;
     await db.update(
       'app_user',
@@ -48,23 +52,25 @@ class UserDao {
         'phone_number': phoneNumber,
         'updated_at': DateTime.now().toIso8601String(),
       },
-      where: 'id = ?',
-      whereArgs: [id],
     );
   }
 
   Future<void> updateUser(User user) async {
     final db = await _db;
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isEmpty) return;
     await db.update(
       'app_user',
       user.toMap(),
       where: 'id = ?',
-      whereArgs: [user.id],
+      whereArgs: [existing.first['id']],
     );
   }
 
-  Future<void> deleteUser(String id) async {
+  Future<void> deleteUser() async {
     final db = await _db;
-    await db.delete('app_user', where: 'id = ?', whereArgs: [id]);
+    final existing = await db.query('app_user', limit: 1);
+    if (existing.isEmpty) return;
+    await db.delete('app_user', where: 'id = ?', whereArgs: [existing.first['id']]);
   }
 }
