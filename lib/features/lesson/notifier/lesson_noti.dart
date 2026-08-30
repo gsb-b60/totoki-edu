@@ -5,7 +5,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:flutter/services.dart';
+import 'package:totoki_extract/business/user/history_lesson.dart';
+import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/data/user_database/history_lesson_dao.dart';
+import 'package:totoki_extract/data/user_database/user_db_helper.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/features/lesson/notifier/quest_noti.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
@@ -24,6 +27,7 @@ part 'src/lesson_progress.dart';
 part 'src/lesson_result.dart';
 part 'src/lesson_sm2.dart';
 part 'src/lesson_speech.dart';
+part 'src/lesson_history.dart';
 
 enum ButtonState { normal, selected, done, wrong }
 
@@ -102,6 +106,7 @@ class LessonNoti extends LessonNotiBase
         LessonOptions,
         LessonPhonemix,
         LessonSpeech,
+        LessonHistory,
         LessonProgress {
   LessonNoti({super.soundController});
 

@@ -126,6 +126,14 @@ class _HomeShellState extends State<HomeShell> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.history, color: AppTheme.greenPrimary),
+              title: Text('Lesson History', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/history');
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.mail, color: AppTheme.sciSpark),
               title: Text('Penpal', style: TextStyle(color: Colors.white)),
               onTap: () {

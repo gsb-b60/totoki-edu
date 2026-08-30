@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/features/user/user_notifier.dart';
+import 'package:totoki_extract/ui/screens/history/lesson_history_screen.dart';
 import 'package:totoki_extract/ui/screens/home/home_screen.dart';
 import 'package:totoki_extract/ui/screens/profile/profile_screen.dart';
 
@@ -88,6 +89,11 @@ class AppRouter {
       GoRoute(
         path: '/dashboard',
         builder: (context, state) => const DueDayDashBoard(),
+      ),
+
+      GoRoute(
+        path: '/history',
+        builder: (context, state) => const LessonHistoryScreen(),
       ),
 
       GoRoute(

@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/features/user/user_notifier.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
@@ -19,7 +21,7 @@ class _EndScreenState extends State<EndScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted || _didCompleteLesson) return;
 
       _didCompleteLesson = true;
@@ -29,6 +31,21 @@ class _EndScreenState extends State<EndScreen> {
       lesson.CallQuest(context);
       lesson.updateCard();
       context.read<SoundController>().playFinish();
+
+      final user = context.read<UserNotifier>().user;
+      if (user != null) {
+        final timer = context.read<TimerNoti>();
+        try {
+          await lesson.saveLession(
+            user.id,
+            LessonType.dailyLearn,
+            accuracy: lesson.accPercent,
+            timeSpent: timer.time.inSeconds,
+          );
+        } catch (e) {
+          debugPrint('Failed to save lesson history: $e');
+        }
+      }
     });
   }
   
