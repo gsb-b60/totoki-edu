@@ -15,6 +15,7 @@ import 'package:totoki_extract/ui/screens/decklist/achievement/achievement.dart'
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievementUI.dart';
 import 'package:totoki_extract/ui/screens/dashboard/dashboard.dart';
 import 'package:totoki_extract/ui/screens/ielts/ielts_training.dart';
+import 'package:totoki_extract/ui/screens/analyze/analyze_screen.dart';
 
 import 'package:totoki_extract/ui/screens/studymode/flashcard/newwayreview.dart';
 import 'package:totoki_extract/ui/screens/studymode/blankfill/blankwordscreen.dart';
@@ -68,6 +69,14 @@ class AppRouter {
               GoRoute(
                 path: '/learn',
                 builder: (context, state) => const LearnModeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/analyze',
+                builder: (context, state) => const AnalyzeScreen(),
               ),
             ],
           ),

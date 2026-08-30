@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/features/user/user_notifier.dart';
+import 'package:totoki_extract/features/user/analyze_notifier.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
@@ -25,6 +26,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SoundController()),
         ChangeNotifierProvider(create: (_) => ReadingNoti()),
         ChangeNotifierProvider(create: (_) => UserNotifier()..initialize()),
+        ChangeNotifierProvider(create: (_) => AnalyzeNotifier()),
       ],
       child: PathService.initError != null
           ? ErrorApp(PathService.initError!)

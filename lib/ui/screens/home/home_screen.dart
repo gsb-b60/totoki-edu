@@ -57,11 +57,14 @@ class _HomeShellState extends State<HomeShell> {
       case 1:
         selectedColor = AppTheme.bluePrimary;
         break;
+      case 2:
+        selectedColor = AppTheme.pinkPrimary;
+        break;
       default:
         selectedColor = AppTheme.greenPrimary;
     }
 
-    const tabTitles = ['Learn', 'IELTS'];
+    const tabTitles = ['Learn', 'Phân tích', 'IELTS'];
 
     return Scaffold(
       drawer: Drawer(
@@ -201,6 +204,11 @@ class _HomeShellState extends State<HomeShell> {
               icon: Icon(Icons.flash_on_outlined),
               selectedIcon: Icon(Icons.flash_on_rounded),
               label: 'Learn',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.insights_outlined),
+              selectedIcon: Icon(Icons.insights),
+              label: 'Phân tích',
             ),
             NavigationDestination(
               icon: Icon(Icons.language_outlined),
