@@ -54,10 +54,10 @@ class _HomeShellState extends State<HomeShell> {
       case 0:
         selectedColor = AppTheme.greenPrimary;
         break;
-      case 1:
+      case 2:
         selectedColor = AppTheme.bluePrimary;
         break;
-      case 2:
+      case 1:
         selectedColor = AppTheme.pinkPrimary;
         break;
       default:
@@ -130,7 +130,10 @@ class _HomeShellState extends State<HomeShell> {
             ),
             ListTile(
               leading: Icon(Icons.history, color: AppTheme.greenPrimary),
-              title: Text('Lesson History', style: TextStyle(color: Colors.white)),
+              title: Text(
+                'Lesson History',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 context.push('/history');
