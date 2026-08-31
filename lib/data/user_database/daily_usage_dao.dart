@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:totoki_extract/business/user/daily_usage.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
+import 'user_DAO.dart';
 import 'user_db_helper.dart';
 
 class DailyUsageDao {
@@ -8,6 +9,46 @@ class DailyUsageDao {
   DailyUsageDao(this._database);
 
   Future<Database> get _db => _database.database;
+
+  Future<void> addUsageTime(int amount) async {
+    if (amount <= 0) return;
+
+    final userDao = UserDao(_database);
+    final user = await userDao.getCurrentUser();
+    if (user == null) return;
+
+    final db = await _db;
+    final today = DateTime.now();
+    final date = '${today.day}/${today.month}/${today.year}';
+
+    final existing = await db.query(
+      'daily_user_usage',
+      where: 'user_id = ? AND date = ?',
+      whereArgs: [user.id, date],
+      limit: 1,
+    );
+
+    if (existing.isNotEmpty) {
+      final currentAmount = (existing.first['amount'] as int?) ?? 0;
+      await db.update(
+        'daily_user_usage',
+        {'amount': currentAmount + amount},
+        where: 'user_id = ? AND date = ?',
+        whereArgs: [user.id, date],
+      );
+      return;
+    }
+
+    await db.insert(
+      'daily_user_usage',
+      {
+        'user_id': user.id,
+        'date': date,
+        'amount': amount,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
   Future<int> upsertDailyUsage(DailyUsage usage) async {
     final db = await _db;

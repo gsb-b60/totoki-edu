@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/features/user/user_notifier.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
+import 'package:totoki_extract/service/usage_tracker.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/features/ielts/notifier/reading_notifier.dart';
@@ -17,7 +18,8 @@ void main() async {
   await PathService.init();
   final prefs = await SharedPreferences.getInstance();
   final onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
-
+  final usageTracker = UsageTracker();
+  usageTracker.start();
   runApp(
     MultiProvider(
       providers: [

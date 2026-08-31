@@ -75,7 +75,11 @@ class UserDao {
     final db = await _db;
     final existing = await db.query('app_user', limit: 1);
     if (existing.isEmpty) return;
-    await db.delete('app_user', where: 'id = ?', whereArgs: [existing.first['id']]);
+    await db.delete(
+      'app_user',
+      where: 'id = ?',
+      whereArgs: [existing.first['id']],
+    );
   }
 
   Future<void> updateName(String name) async {
