@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/ui/widget/nav_page_button.dart';
 
 class LearnMode extends StatelessWidget {

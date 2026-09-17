@@ -2,7 +2,6 @@
 import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:path/path.dart';
 
 import 'phonemixUI.dart';
 

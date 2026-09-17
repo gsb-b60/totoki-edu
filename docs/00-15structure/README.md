@@ -22,7 +22,8 @@ docs/00-15structure/
 │   ├── 09-roadmap.md          # Project roadmap: Done, Doing, and Next
 │   ├── 10-ielts.md            # IELTS training: assets, UI structure, data flow
 │   ├── 11-sound.md            # Sound effects: controller, registration, events
-│   └── 12-assets.md           # Asset directory map (sound, anki, icons, etc.)
+│   ├── 12-assets.md           # Asset directory map (sound, anki, icons, etc.)
+│   └── 13-testing.md          # Test suite layout, coverage, and how to run
 │
 ├── spec/                      # Screen-by-screen specific UI & UX specs
 │   ├── home.md                # Dashboard, Deck list, and DB Import

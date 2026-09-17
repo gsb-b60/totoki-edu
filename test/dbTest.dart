@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:totoki_extract/features/ielts/models/article_fragment.dart';
 import 'package:totoki_extract/features/ielts/models/paragraph_group.dart';
 import 'package:totoki_extract/features/ielts/parsers/answer_parser.dart';
 import 'package:totoki_extract/features/ielts/parsers/article_parser.dart';
@@ -47,15 +46,11 @@ class Parser
 
   static parseFromJson(seriesID, testID,part, questionGroup)
   async {
-    List<ParagraphGroup> questions = [];
-    List<ArticleFragment> articleFragments = [];
     String title = "";
-    String articleText = "";
     final testPath = "assets/ielts/test/$seriesID-$testID-$part.json";
     final questionPath = "assets/ielts/question/$seriesID-$testID-$part.json";
     final answerPath = "assets/ielts/answer/$seriesID-$testID.json";
     final dictPath = "assets/ielts/jsondictionary.json";
-    Map<String, dynamic>? questionData;
     try {
       final results = await Future.wait([
         rootBundle.loadString(testPath),
@@ -64,14 +59,9 @@ class Parser
         rootBundle.loadString(dictPath),
       ]);
       final data = jsonDecode(results[0]) as Map<String, dynamic>;
-      questionData = jsonDecode(results[1]) as Map<String, dynamic>;
-      final answerData = jsonDecode(results[2]) as Map<String, dynamic>;
-      final _dictionary = jsonDecode(results[3]) as Map<String, dynamic>;
 
       final article = ArticleParser.parse(data, seriesID);
       title = article.title;
-      articleFragments = article.fragments;
-      articleText = article.articleText;
       if(title=="?")
       {
         return false;
@@ -102,9 +92,6 @@ class Parser
   static parseQuestionFromJson(seriesID, testID,part, questionGroup)
   async {
     List<ParagraphGroup> questions = [];
-    List<ArticleFragment> articleFragments = [];
-    String title = "";
-    String articleText = "";
     final testPath = "assets/ielts/test/$seriesID-$testID-$part.json";
     final questionPath = "assets/ielts/question/$seriesID-$testID-$part.json";
     final answerPath = "assets/ielts/answer/$seriesID-$testID.json";
@@ -117,15 +104,8 @@ class Parser
         rootBundle.loadString(answerPath),
         rootBundle.loadString(dictPath),
       ]);
-      final data = jsonDecode(results[0]) as Map<String, dynamic>;
       questionData = jsonDecode(results[1]) as Map<String, dynamic>;
       final answerData = jsonDecode(results[2]) as Map<String, dynamic>;
-      final _dictionary = jsonDecode(results[3]) as Map<String, dynamic>;
-
-      final article = ArticleParser.parse(data, seriesID);
-      title = article.title;
-      articleFragments = article.fragments;
-      articleText = article.articleText;
 
       final answers = AnswerParser.parse(answerData["reading"] as List?);
       final qList = questionData["test_question"] as List? ?? [];

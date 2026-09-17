@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/ui/screens/analyze/analyze_constants.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 
 class TodayPulseBlock extends StatelessWidget {
   const TodayPulseBlock({super.key});
@@ -12,15 +12,15 @@ class TodayPulseBlock extends StatelessWidget {
     return Consumer<Cardmodel>(
       builder: (context, cardModel, child) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(AnalyzeSpacing.xl),
+            padding: const EdgeInsets.all(32.0),
             decoration: BoxDecoration(
-              color: AnalyzeColors.bgCard,
-              borderRadius: BorderRadius.circular(AnalyzeSpacing.xl),
+              color: AppTheme.darkBase,
+              borderRadius: BorderRadius.circular(32.0),
               border: Border.all(
-                color: AnalyzeColors.greenPrimary.withValues(alpha: 0.3),
+                color: AppTheme.greenPrimary.withValues(alpha: 0.3),
               ),
               boxShadow: [
                 BoxShadow(
@@ -42,19 +42,19 @@ class TodayPulseBlock extends StatelessWidget {
                         Text(
                           'HÔM NAY',
                           style: const TextStyle(
-                            color: AnalyzeColors.greenPrimary,
+                            color: AppTheme.greenPrimary,
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1.5,
                           ),
                         ),
-                        const SizedBox(height: AnalyzeSpacing.xs),
+                        const SizedBox(height: 8.0),
                         Text(
                           cardModel.dueCount.toString(),
                           style: const TextStyle(
                             fontSize: 48,
                             fontWeight: FontWeight.bold,
-                            color: AnalyzeColors.greenPrimary,
+                            color: AppTheme.greenPrimary,
                             height: 1.0,
                           ),
                         ),
@@ -62,14 +62,14 @@ class TodayPulseBlock extends StatelessWidget {
                           'thẻ đến hạn',
                           style: const TextStyle(
                             fontSize: 14,
-                            color: AnalyzeColors.textMuted,
+                            color: Colors.white,
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                const SizedBox(height: AnalyzeSpacing.xl),
+                const SizedBox(height: 32.0),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -77,11 +77,11 @@ class TodayPulseBlock extends StatelessWidget {
                       context.go('/learn');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AnalyzeColors.greenPrimary,
+                      backgroundColor: AppTheme.greenPrimary,
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: AnalyzeSpacing.lg),
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                       elevation: 0,
                     ),

@@ -45,7 +45,7 @@ class SelectGivenDiagram extends StatelessWidget {
         children: [
           if (constraint != null) ...[
             Text(
-              constraint!,
+              constraint,
               style: AppTheme.captionStyle.copyWith(color: Colors.orangeAccent, fontSize: 12),
             ),
             const SizedBox(height: 8),
@@ -68,7 +68,7 @@ class SelectGivenDiagram extends StatelessWidget {
             const SizedBox(height: 12),
           ],
           if (imageAssetPath != null) ...[
-            PictureViewer(imageAssetPath: imageAssetPath!),
+            PictureViewer(imageAssetPath: imageAssetPath),
             const SizedBox(height: 16),
           ],
           for (int i = 0; i < userSelected.length; i++)
@@ -120,7 +120,7 @@ class SelectGivenDiagram extends StatelessWidget {
                   Expanded(
                     child: Text(
                       hasAnswer
-                          ? (userSel! < options.length ? options[userSel] : '?')
+                          ? (userSel < options.length ? options[userSel] : '?')
                           : (correctSel != null && correctSel < options.length ? options[correctSel] : ' ___ '),
                       style: TextStyle(
                         color: hasAnswer

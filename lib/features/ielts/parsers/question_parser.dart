@@ -530,7 +530,7 @@ class QuestionParser {
           );
           groups.addAll(tableResult);
           for (final g in tableResult) {
-            qNum += (g.textAnswers?.length ?? 0) + g.answers.length;
+            qNum += g.textAnswers.length + g.answers.length;
           }
         } else {
           final itemTitle = item["title"] as String?;

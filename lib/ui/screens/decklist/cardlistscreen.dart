@@ -4,7 +4,6 @@ import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/ui/widget/nav_page_button.dart';
 
 import 'package:totoki_extract/ui/screens/decklist/learnModeMenu.dart';
 

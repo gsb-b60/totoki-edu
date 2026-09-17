@@ -10,9 +10,9 @@ class ChoiceBtnStates extends StatelessWidget {
     required this.onChoose,
   });
 
-  String value;
-  ButtonState state;
-  VoidCallback onChoose;
+  final String value;
+  final ButtonState state;
+  final VoidCallback onChoose;
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = AppTheme.darkBase;

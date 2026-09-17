@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
-import 'package:totoki_extract/ui/screens/analyze/analyze_constants.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 
 class ReviewHealthBlock extends StatelessWidget {
   const ReviewHealthBlock({super.key});
@@ -26,7 +26,7 @@ class ReviewHealthBlock extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,28 +36,28 @@ class ReviewHealthBlock extends StatelessWidget {
                   const Text(
                     'SỨC KHỎE ÔN TẬP',
                     style: TextStyle(
-                      color: AnalyzeColors.textPrimary,
+                      color: AppTheme.lightText,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      // Navigate to detail
-                    },
-                    child: const Text(
-                      'Xem chi tiết',
-                      style: TextStyle(
-                        color: AnalyzeColors.bluePrimary,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     // Navigate to detail
+                  //   },
+                  //   child: const Text(
+                  //     'Xem chi tiết',
+                  //     style: TextStyle(
+                  //       color: AppTheme.bluePrimary,
+                  //       fontSize: 11,
+                  //       fontWeight: FontWeight.w600,
+                  //       letterSpacing: 0.5,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
-              const SizedBox(height: AnalyzeSpacing.lg),
+              const SizedBox(height: 24.0),
               Row(
                 children: [
                   Expanded(
@@ -66,12 +66,9 @@ class ReviewHealthBlock extends StatelessWidget {
                       children: [
                         const Text(
                           'Tỷ lệ thành công',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: AnalyzeColors.textSecondary,
-                          ),
+                          style: TextStyle(fontSize: 11, color: Colors.white70),
                         ),
-                        const SizedBox(height: AnalyzeSpacing.xs),
+                        const SizedBox(height: 8.0),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,
@@ -81,31 +78,37 @@ class ReviewHealthBlock extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 36,
                                 fontWeight: FontWeight.bold,
-                                color: AnalyzeColors.greenPrimary,
+                                color: AppTheme.greenPrimary,
                                 height: 1.0,
                               ),
                             ),
-                            const SizedBox(width: AnalyzeSpacing.xs),
+                            const SizedBox(width: 8.0),
                             const Text(
                               '%',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AnalyzeColors.greenPrimary,
+                                color: AppTheme.greenPrimary,
                               ),
                             ),
-                            const SizedBox(width: AnalyzeSpacing.md),
+                            const SizedBox(width: 16.0),
                             if (stats.trend != 0) ...[
                               Icon(
-                                stats.trend > 0 ? Icons.trending_up : Icons.trending_down,
+                                stats.trend > 0
+                                    ? Icons.trending_up
+                                    : Icons.trending_down,
                                 size: 18,
-                                color: stats.trend > 0 ? AnalyzeColors.greenPrimary : AnalyzeColors.redPrimary,
+                                color: stats.trend > 0
+                                    ? AppTheme.greenPrimary
+                                    : AppTheme.redPrimary,
                               ),
                               Text(
                                 '${stats.trend.abs().toStringAsFixed(1)}%',
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: stats.trend > 0 ? AnalyzeColors.greenPrimary : AnalyzeColors.redPrimary,
+                                  color: stats.trend > 0
+                                      ? AppTheme.greenPrimary
+                                      : AppTheme.redPrimary,
                                 ),
                               ),
                             ],
@@ -116,30 +119,32 @@ class ReviewHealthBlock extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AnalyzeSpacing.xl),
+              const SizedBox(height: 32.0),
               Container(
                 height: 80,
-                padding: const EdgeInsets.all(AnalyzeSpacing.md),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: AnalyzeColors.bgCard,
-                  borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-                  border: Border.all(color: AnalyzeColors.borderLight),
+                  color: AppTheme.darkCard,
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(color: AppTheme.darkBorder),
                 ),
                 child: _buildSparkline(stats.dailyRates),
               ),
-              const SizedBox(height: AnalyzeSpacing.lg),
+              const SizedBox(height: 24.0),
               if (notifier.leechCards.isNotEmpty) ...[
                 const Text(
                   'THẺ KHÓ (CẦN ÔN LẠI)',
                   style: TextStyle(
                     fontSize: 11,
-                    color: AnalyzeColors.textSecondary,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: AnalyzeSpacing.md),
-                ...notifier.leechCards.map((card) => _buildLeechCard(card)).toList(),
+                const SizedBox(height: 12.0),
+                ...notifier.leechCards
+                    .map((card) => _buildLeechCard(card))
+                    .toList(),
               ],
             ],
           ),
@@ -153,14 +158,14 @@ class ReviewHealthBlock extends StatelessWidget {
       return const Center(
         child: Text(
           'Không có dữ liệu',
-          style: TextStyle(fontSize: 12, color: AnalyzeColors.textMuted),
+          style: TextStyle(fontSize: 12, color: Colors.white),
         ),
       );
     }
 
     // Take last 7 data points for weekly view
     final weeklyData = data.length > 7 ? data.sublist(data.length - 7) : data;
-    
+
     return LineChart(
       LineChartData(
         gridData: FlGridData(show: false),
@@ -179,8 +184,8 @@ class ReviewHealthBlock extends StatelessWidget {
             isCurved: true,
             gradient: LinearGradient(
               colors: [
-                AnalyzeColors.greenPrimary.withValues(alpha: 0.8),
-                AnalyzeColors.greenPrimary,
+                AppTheme.greenPrimary.withValues(alpha: 0.8),
+                AppTheme.greenPrimary,
               ],
             ),
             barWidth: 3,
@@ -190,8 +195,8 @@ class ReviewHealthBlock extends StatelessWidget {
               show: true,
               gradient: LinearGradient(
                 colors: [
-                  AnalyzeColors.greenPrimary.withValues(alpha: 0.2),
-                  AnalyzeColors.greenPrimary.withValues(alpha: 0.0),
+                  AppTheme.greenPrimary.withValues(alpha: 0.2),
+                  AppTheme.greenPrimary.withValues(alpha: 0.0),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -205,12 +210,12 @@ class ReviewHealthBlock extends StatelessWidget {
 
   Widget _buildLeechCard(dynamic card) {
     return Container(
-      margin: const EdgeInsets.only(bottom: AnalyzeSpacing.sm),
-      padding: const EdgeInsets.all(AnalyzeSpacing.md),
+      margin: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AnalyzeColors.bgCard,
-        borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-        border: Border.all(color: AnalyzeColors.redPrimary.withValues(alpha: 0.3)),
+        color: AppTheme.darkCard,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(color: AppTheme.redPrimary.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -223,24 +228,20 @@ class ReviewHealthBlock extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AnalyzeColors.textPrimary,
+                    color: AppTheme.lightText,
                   ),
                 ),
                 Text(
                   'Thất bại ${card.failCount} lần • Ease: ${card.easeFactor.toStringAsFixed(1)}',
                   style: const TextStyle(
                     fontSize: 11,
-                    color: AnalyzeColors.redPrimary,
+                    color: AppTheme.redPrimary,
                   ),
                 ),
               ],
             ),
           ),
-          Icon(
-            Icons.chevron_right,
-            color: AnalyzeColors.textMuted,
-            size: 20,
-          ),
+          Icon(Icons.chevron_right, color: Colors.white38, size: 20),
         ],
       ),
     );
@@ -248,24 +249,24 @@ class ReviewHealthBlock extends StatelessWidget {
 
   Widget _buildLoading() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'SỨC KHỎE ÔN TẬP',
             style: TextStyle(
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.lg),
+          const SizedBox(height: 24.0),
           Container(
             height: 80,
             decoration: BoxDecoration(
-              color: AnalyzeColors.bgSecondary,
-              borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
+              color: AppTheme.darkSurface,
+              borderRadius: BorderRadius.circular(16.0),
             ),
           ),
         ],
@@ -275,20 +276,17 @@ class ReviewHealthBlock extends StatelessWidget {
 
   Widget _buildError(String error) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
-        padding: const EdgeInsets.all(AnalyzeSpacing.lg),
+        padding: const EdgeInsets.all(24.0),
         decoration: BoxDecoration(
-          color: AnalyzeColors.bgCard,
-          borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-          border: Border.all(color: AnalyzeColors.borderLight),
+          color: AppTheme.darkBase,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(color: AppTheme.darkBorder),
         ),
         child: const Text(
           'Không thể tải dữ liệu',
-          style: TextStyle(
-            fontSize: 14,
-            color: AnalyzeColors.redPrimary,
-          ),
+          style: TextStyle(fontSize: 14, color: AppTheme.redPrimary),
         ),
       ),
     );
@@ -296,37 +294,27 @@ class ReviewHealthBlock extends StatelessWidget {
 
   Widget _buildEmpty() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
-        padding: const EdgeInsets.all(AnalyzeSpacing.xl),
+        padding: const EdgeInsets.all(32.0),
         decoration: BoxDecoration(
-          color: AnalyzeColors.bgCard,
-          borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-          border: Border.all(color: AnalyzeColors.borderLight),
+          color: AppTheme.darkCard,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(color: AppTheme.darkBorder),
         ),
         child: Center(
           child: Column(
             children: [
-              Icon(
-                Icons.analytics,
-                size: 48,
-                color: AnalyzeColors.textMuted,
-              ),
-              const SizedBox(height: AnalyzeSpacing.md),
+              Icon(Icons.analytics, size: 48, color: Colors.white38),
+              const SizedBox(height: 16.0),
               const Text(
                 'Chưa có dữ liệu ôn tập',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AnalyzeColors.textSecondary,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.white70),
               ),
-              const SizedBox(height: AnalyzeSpacing.xs),
+              const SizedBox(height: 8.0),
               const Text(
                 'Hãy ôn tập thẻ để xem thống kê',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: AnalyzeColors.textMuted,
-                ),
+                style: TextStyle(fontSize: 11, color: Colors.white38),
               ),
             ],
           ),

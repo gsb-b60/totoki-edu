@@ -27,7 +27,7 @@ import 'end_screen.dart';
 
 class Learnlevel extends StatefulWidget {
   Learnlevel({super.key, required this.level});
-  int level;
+  final int level;
 
   @override
   State<Learnlevel> createState() => _LearnlevelState();

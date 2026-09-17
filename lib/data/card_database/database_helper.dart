@@ -189,6 +189,15 @@ class DatabaseHelper {
 
   Future<List<Flashcard>> getDueCardLimit(int limit) async {
     final db = await database;
+    final check = await db.rawQuery('''
+    select 1
+    from cards
+    limit 1
+    ''');
+    if (check.isEmpty) {
+      await pickApkgFile(true);
+    }
+
     final maps = await db.rawQuery(
       '''
       SELECT *

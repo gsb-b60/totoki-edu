@@ -7,7 +7,6 @@ import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/ui/screens/studymode/echospell/echospellUI.dart';
 
 class EchospellNoti extends ChangeNotifier {
-  static final _dbhelper = DatabaseHelper.instance;
   List<Flashcard> _cards = [];
   String media = "";
   bool isLoading = false;

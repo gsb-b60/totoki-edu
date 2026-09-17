@@ -4,7 +4,7 @@ import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemixUI.dart';
 import 'package:provider/provider.dart';
 
 class PhoneMix extends StatefulWidget {
-  int deckID;
+  final int deckID;
   PhoneMix({super.key, required this.deckID});
 
   @override

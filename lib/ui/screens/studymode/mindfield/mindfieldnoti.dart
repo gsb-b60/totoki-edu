@@ -5,7 +5,6 @@ import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class Mindfieldnoti extends ChangeNotifier {
-  static final _dbhelper = DatabaseHelper.instance;
   List<Flashcard> _cards = [];
   bool IsLoading = false;
   int currentIndex = 0;

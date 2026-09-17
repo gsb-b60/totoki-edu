@@ -545,7 +545,7 @@ bool _matchesAnswer(ParagraphGroup q, int qId, List answers) {
   }
   
   final expectedNorm = expectedRaw.toUpperCase().trim();
-  final actual = q.textAnswers?.map((a) => a.toUpperCase().trim()).toList() ?? [];
+  final actual = q.textAnswers.map((a) => a.toUpperCase().trim()).toList();
   return actual.any((a) => a == expectedNorm);
 }
 
@@ -560,6 +560,6 @@ String _expectedAns(List answers, int qId) {
 
 String _actualAns(ParagraphGroup q) {
   if (q.answers.isNotEmpty) return 'option:${q.answers.first}';
-  if (q.textAnswers?.isNotEmpty == true) return 'text:${q.textAnswers}';
+  if (q.textAnswers.isNotEmpty == true) return 'text:${q.textAnswers}';
   return 'none';
 }

@@ -63,7 +63,7 @@ class InputDiagram extends StatelessWidget {
             const SizedBox(height: 12),
           ],
           if (imageAssetPath != null) ...[
-            PictureViewer(imageAssetPath: imageAssetPath!),
+            PictureViewer(imageAssetPath: imageAssetPath),
             const SizedBox(height: 16),
           ],
           for (int i = 0; i < userInputs.length; i++)

@@ -25,7 +25,7 @@ import 'package:totoki_extract/services/sound_controller.dart';
 
 class LessLearnMode extends StatefulWidget {
   LessLearnMode({super.key, required this.st});
-  StudyMode st;
+  final StudyMode st;
   @override
   State<LessLearnMode> createState() => _LessLearnModeState();
 }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/ui/screens/studymode/mindfield/mindfieldnoti.dart';
 import 'package:totoki_extract/ui/screens/studymode/wordsnap/wordsnapNoti.dart';
 import 'package:totoki_extract/ui/screens/studymode/wordsnap/wordsnapUI.dart';
 import 'package:provider/provider.dart';
 
 class WordSnap extends StatefulWidget {
   WordSnap({super.key, required this.deck_id});
-  int deck_id;
+  final int deck_id;
   @override
   State<WordSnap> createState() => _WordSnapState();
 }

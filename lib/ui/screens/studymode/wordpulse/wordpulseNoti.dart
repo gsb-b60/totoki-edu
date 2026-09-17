@@ -8,7 +8,6 @@ import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/data/card_database/database_helper.dart';
 
 class WordPulseNoti extends ChangeNotifier {
-  static final _dbhelper = DatabaseHelper.instance;
   List<Flashcard> _cards = [];
   String media = "";
   bool isLoading = false;

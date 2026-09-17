@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
-import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:totoki_extract/ui/screens/decklist/cardlistscreen.dart';
 
 class DeckListTab extends StatelessWidget {
   const DeckListTab({super.key});

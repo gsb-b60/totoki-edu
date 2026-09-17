@@ -26,7 +26,7 @@ import 'end_screen.dart';
 
 class LessonScreen extends StatefulWidget {
   LessonScreen({super.key, required this.fetchMode});
-  LearnMode fetchMode;
+  final LearnMode fetchMode;
   @override
   State<LessonScreen> createState() => _LessonScreenState();
 }

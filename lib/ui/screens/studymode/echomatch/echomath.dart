@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class EchoMatch extends StatefulWidget {
   EchoMatch({super.key, required this.deck_id});
-  int deck_id;
+  final int deck_id;
   @override
   State<EchoMatch> createState() => _EchoMatchState();
 }

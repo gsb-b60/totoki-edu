@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/ui/screens/ielts/widgets/ielts_card.dart';
-import 'package:totoki_extract/ui/screens/ielts/passages/passages_screen.dart';
 
 class ReadingTab extends StatelessWidget {
   const ReadingTab({super.key});

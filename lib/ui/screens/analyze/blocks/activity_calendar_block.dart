@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
-import 'package:totoki_extract/ui/screens/analyze/analyze_constants.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 
 class ActivityCalendarBlock extends StatelessWidget {
   const ActivityCalendarBlock({super.key});
@@ -24,7 +24,7 @@ class ActivityCalendarBlock extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,7 +34,7 @@ class ActivityCalendarBlock extends StatelessWidget {
                   const Text(
                     'HOẠT ĐỘNG',
                     style: TextStyle(
-                      color: AnalyzeColors.textPrimary,
+                      color: AppTheme.lightText,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -46,7 +46,7 @@ class ActivityCalendarBlock extends StatelessWidget {
                     child: const Text(
                       'Xem năm',
                       style: TextStyle(
-                        color: AnalyzeColors.bluePrimary,
+                        color: AppTheme.bluePrimary,
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.5,
@@ -55,7 +55,7 @@ class ActivityCalendarBlock extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AnalyzeSpacing.lg),
+              const SizedBox(height: 24.0),
               Row(
                 children: [
                   Expanded(
@@ -63,21 +63,21 @@ class ActivityCalendarBlock extends StatelessWidget {
                       icon: Icons.local_fire_department,
                       label: 'Streak hiện tại',
                       value: '${notifier.currentStreak} ngày',
-                      color: AnalyzeColors.redPrimary,
+                      color: AppTheme.redPrimary,
                     ),
                   ),
-                  const SizedBox(width: AnalyzeSpacing.md),
+                  const SizedBox(width: 16.0),
                   Expanded(
                     child: _buildStatCard(
                       icon: Icons.emoji_events,
                       label: 'Streak dài nhất',
                       value: '${notifier.longestStreak} ngày',
-                      color: AnalyzeColors.yellowPrimary,
+                      color: AppTheme.yellowPrimary,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: AnalyzeSpacing.xl),
+              const SizedBox(height: 32.0),
               SizedBox(
                 height: 100,
                 child: ListView.builder(
@@ -103,29 +103,29 @@ class ActivityCalendarBlock extends StatelessWidget {
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.all(AnalyzeSpacing.md),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AnalyzeColors.bgCard,
-        borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-        border: Border.all(color: AnalyzeColors.borderLight),
+        color: AppTheme.darkCard,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(color: AppTheme.darkBorder),
       ),
       child: Column(
         children: [
           Icon(icon, color: color, size: 24),
-          const SizedBox(height: AnalyzeSpacing.xs),
+          const SizedBox(height: 8.0),
           Text(
             value,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
             ),
           ),
           Text(
             label,
             style: const TextStyle(
               fontSize: 11,
-              color: AnalyzeColors.textSecondary,
+              color: Colors.white70,
             ),
           ),
         ],
@@ -141,19 +141,19 @@ class ActivityCalendarBlock extends StatelessWidget {
     
     // Get color based on activity level
     Color barColor;
-    if (fillRatio > 0.7) barColor = AnalyzeColors.greenPrimary;
-    else if (fillRatio > 0.4) barColor = AnalyzeColors.yellowPrimary;
-    else if (fillRatio > 0.1) barColor = AnalyzeColors.bluePrimary;
-    else barColor = AnalyzeColors.borderMedium;
+    if (fillRatio > 0.7) barColor = AppTheme.greenPrimary;
+    else if (fillRatio > 0.4) barColor = AppTheme.yellowPrimary;
+    else if (fillRatio > 0.1) barColor = AppTheme.bluePrimary;
+    else barColor = Colors.grey[700]!;
 
     return Container(
       width: 70,
-      margin: const EdgeInsets.only(right: AnalyzeSpacing.sm),
-      padding: const EdgeInsets.all(AnalyzeSpacing.sm),
+      margin: const EdgeInsets.only(right: 12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: AnalyzeColors.bgCard,
-        borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-        border: Border.all(color: AnalyzeColors.borderLight),
+        color: AppTheme.darkCard,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(color: AppTheme.darkBorder),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,10 +163,10 @@ class ActivityCalendarBlock extends StatelessWidget {
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.bold,
-              color: AnalyzeColors.textSecondary,
+              color: Colors.white70,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.xs),
+          const SizedBox(height: 8.0),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -183,10 +183,10 @@ class ActivityCalendarBlock extends StatelessWidget {
                         ? barColor 
                         : weekFill > 0.2 
                             ? barColor.withValues(alpha: 0.5)
-                            : AnalyzeColors.borderLight,
+                            : AppTheme.darkBorder,
                     borderRadius: BorderRadius.circular(3),
                     border: Border.all(
-                      color: weekFill > 0 ? barColor : AnalyzeColors.borderLight,
+                      color: weekFill > 0 ? barColor : AppTheme.darkBorder,
                       width: 1,
                     ),
                   ),
@@ -194,13 +194,13 @@ class ActivityCalendarBlock extends StatelessWidget {
               }).reversed.toList(),
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.xs),
+          const SizedBox(height: 8.0),
           Text(
             '$activeDays/$totalDays',
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
             ),
           ),
         ],
@@ -233,37 +233,37 @@ class ActivityCalendarBlock extends StatelessWidget {
 
   Widget _buildLoading() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'HOẠT ĐỘNG',
             style: TextStyle(
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.lg),
+          const SizedBox(height: 24.0),
           Row(
             children: [
               Expanded(child: _buildStatCard(
                 icon: Icons.local_fire_department,
                 label: 'Streak hiện tại',
                 value: '...',
-                color: AnalyzeColors.redPrimary,
+                color: AppTheme.redPrimary,
               )),
-              const SizedBox(width: AnalyzeSpacing.md),
+              const SizedBox(width: 16.0),
               Expanded(child: _buildStatCard(
                 icon: Icons.emoji_events,
                 label: 'Streak dài nhất',
                 value: '...',
-                color: AnalyzeColors.yellowPrimary,
+                color: AppTheme.yellowPrimary,
               )),
             ],
           ),
-          const SizedBox(height: AnalyzeSpacing.xl),
+          const SizedBox(height: 32.0),
           SizedBox(
             height: 100,
             child: ListView.builder(
@@ -272,10 +272,10 @@ class ActivityCalendarBlock extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Container(
                   width: 70,
-                  margin: const EdgeInsets.only(right: AnalyzeSpacing.sm),
+                  margin: const EdgeInsets.only(right: 12.0),
                   decoration: BoxDecoration(
-                    color: AnalyzeColors.bgSecondary,
-                    borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
+                    color: AppTheme.darkSurface,
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
                 );
               },
@@ -288,19 +288,19 @@ class ActivityCalendarBlock extends StatelessWidget {
 
   Widget _buildError(String error) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
-        padding: const EdgeInsets.all(AnalyzeSpacing.lg),
+        padding: const EdgeInsets.all(24.0),
         decoration: BoxDecoration(
-          color: AnalyzeColors.bgCard,
-          borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-          border: Border.all(color: AnalyzeColors.borderLight),
+          color: AppTheme.darkCard,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(color: AppTheme.darkBorder),
         ),
         child: const Text(
           'Không thể tải dữ liệu',
           style: TextStyle(
             fontSize: 14,
-            color: AnalyzeColors.redPrimary,
+            color: AppTheme.redPrimary,
           ),
         ),
       ),
@@ -309,13 +309,13 @@ class ActivityCalendarBlock extends StatelessWidget {
 
   Widget _buildEmpty() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
-        padding: const EdgeInsets.all(AnalyzeSpacing.xl),
+        padding: const EdgeInsets.all(32.0),
         decoration: BoxDecoration(
-          color: AnalyzeColors.bgCard,
-          borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-          border: Border.all(color: AnalyzeColors.borderLight),
+          color: AppTheme.darkCard,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(color: AppTheme.darkBorder),
         ),
         child: Center(
           child: Column(
@@ -323,22 +323,22 @@ class ActivityCalendarBlock extends StatelessWidget {
               Icon(
                 Icons.calendar_month,
                 size: 48,
-                color: AnalyzeColors.textMuted,
+                color: Colors.white38,
               ),
-              const SizedBox(height: AnalyzeSpacing.md),
+              const SizedBox(height: 16.0),
               const Text(
                 'Chưa có hoạt động',
                 style: TextStyle(
                   fontSize: 14,
-                  color: AnalyzeColors.textSecondary,
+                  color: Colors.white70,
                 ),
               ),
-              const SizedBox(height: AnalyzeSpacing.xs),
+              const SizedBox(height: 8.0),
               const Text(
                 'Hãy học mỗi ngày để tạo streak',
                 style: TextStyle(
                   fontSize: 11,
-                  color: AnalyzeColors.textMuted,
+                  color: Colors.white38,
                 ),
               ),
             ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/features/user/user_notifier.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
@@ -8,8 +7,6 @@ import 'package:totoki_extract/ui/screens/analyze/blocks/today_pulse_block.dart'
 import 'package:totoki_extract/ui/screens/analyze/blocks/weekly_lesson_block.dart';
 import 'package:totoki_extract/ui/screens/analyze/blocks/lesson_progress_block.dart';
 import 'package:totoki_extract/ui/screens/analyze/blocks/review_health_block.dart';
-import 'package:totoki_extract/ui/screens/analyze/blocks/activity_calendar_block.dart';
-import 'package:totoki_extract/ui/screens/analyze/analyze_constants.dart';
 
 class AnalyzeScreen extends StatefulWidget {
   const AnalyzeScreen({super.key});
@@ -37,7 +34,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.darkSurface,
+      backgroundColor: AppTheme.darkBase,
       body: Consumer<UserNotifier>(
         builder: (context, userNotifier, child) {
           final user = userNotifier.user;
@@ -55,9 +52,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AnalyzeSpacing.md,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: const _AnalyzeContent(),
               ),
             ),
@@ -75,5 +70,27 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     if (user != null) {
       await analyzeNotifier.refresh(user.id);
     }
+  }
+}
+
+class _AnalyzeContent extends StatelessWidget {
+  const _AnalyzeContent();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 24.0),
+        const TodayPulseBlock(),
+        const SizedBox(height: 48.0),
+        const WeeklyLessonBlock(),
+        const SizedBox(height: 48.0),
+        const LessonProgressBlock(),
+        const SizedBox(height: 48.0),
+        const ReviewHealthBlock(),
+        const SizedBox(height: 48.0),
+      ],
+    );
   }
 }

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class WordPulse extends StatefulWidget {
   WordPulse({super.key, required this.deck_id});
-  int deck_id;
+  final int deck_id;
   @override
   State<WordPulse> createState() => _WordPulseState();
 }

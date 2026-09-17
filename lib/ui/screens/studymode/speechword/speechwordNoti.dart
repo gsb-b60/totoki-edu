@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
-import 'package:path/path.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechWordNoti extends ChangeNotifier {
-  static final _dbhelper = DatabaseHelper.instance;
   List<Flashcard> _cards = [];
   bool isLoading = false;
 
@@ -109,7 +107,7 @@ class SpeechWordNoti extends ChangeNotifier {
     re = re.toLowerCase().trim();
     var wordtrim = word.toLowerCase().trim();
     answered = true;
-    if (normalize(re) == normalize(wordtrim)) {
+    if (re == wordtrim) {
       right = true;
     } else {
       right = false;

@@ -8,7 +8,6 @@ import 'package:totoki_extract/data/card_database/database_helper.dart';
 import 'package:totoki_extract/ui/screens/studymode/sound_and_sight/sound_and_sight_ui.dart';
 
 class SoundNSightNoti extends ChangeNotifier {
-  static final _dbhelper = DatabaseHelper.instance;
   List<Flashcard> _cards = [];
   String media = "";
   bool isLoading = false;
@@ -39,9 +38,9 @@ class SoundNSightNoti extends ChangeNotifier {
   }
 
   void CheckAnswer(String letter, int index) {
-    if (letter == trueList![currentIndex]) {
+    if (letter == trueList[currentIndex]) {
       listState![index] = ButtonState.done;
-      listWord![currentIndex] = trueList![currentIndex];
+      listWord![currentIndex] = trueList[currentIndex];
       notifyListeners();
       currentIndex++;
     } else {

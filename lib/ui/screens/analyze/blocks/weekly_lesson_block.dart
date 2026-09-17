@@ -3,10 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
 import 'package:totoki_extract/business/user/lessonType.dart';
-import 'package:totoki_extract/ui/screens/analyze/analyze_constants.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 
 class WeeklyLessonBlock extends StatelessWidget {
   const WeeklyLessonBlock({super.key});
+
+  static Color _lessonColor(LessonType t) => switch (t) {
+    LessonType.dailyLearn => AppTheme.primaryTeal,
+    LessonType.ielts => AppTheme.bluePrimary,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +31,19 @@ class WeeklyLessonBlock extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'TUẦN NÀY',
                 style: TextStyle(
-                  color: AnalyzeColors.textPrimary,
+                  color: AppTheme.lightText,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: AnalyzeSpacing.lg),
+              const SizedBox(height: 24.0),
               SizedBox(
                 height: 120,
                 child: ListView.builder(
@@ -63,14 +68,14 @@ class WeeklyLessonBlock extends StatelessWidget {
     
     return Container(
       width: 70,
-      margin: const EdgeInsets.only(right: AnalyzeSpacing.sm),
-      padding: const EdgeInsets.all(AnalyzeSpacing.sm),
+      margin: const EdgeInsets.only(right: 12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: isToday ? AnalyzeColors.greenPrimary.withValues(alpha: 0.1) : AnalyzeColors.bgCard,
-        borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
+        color: isToday ? AppTheme.greenPrimary.withValues(alpha: 0.1) : AppTheme.darkCard,
+        borderRadius: BorderRadius.circular(16.0),
         border: isToday
-            ? Border.all(color: AnalyzeColors.greenPrimary, width: 2)
-            : Border.all(color: AnalyzeColors.borderLight),
+            ? Border.all(color: AppTheme.greenPrimary, width: 2)
+            : Border.all(color: AppTheme.darkBorder),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,10 +85,10 @@ class WeeklyLessonBlock extends StatelessWidget {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.bold,
-              color: isToday ? AnalyzeColors.greenPrimary : AnalyzeColors.textMuted,
+              color: isToday ? AppTheme.greenPrimary : Colors.white38,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.xs),
+          const SizedBox(height: 8.0),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -93,13 +98,13 @@ class WeeklyLessonBlock extends StatelessWidget {
               }).toList(),
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.xs),
+          const SizedBox(height: 8.0),
           Text(
             '${_totalMinutes(day)}m',
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
             ),
           ),
         ],
@@ -108,7 +113,7 @@ class WeeklyLessonBlock extends StatelessWidget {
   }
 
   Widget _buildLessonPill(LessonType type, int minutes) {
-    final color = AnalyzeColors.lessonColor(type);
+    final color = _lessonColor(type);
     final initial = _getInitial(type);
     
     return Container(
@@ -118,7 +123,7 @@ class WeeklyLessonBlock extends StatelessWidget {
         vertical: 2,
       ),
       decoration: BoxDecoration(
-        color: minutes > 0 ? color.withValues(alpha: 0.15) : AnalyzeColors.borderLight,
+        color: minutes > 0 ? color.withValues(alpha: 0.15) : AppTheme.darkBorder,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
@@ -126,7 +131,7 @@ class WeeklyLessonBlock extends StatelessWidget {
         style: TextStyle(
           fontSize: 9,
           fontWeight: FontWeight.bold,
-          color: minutes > 0 ? color : AnalyzeColors.textMuted,
+          color: minutes > 0 ? color : Colors.white38,
         ),
       ),
     );
@@ -155,19 +160,19 @@ class WeeklyLessonBlock extends StatelessWidget {
 
   Widget _buildLoading() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'TUẦN NÀY',
             style: TextStyle(
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.lg),
+          const SizedBox(height: 24.0),
           SizedBox(
             height: 120,
             child: ListView.builder(
@@ -176,10 +181,10 @@ class WeeklyLessonBlock extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Container(
                   width: 70,
-                  margin: const EdgeInsets.only(right: AnalyzeSpacing.sm),
+                  margin: const EdgeInsets.only(right: 12.0),
                   decoration: BoxDecoration(
-                    color: AnalyzeColors.bgSecondary,
-                    borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
+                    color: AppTheme.darkSurface,
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
                 );
               },
@@ -192,31 +197,31 @@ class WeeklyLessonBlock extends StatelessWidget {
 
   Widget _buildError(String error) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'TUẦN NÀY',
             style: TextStyle(
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.lg),
+          const SizedBox(height: 24.0),
           Container(
-            padding: const EdgeInsets.all(AnalyzeSpacing.lg),
+            padding: const EdgeInsets.all(24.0),
             decoration: BoxDecoration(
-              color: AnalyzeColors.bgCard,
-              borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-              border: Border.all(color: AnalyzeColors.borderLight),
+              color: AppTheme.darkCard,
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(color: AppTheme.darkBorder),
             ),
             child: const Text(
               'Không thể tải dữ liệu',
               style: TextStyle(
                 fontSize: 14,
-                color: AnalyzeColors.redPrimary,
+                color: AppTheme.redPrimary,
               ),
             ),
           ),
@@ -227,26 +232,26 @@ class WeeklyLessonBlock extends StatelessWidget {
 
   Widget _buildEmpty() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnalyzeSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'TUẦN NÀY',
             style: TextStyle(
-              color: AnalyzeColors.textPrimary,
+              color: AppTheme.lightText,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AnalyzeSpacing.lg),
+          const SizedBox(height: 24.0),
           Container(
             height: 120,
-            padding: const EdgeInsets.all(AnalyzeSpacing.lg),
+            padding: const EdgeInsets.all(24.0),
             decoration: BoxDecoration(
-              color: AnalyzeColors.bgCard,
-              borderRadius: BorderRadius.circular(AnalyzeSpacing.md),
-              border: Border.all(color: AnalyzeColors.borderLight),
+              color: AppTheme.darkCard,
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(color: AppTheme.darkBorder),
             ),
             child: Center(
               child: Column(
@@ -255,14 +260,14 @@ class WeeklyLessonBlock extends StatelessWidget {
                   Icon(
                     Icons.calendar_today,
                     size: 32,
-                    color: AnalyzeColors.textMuted,
+                    color: Colors.white38,
                   ),
-                  const SizedBox(height: AnalyzeSpacing.md),
+                  const SizedBox(height: 16.0),
                   const Text(
                     'Chưa có hoạt động tuần này',
                     style: TextStyle(
                       fontSize: 14,
-                      color: AnalyzeColors.textSecondary,
+                      color: Colors.white70,
                     ),
                   ),
                 ],

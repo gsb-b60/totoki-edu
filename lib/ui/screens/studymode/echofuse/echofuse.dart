@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class EchoFuse extends StatefulWidget {
   EchoFuse({super.key, required this.deck_id});
-  int deck_id;
+  final int deck_id;
   @override
   State<EchoFuse> createState() => _EchoFuseState();
 }

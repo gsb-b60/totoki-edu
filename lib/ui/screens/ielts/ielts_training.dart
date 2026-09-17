@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/ui/screens/ielts/tabs/reading_tab.dart';
-import 'package:totoki_extract/ui/screens/ielts/tabs/listening_tab.dart';
-import 'package:totoki_extract/ui/screens/ielts/tabs/writing_tab.dart';
-import 'package:totoki_extract/ui/screens/ielts/tabs/speaking_tab.dart';
 
 class IeltsTraining extends StatefulWidget {
   const IeltsTraining({super.key});

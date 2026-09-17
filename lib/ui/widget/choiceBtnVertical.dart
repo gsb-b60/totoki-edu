@@ -49,8 +49,8 @@ class ChoiceBtnVertical extends StatelessWidget {
 }
 
 class CheckBtn extends StatelessWidget {
-  bool isChecked;
-  VoidCallback? onCheck;
+  final bool isChecked;
+  final VoidCallback? onCheck;
   CheckBtn({super.key, required this.isChecked, required this.onCheck});
 
   @override
