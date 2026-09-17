@@ -68,9 +68,20 @@ flutter test test/unit test/widget # unit + widget suites
 
 Structured docs live under [`docs/00-15structure/`](docs/00-15structure/README.md) - architecture, database schema, SM-2 business rules, features, specs, roadmap. An IELTS parser handbook is in [`docs/parser-handbook/`](docs/parser-handbook/README.md).
 
+
 ## Screenshots
 
-<img width="351" height="684" alt="Ảnh chụp màn hình 2026-09-17 210233" src="https://github.com/user-attachments/assets/4950404a-563d-4d71-ae4e-0a636068cfca" />
-<img width="376" height="683" alt="Ảnh chụp màn hình 2026-09-17 210437" src="https://github.com/user-attachments/assets/ce7bd2da-cb04-4155-9be3-736a2b5301d3" />
-<img width="367" height="685" alt="Ảnh chụp màn hình 2026-09-17 210505" src="https://github.com/user-attachments/assets/6891f29c-68bc-4438-88de-ce70147253f8" />
-<img width="366" height="672" alt="Ảnh chụp màn hình 2026-09-17 210212" src="https://github.com/user-attachments/assets/3efaaac9-d3ad-4846-ac59-879ff377c4a1" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3efaaac9-d3ad-4846-ac59-879ff377c4a1" width="220" alt="Main screen">
+  <img src="https://github.com/user-attachments/assets/ce7bd2da-cb04-4155-9be3-736a2b5301d3" width="220" alt="Side screen">
+  <img src="https://github.com/user-attachments/assets/6891f29c-68bc-4438-88de-ce70147253f8" width="220" alt="Speaking screen">
+  <img src="https://github.com/user-attachments/assets/4950404a-563d-4d71-ae4e-0a636068cfca" width="220" alt="IELTS screen">
+</p>
+
+<p align="center">
+  <strong>Main</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <strong>Side</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <strong>Speak</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <strong>IELTS</strong>
+</p>
+
