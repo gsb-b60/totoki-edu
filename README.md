@@ -78,10 +78,4 @@ Structured docs live under [`docs/00-15structure/`](docs/00-15structure/README.m
   <img src="https://github.com/user-attachments/assets/4950404a-563d-4d71-ae4e-0a636068cfca" width="220" alt="IELTS screen">
 </p>
 
-<p align="center">
-  <strong>Main</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <strong>Side</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <strong>Speak</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <strong>IELTS</strong>
-</p>
 
