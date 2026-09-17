@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flip_card/flip_card.dart';
 import 'front.dart';
 import "back.dart";
 import 'dart:math';
-
-final AudioPlayer audio = AudioPlayer();
 
 class Newwayreview extends StatefulWidget {
   final int deckId;
@@ -28,7 +26,7 @@ class _Newwayreview extends State<Newwayreview> {
     final cardModel = Provider.of<Cardmodel>(context, listen: false);
     _dueCards = await cardModel.getDueCards(widget.deckId);
     cardWidgets = _dueCards.map((card) {
-      return FlashCardItem(card: card, media: cardModel.media);
+      return FlipCardItem(card: card, media: cardModel.media);
     }).toList();
     if (mounted) {
       setState(() {
@@ -51,7 +49,7 @@ class _Newwayreview extends State<Newwayreview> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText, size: 24),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: Text(
           'Review Cards',
@@ -194,7 +192,7 @@ class _SwipederState extends State<Swipeder> {
                       widget.controller.next(swipeDirection: dir);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isEasy ? AppTheme.greenPrimary.withOpacity(0.8) : AppTheme.redPrimary.withOpacity(0.8),
+                      backgroundColor: isEasy ? AppTheme.greenPrimary.withValues(alpha:0.8) : AppTheme.redPrimary.withValues(alpha:0.8),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       elevation: 0,
@@ -246,7 +244,7 @@ class CardLabel extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: color, width: 4),
           borderRadius: BorderRadius.circular(24),
-          color: AppTheme.darkBase.withOpacity(0.8),
+          color: AppTheme.darkBase.withValues(alpha:0.8),
         ),
         child: Text(
           value,
@@ -260,16 +258,16 @@ class CardLabel extends StatelessWidget {
   }
 }
 
-class FlashCardItem extends StatefulWidget {
+class FlipCardItem extends StatefulWidget {
   final Flashcard? card;
   final String? media;
-  const FlashCardItem({super.key, required this.card, required this.media});
+  const FlipCardItem({super.key, required this.card, required this.media});
 
   @override
-  State<FlashCardItem> createState() => _FlashCardItemState();
+  State<FlipCardItem> createState() => _FlipCardItemState();
 }
 
-class _FlashCardItemState extends State<FlashCardItem> {
+class _FlipCardItemState extends State<FlipCardItem> {
   @override
   Widget build(BuildContext context) {
     final backKey = GlobalKey<BackSideState>();

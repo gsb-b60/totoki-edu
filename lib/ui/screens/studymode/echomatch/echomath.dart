@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/ui/screens/studymode/echomatch/echomatchNoti.dart';
-import 'package:totoki_extract/ui/screens/studymode/echomatch/echomathUI.dart';
+import 'package:totoki_extract/ui/screens/studymode/echomatch/echomatch_noti.dart';
+import 'package:totoki_extract/ui/screens/studymode/echomatch/echomath_ui.dart';
 import 'package:provider/provider.dart';
 
 class EchoMatch extends StatefulWidget {
-  EchoMatch({super.key, required this.deck_id});
-  int deck_id;
+  const EchoMatch({super.key, required this.deckId});
+  final int deckId;
   @override
   State<EchoMatch> createState() => _EchoMatchState();
 }
@@ -14,7 +14,7 @@ class _EchoMatchState extends State<EchoMatch> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => EchoMatchNoti()..getFlashcardList(widget.deck_id),
+      create: (context) => EchoMatchNoti()..getFlashcardList(widget.deckId),
       child: Consumer<EchoMatchNoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {

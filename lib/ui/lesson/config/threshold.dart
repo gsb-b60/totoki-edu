@@ -10,15 +10,13 @@ class ThresholdAcc {
 }
 
 class ThresholdTime {
-  static const Duration Super = Duration(seconds: 90);
-  static const Duration Quick = Duration(seconds: 180);
-  static const Duration Moderate = Duration(seconds: 280);
+  static const Duration superDuration = Duration(seconds: 90);
+  static const Duration quick = Duration(seconds: 180);
+  static const Duration moderate = Duration(seconds: 280);
   static const Duration slow = Duration(seconds: 380);
 
-  static const String SuperStr = "SUPER";
-  static const String QuickStr = "QUICK";
-  static const String ModerateStr = "MODERATE";
-  static const String SlowStr = "SLOW";
+  static const String superStr = "SUPER";
+  static const String quickStr = "QUICK";
+  static const String moderateStr = "MODERATE";
+  static const String slowStr = "SLOW";
 }
-
-

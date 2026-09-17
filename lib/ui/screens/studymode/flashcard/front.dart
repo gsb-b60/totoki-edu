@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'newwayreview.dart';
 
 class FrontSide extends StatelessWidget {
   const FrontSide({super.key, required this.widget});
 
-  final FlashCardItem widget;
+  final FlipCardItem widget;
 
   @override
   Widget build(BuildContext context) {

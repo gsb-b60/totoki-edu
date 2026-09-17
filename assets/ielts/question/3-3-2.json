@@ -1,0 +1,3728 @@
+{
+    "test_question": [
+        {
+            "start": 13,
+            "end": 15,
+            "type": "select-section-given-list",
+            "desc": {
+                "text": [
+                    "Reading Passage 2 has six paragraphs, A-F.",
+                    "Choose the most suitable headings for paragraphs A, B and D from the list of headings below."
+                ],
+                "optionRange": [
+                    "i",
+                    "vii"
+                ],
+                "sectionType": "paragraph",
+                "sectionRange": [
+                    "A",
+                    "F"
+                ]
+            },
+            "body": {
+                "list": [
+                    "Amazonia as unable to sustain complex societies                         ",
+                    "The role of recent technology in ecological research in Amazonia        ",
+                    "The hostility of the indigenous population to North American influences ",
+                    "Recent evidence                                                         ",
+                    "Early research among the Indian Amazons                                 ",
+                    "The influence of prehistoric inhabitants on Amazonian natural history   ",
+                    "The great difficulty of changing local attitudes and practices          "
+                ],
+                "items": [
+                    "Paragraph A <input>",
+                    "Paragraph B <input>",
+                    {
+                        "type": "example",
+                        "items": "Paragraph C <input=iv>"
+                    },
+                    "Paragraph D <input>"
+                ],
+                "listTitle": "List of Headings"
+            },
+            "body_smart": {
+                "list": [
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Amazonia",
+                                "word_gid": "a3t3r2_13-15_5"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_6"
+                            },
+                            {
+                                "type": "word",
+                                "content": "as",
+                                "word_gid": "a3t3r2_13-15_7"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_8"
+                            },
+                            {
+                                "type": "word",
+                                "content": "unable",
+                                "word_gid": "a3t3r2_13-15_9"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_10"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t3r2_13-15_11"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_12"
+                            },
+                            {
+                                "type": "word",
+                                "content": "sustain",
+                                "word_gid": "a3t3r2_13-15_13"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_14"
+                            },
+                            {
+                                "type": "word",
+                                "content": "complex",
+                                "word_gid": "a3t3r2_13-15_15"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_16"
+                            },
+                            {
+                                "type": "word",
+                                "content": "societies",
+                                "word_gid": "a3t3r2_13-15_17"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "The",
+                                "word_gid": "a3t3r2_13-15_18"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_19"
+                            },
+                            {
+                                "type": "word",
+                                "content": "role",
+                                "word_gid": "a3t3r2_13-15_20"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_21"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_13-15_22"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_23"
+                            },
+                            {
+                                "type": "word",
+                                "content": "recent",
+                                "word_gid": "a3t3r2_13-15_24"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_25"
+                            },
+                            {
+                                "type": "word",
+                                "content": "technology",
+                                "word_gid": "a3t3r2_13-15_26"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_27"
+                            },
+                            {
+                                "type": "word",
+                                "content": "in",
+                                "word_gid": "a3t3r2_13-15_28"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_29"
+                            },
+                            {
+                                "type": "word",
+                                "content": "ecological",
+                                "word_gid": "a3t3r2_13-15_30"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_31"
+                            },
+                            {
+                                "type": "word",
+                                "content": "research",
+                                "word_gid": "a3t3r2_13-15_32"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_33"
+                            },
+                            {
+                                "type": "word",
+                                "content": "in",
+                                "word_gid": "a3t3r2_13-15_34"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_35"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonia",
+                                "word_gid": "a3t3r2_13-15_36"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "The",
+                                "word_gid": "a3t3r2_13-15_37"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_38"
+                            },
+                            {
+                                "type": "word",
+                                "content": "hostility",
+                                "word_gid": "a3t3r2_13-15_39"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_40"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_13-15_41"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_42"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_13-15_43"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_44"
+                            },
+                            {
+                                "type": "word",
+                                "content": "indigenous",
+                                "word_gid": "a3t3r2_13-15_45"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_46"
+                            },
+                            {
+                                "type": "word",
+                                "content": "population",
+                                "word_gid": "a3t3r2_13-15_47"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_48"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t3r2_13-15_49"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_50"
+                            },
+                            {
+                                "type": "word",
+                                "content": "North",
+                                "word_gid": "a3t3r2_13-15_51"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_52"
+                            },
+                            {
+                                "type": "word",
+                                "content": "American",
+                                "word_gid": "a3t3r2_13-15_53"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_54"
+                            },
+                            {
+                                "type": "word",
+                                "content": "influences",
+                                "word_gid": "a3t3r2_13-15_55"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Recent",
+                                "word_gid": "a3t3r2_13-15_56"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_57"
+                            },
+                            {
+                                "type": "word",
+                                "content": "evidence",
+                                "word_gid": "a3t3r2_13-15_58"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Early",
+                                "word_gid": "a3t3r2_13-15_59"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_60"
+                            },
+                            {
+                                "type": "word",
+                                "content": "research",
+                                "word_gid": "a3t3r2_13-15_61"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_62"
+                            },
+                            {
+                                "type": "word",
+                                "content": "among",
+                                "word_gid": "a3t3r2_13-15_63"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_64"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_13-15_65"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_66"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Indian",
+                                "word_gid": "a3t3r2_13-15_67"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_68"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazons",
+                                "word_gid": "a3t3r2_13-15_69"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "The",
+                                "word_gid": "a3t3r2_13-15_70"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_71"
+                            },
+                            {
+                                "type": "word",
+                                "content": "influence",
+                                "word_gid": "a3t3r2_13-15_72"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_73"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_13-15_74"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_75"
+                            },
+                            {
+                                "type": "word",
+                                "content": "prehistoric",
+                                "word_gid": "a3t3r2_13-15_76"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_77"
+                            },
+                            {
+                                "type": "word",
+                                "content": "inhabitants",
+                                "word_gid": "a3t3r2_13-15_78"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_79"
+                            },
+                            {
+                                "type": "word",
+                                "content": "on",
+                                "word_gid": "a3t3r2_13-15_80"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_81"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonian",
+                                "word_gid": "a3t3r2_13-15_82"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_83"
+                            },
+                            {
+                                "type": "word",
+                                "content": "natural",
+                                "word_gid": "a3t3r2_13-15_84"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_85"
+                            },
+                            {
+                                "type": "word",
+                                "content": "history",
+                                "word_gid": "a3t3r2_13-15_86"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "The",
+                                "word_gid": "a3t3r2_13-15_87"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_88"
+                            },
+                            {
+                                "type": "word",
+                                "content": "great",
+                                "word_gid": "a3t3r2_13-15_89"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_90"
+                            },
+                            {
+                                "type": "word",
+                                "content": "difficulty",
+                                "word_gid": "a3t3r2_13-15_91"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_92"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_13-15_93"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_94"
+                            },
+                            {
+                                "type": "word",
+                                "content": "changing",
+                                "word_gid": "a3t3r2_13-15_95"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_96"
+                            },
+                            {
+                                "type": "word",
+                                "content": "local",
+                                "word_gid": "a3t3r2_13-15_97"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_98"
+                            },
+                            {
+                                "type": "word",
+                                "content": "attitudes",
+                                "word_gid": "a3t3r2_13-15_99"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_100"
+                            },
+                            {
+                                "type": "word",
+                                "content": "and",
+                                "word_gid": "a3t3r2_13-15_101"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_102"
+                            },
+                            {
+                                "type": "word",
+                                "content": "practices",
+                                "word_gid": "a3t3r2_13-15_103"
+                            }
+                        ]
+                    }
+                ],
+                "items": [
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Paragraph",
+                                "word_gid": "a3t3r2_13-15_104"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_105"
+                            },
+                            {
+                                "type": "word",
+                                "content": "A",
+                                "word_gid": "a3t3r2_13-15_106"
+                            },
+                            {
+                                "type": "input",
+                                "content": 13,
+                                "word_gid": "a3t3r2_13-15_107"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Paragraph",
+                                "word_gid": "a3t3r2_13-15_108"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_109"
+                            },
+                            {
+                                "type": "word",
+                                "content": "B",
+                                "word_gid": "a3t3r2_13-15_110"
+                            },
+                            {
+                                "type": "input",
+                                "content": 14,
+                                "word_gid": "a3t3r2_13-15_111"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "example",
+                        "items": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "Paragraph",
+                                    "word_gid": "a3t3r2_13-15_112"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_13-15_113"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "C",
+                                    "word_gid": "a3t3r2_13-15_114"
+                                },
+                                {
+                                    "type": "input-example",
+                                    "content": "iv",
+                                    "word_gid": "a3t3r2_13-15_115"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Paragraph",
+                                "word_gid": "a3t3r2_13-15_116"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_13-15_117"
+                            },
+                            {
+                                "type": "word",
+                                "content": "D",
+                                "word_gid": "a3t3r2_13-15_118"
+                            },
+                            {
+                                "type": "input",
+                                "content": 15,
+                                "word_gid": "a3t3r2_13-15_119"
+                            }
+                        ]
+                    }
+                ],
+                "listTitle": {
+                    "type": "atom",
+                    "blocks": [
+                        {
+                            "type": "word",
+                            "content": "List",
+                            "word_gid": "a3t3r2_13-15_0"
+                        },
+                        {
+                            "type": "",
+                            "content": " ",
+                            "word_gid": "a3t3r2_13-15_1"
+                        },
+                        {
+                            "type": "word",
+                            "content": "of",
+                            "word_gid": "a3t3r2_13-15_2"
+                        },
+                        {
+                            "type": "",
+                            "content": " ",
+                            "word_gid": "a3t3r2_13-15_3"
+                        },
+                        {
+                            "type": "word",
+                            "content": "Headings",
+                            "word_gid": "a3t3r2_13-15_4"
+                        }
+                    ]
+                },
+                "item_qids": [
+                    13,
+                    14,
+                    null,
+                    15
+                ]
+            }
+        },
+        {
+            "start": 16,
+            "end": 21,
+            "type": "option-yes-no",
+            "desc": {},
+            "body": {
+                "items": [
+                    {
+                        "type": "example",
+                        "items": "The prehistoric inhabitants of Amazonia were relatively backward in technological terms. <input=NO>"
+                    },
+                    "The reason for the simplicity of the Indian way of life is that Amazonia has always been unable to support a more complex society.",
+                    "There is a crucial popular misconception about the human history of Amazonia.                                                     ",
+                    "There are lessons to be learned from similar ecosystems in other parts of the world.                                              ",
+                    "Most ecologists were aware that the areas of Amazonia they were working in had been shaped by human settlement.                   ",
+                    "The indigenous Amazonian Indians are necessary to the well-being of the forest.                                                   ",
+                    "It would be possible for certain parts of Amazonia to support a higher population                                                 "
+                ]
+            },
+            "body_smart": {
+                "items": [
+                    {
+                        "type": "example",
+                        "items": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "The",
+                                    "word_gid": "a3t3r2_16-21_0"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_1"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "prehistoric",
+                                    "word_gid": "a3t3r2_16-21_2"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_3"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "inhabitants",
+                                    "word_gid": "a3t3r2_16-21_4"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_5"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t3r2_16-21_6"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_7"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "Amazonia",
+                                    "word_gid": "a3t3r2_16-21_8"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_9"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "were",
+                                    "word_gid": "a3t3r2_16-21_10"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_11"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "relatively",
+                                    "word_gid": "a3t3r2_16-21_12"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_13"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "backward",
+                                    "word_gid": "a3t3r2_16-21_14"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_15"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "in",
+                                    "word_gid": "a3t3r2_16-21_16"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_17"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "technological",
+                                    "word_gid": "a3t3r2_16-21_18"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_16-21_19"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "terms",
+                                    "word_gid": "a3t3r2_16-21_20"
+                                },
+                                {
+                                    "type": "",
+                                    "content": ".",
+                                    "word_gid": "a3t3r2_16-21_21"
+                                },
+                                {
+                                    "type": "input-example",
+                                    "content": "NO",
+                                    "word_gid": "a3t3r2_16-21_22"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "The",
+                                "word_gid": "a3t3r2_16-21_23"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_24"
+                            },
+                            {
+                                "type": "word",
+                                "content": "reason",
+                                "word_gid": "a3t3r2_16-21_25"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_26"
+                            },
+                            {
+                                "type": "word",
+                                "content": "for",
+                                "word_gid": "a3t3r2_16-21_27"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_28"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_29"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_30"
+                            },
+                            {
+                                "type": "word",
+                                "content": "simplicity",
+                                "word_gid": "a3t3r2_16-21_31"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_32"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_33"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_34"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_35"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_36"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Indian",
+                                "word_gid": "a3t3r2_16-21_37"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_38"
+                            },
+                            {
+                                "type": "word",
+                                "content": "way",
+                                "word_gid": "a3t3r2_16-21_39"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_40"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_41"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_42"
+                            },
+                            {
+                                "type": "word",
+                                "content": "life",
+                                "word_gid": "a3t3r2_16-21_43"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_44"
+                            },
+                            {
+                                "type": "word",
+                                "content": "is",
+                                "word_gid": "a3t3r2_16-21_45"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_46"
+                            },
+                            {
+                                "type": "word",
+                                "content": "that",
+                                "word_gid": "a3t3r2_16-21_47"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_48"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonia",
+                                "word_gid": "a3t3r2_16-21_49"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_50"
+                            },
+                            {
+                                "type": "word",
+                                "content": "has",
+                                "word_gid": "a3t3r2_16-21_51"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_52"
+                            },
+                            {
+                                "type": "word",
+                                "content": "always",
+                                "word_gid": "a3t3r2_16-21_53"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_54"
+                            },
+                            {
+                                "type": "word",
+                                "content": "been",
+                                "word_gid": "a3t3r2_16-21_55"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_56"
+                            },
+                            {
+                                "type": "word",
+                                "content": "unable",
+                                "word_gid": "a3t3r2_16-21_57"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_58"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t3r2_16-21_59"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_60"
+                            },
+                            {
+                                "type": "word",
+                                "content": "support",
+                                "word_gid": "a3t3r2_16-21_61"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_62"
+                            },
+                            {
+                                "type": "word",
+                                "content": "a",
+                                "word_gid": "a3t3r2_16-21_63"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_64"
+                            },
+                            {
+                                "type": "word",
+                                "content": "more",
+                                "word_gid": "a3t3r2_16-21_65"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_66"
+                            },
+                            {
+                                "type": "word",
+                                "content": "complex",
+                                "word_gid": "a3t3r2_16-21_67"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_68"
+                            },
+                            {
+                                "type": "word",
+                                "content": "society",
+                                "word_gid": "a3t3r2_16-21_69"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t3r2_16-21_70"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "There",
+                                "word_gid": "a3t3r2_16-21_71"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_72"
+                            },
+                            {
+                                "type": "word",
+                                "content": "is",
+                                "word_gid": "a3t3r2_16-21_73"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_74"
+                            },
+                            {
+                                "type": "word",
+                                "content": "a",
+                                "word_gid": "a3t3r2_16-21_75"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_76"
+                            },
+                            {
+                                "type": "word",
+                                "content": "crucial",
+                                "word_gid": "a3t3r2_16-21_77"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_78"
+                            },
+                            {
+                                "type": "word",
+                                "content": "popular",
+                                "word_gid": "a3t3r2_16-21_79"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_80"
+                            },
+                            {
+                                "type": "word",
+                                "content": "misconception",
+                                "word_gid": "a3t3r2_16-21_81"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_82"
+                            },
+                            {
+                                "type": "word",
+                                "content": "about",
+                                "word_gid": "a3t3r2_16-21_83"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_84"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_85"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_86"
+                            },
+                            {
+                                "type": "word",
+                                "content": "human",
+                                "word_gid": "a3t3r2_16-21_87"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_88"
+                            },
+                            {
+                                "type": "word",
+                                "content": "history",
+                                "word_gid": "a3t3r2_16-21_89"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_90"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_91"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_92"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonia",
+                                "word_gid": "a3t3r2_16-21_93"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t3r2_16-21_94"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "There",
+                                "word_gid": "a3t3r2_16-21_95"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_96"
+                            },
+                            {
+                                "type": "word",
+                                "content": "are",
+                                "word_gid": "a3t3r2_16-21_97"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_98"
+                            },
+                            {
+                                "type": "word",
+                                "content": "lessons",
+                                "word_gid": "a3t3r2_16-21_99"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_100"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t3r2_16-21_101"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_102"
+                            },
+                            {
+                                "type": "word",
+                                "content": "be",
+                                "word_gid": "a3t3r2_16-21_103"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_104"
+                            },
+                            {
+                                "type": "word",
+                                "content": "learned",
+                                "word_gid": "a3t3r2_16-21_105"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_106"
+                            },
+                            {
+                                "type": "word",
+                                "content": "from",
+                                "word_gid": "a3t3r2_16-21_107"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_108"
+                            },
+                            {
+                                "type": "word",
+                                "content": "similar",
+                                "word_gid": "a3t3r2_16-21_109"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_110"
+                            },
+                            {
+                                "type": "word",
+                                "content": "ecosystems",
+                                "word_gid": "a3t3r2_16-21_111"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_112"
+                            },
+                            {
+                                "type": "word",
+                                "content": "in",
+                                "word_gid": "a3t3r2_16-21_113"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_114"
+                            },
+                            {
+                                "type": "word",
+                                "content": "other",
+                                "word_gid": "a3t3r2_16-21_115"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_116"
+                            },
+                            {
+                                "type": "word",
+                                "content": "parts",
+                                "word_gid": "a3t3r2_16-21_117"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_118"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_119"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_120"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_121"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_122"
+                            },
+                            {
+                                "type": "word",
+                                "content": "world",
+                                "word_gid": "a3t3r2_16-21_123"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t3r2_16-21_124"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "Most",
+                                "word_gid": "a3t3r2_16-21_125"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_126"
+                            },
+                            {
+                                "type": "word",
+                                "content": "ecologists",
+                                "word_gid": "a3t3r2_16-21_127"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_128"
+                            },
+                            {
+                                "type": "word",
+                                "content": "were",
+                                "word_gid": "a3t3r2_16-21_129"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_130"
+                            },
+                            {
+                                "type": "word",
+                                "content": "aware",
+                                "word_gid": "a3t3r2_16-21_131"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_132"
+                            },
+                            {
+                                "type": "word",
+                                "content": "that",
+                                "word_gid": "a3t3r2_16-21_133"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_134"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_135"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_136"
+                            },
+                            {
+                                "type": "word",
+                                "content": "areas",
+                                "word_gid": "a3t3r2_16-21_137"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_138"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_139"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_140"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonia",
+                                "word_gid": "a3t3r2_16-21_141"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_142"
+                            },
+                            {
+                                "type": "word",
+                                "content": "they",
+                                "word_gid": "a3t3r2_16-21_143"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_144"
+                            },
+                            {
+                                "type": "word",
+                                "content": "were",
+                                "word_gid": "a3t3r2_16-21_145"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_146"
+                            },
+                            {
+                                "type": "word",
+                                "content": "working",
+                                "word_gid": "a3t3r2_16-21_147"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_148"
+                            },
+                            {
+                                "type": "word",
+                                "content": "in",
+                                "word_gid": "a3t3r2_16-21_149"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_150"
+                            },
+                            {
+                                "type": "word",
+                                "content": "had",
+                                "word_gid": "a3t3r2_16-21_151"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_152"
+                            },
+                            {
+                                "type": "word",
+                                "content": "been",
+                                "word_gid": "a3t3r2_16-21_153"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_154"
+                            },
+                            {
+                                "type": "word",
+                                "content": "shaped",
+                                "word_gid": "a3t3r2_16-21_155"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_156"
+                            },
+                            {
+                                "type": "word",
+                                "content": "by",
+                                "word_gid": "a3t3r2_16-21_157"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_158"
+                            },
+                            {
+                                "type": "word",
+                                "content": "human",
+                                "word_gid": "a3t3r2_16-21_159"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_160"
+                            },
+                            {
+                                "type": "word",
+                                "content": "settlement",
+                                "word_gid": "a3t3r2_16-21_161"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t3r2_16-21_162"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "The",
+                                "word_gid": "a3t3r2_16-21_163"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_164"
+                            },
+                            {
+                                "type": "word",
+                                "content": "indigenous",
+                                "word_gid": "a3t3r2_16-21_165"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_166"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonian",
+                                "word_gid": "a3t3r2_16-21_167"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_168"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Indians",
+                                "word_gid": "a3t3r2_16-21_169"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_170"
+                            },
+                            {
+                                "type": "word",
+                                "content": "are",
+                                "word_gid": "a3t3r2_16-21_171"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_172"
+                            },
+                            {
+                                "type": "word",
+                                "content": "necessary",
+                                "word_gid": "a3t3r2_16-21_173"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_174"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t3r2_16-21_175"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_176"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_177"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_178"
+                            },
+                            {
+                                "type": "word",
+                                "content": "well-being",
+                                "word_gid": "a3t3r2_16-21_179"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_180"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_181"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_182"
+                            },
+                            {
+                                "type": "word",
+                                "content": "the",
+                                "word_gid": "a3t3r2_16-21_183"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_184"
+                            },
+                            {
+                                "type": "word",
+                                "content": "forest",
+                                "word_gid": "a3t3r2_16-21_185"
+                            },
+                            {
+                                "type": "",
+                                "content": ".",
+                                "word_gid": "a3t3r2_16-21_186"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "atom",
+                        "blocks": [
+                            {
+                                "type": "word",
+                                "content": "It",
+                                "word_gid": "a3t3r2_16-21_187"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_188"
+                            },
+                            {
+                                "type": "word",
+                                "content": "would",
+                                "word_gid": "a3t3r2_16-21_189"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_190"
+                            },
+                            {
+                                "type": "word",
+                                "content": "be",
+                                "word_gid": "a3t3r2_16-21_191"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_192"
+                            },
+                            {
+                                "type": "word",
+                                "content": "possible",
+                                "word_gid": "a3t3r2_16-21_193"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_194"
+                            },
+                            {
+                                "type": "word",
+                                "content": "for",
+                                "word_gid": "a3t3r2_16-21_195"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_196"
+                            },
+                            {
+                                "type": "word",
+                                "content": "certain",
+                                "word_gid": "a3t3r2_16-21_197"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_198"
+                            },
+                            {
+                                "type": "word",
+                                "content": "parts",
+                                "word_gid": "a3t3r2_16-21_199"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_200"
+                            },
+                            {
+                                "type": "word",
+                                "content": "of",
+                                "word_gid": "a3t3r2_16-21_201"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_202"
+                            },
+                            {
+                                "type": "word",
+                                "content": "Amazonia",
+                                "word_gid": "a3t3r2_16-21_203"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_204"
+                            },
+                            {
+                                "type": "word",
+                                "content": "to",
+                                "word_gid": "a3t3r2_16-21_205"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_206"
+                            },
+                            {
+                                "type": "word",
+                                "content": "support",
+                                "word_gid": "a3t3r2_16-21_207"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_208"
+                            },
+                            {
+                                "type": "word",
+                                "content": "a",
+                                "word_gid": "a3t3r2_16-21_209"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_210"
+                            },
+                            {
+                                "type": "word",
+                                "content": "higher",
+                                "word_gid": "a3t3r2_16-21_211"
+                            },
+                            {
+                                "type": "",
+                                "content": " ",
+                                "word_gid": "a3t3r2_16-21_212"
+                            },
+                            {
+                                "type": "word",
+                                "content": "population",
+                                "word_gid": "a3t3r2_16-21_213"
+                            }
+                        ]
+                    }
+                ],
+                "item_qids": [
+                    null,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21
+                ]
+            }
+        },
+        {
+            "start": 22,
+            "end": 25,
+            "type": "option-abc",
+            "desc": {
+                "optionRange": [
+                    "A",
+                    "D"
+                ]
+            },
+            "body": {
+                "items": [
+                    {
+                        "title": "In 1942 the US anthropology student concluded that the Siriono",
+                        "options": [
+                            "were unusually aggressive and cruel.            ",
+                            "had had their way of life destroyed by invaders.",
+                            "were an extremely primitive society.            ",
+                            "had only recently made permanent settlements.   "
+                        ]
+                    },
+                    {
+                        "title": "The author believes recent discoveries of the remains of complex societies in Amazonia",
+                        "options": [
+                            "are evidence of early indigenous communities.                         ",
+                            "are the remains of settlements by invaders.                           ",
+                            "are the ruins of communities established since the European invasions.",
+                            "show the region has only relatively recently been covered by forest.  "
+                        ]
+                    },
+                    {
+                        "title": "The assumption that the tropical ecosystem of Amazonia has been created solely by natural forces",
+                        "options": [
+                            "has often been questioned by ecologists in the past.",
+                            "has been shown to be incorrect by recent research.  ",
+                            "was made by Peter Feinsinger and other ecologists.  ",
+                            "has led to some fruitful discoveries.               "
+                        ]
+                    },
+                    {
+                        "title": "The application of our new insights into the Amazonian past would",
+                        "options": [
+                            "warn us against allowing any development at all.            ",
+                            "cause further suffering to the Indian communities.          ",
+                            "change present policies on development in the region.       ",
+                            "reduce the amount of hunting, fishing, and 'slash-and-burn'."
+                        ]
+                    }
+                ]
+            },
+            "body_smart": {
+                "items": [
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "In",
+                                    "word_gid": "a3t3r2_22-25_0"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_1"
+                                },
+                                {
+                                    "type": "",
+                                    "content": "1942",
+                                    "word_gid": "a3t3r2_22-25_2"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_3"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t3r2_22-25_4"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_5"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "US",
+                                    "word_gid": "a3t3r2_22-25_6"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_7"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "anthropology",
+                                    "word_gid": "a3t3r2_22-25_8"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_9"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "student",
+                                    "word_gid": "a3t3r2_22-25_10"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_11"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "concluded",
+                                    "word_gid": "a3t3r2_22-25_12"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_13"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "that",
+                                    "word_gid": "a3t3r2_22-25_14"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_15"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t3r2_22-25_16"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_17"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "Siriono",
+                                    "word_gid": "a3t3r2_22-25_18"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "were",
+                                        "word_gid": "a3t3r2_22-25_19"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_20"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "unusually",
+                                        "word_gid": "a3t3r2_22-25_21"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_22"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "aggressive",
+                                        "word_gid": "a3t3r2_22-25_23"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_24"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "and",
+                                        "word_gid": "a3t3r2_22-25_25"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_26"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "cruel",
+                                        "word_gid": "a3t3r2_22-25_27"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_28"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "had",
+                                        "word_gid": "a3t3r2_22-25_29"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_30"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "had",
+                                        "word_gid": "a3t3r2_22-25_31"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_32"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "their",
+                                        "word_gid": "a3t3r2_22-25_33"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_34"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "way",
+                                        "word_gid": "a3t3r2_22-25_35"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_36"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "of",
+                                        "word_gid": "a3t3r2_22-25_37"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_38"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "life",
+                                        "word_gid": "a3t3r2_22-25_39"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_40"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "destroyed",
+                                        "word_gid": "a3t3r2_22-25_41"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_42"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "by",
+                                        "word_gid": "a3t3r2_22-25_43"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_44"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "invaders",
+                                        "word_gid": "a3t3r2_22-25_45"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_46"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "were",
+                                        "word_gid": "a3t3r2_22-25_47"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_48"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "an",
+                                        "word_gid": "a3t3r2_22-25_49"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_50"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "extremely",
+                                        "word_gid": "a3t3r2_22-25_51"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_52"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "primitive",
+                                        "word_gid": "a3t3r2_22-25_53"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_54"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "society",
+                                        "word_gid": "a3t3r2_22-25_55"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_56"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "had",
+                                        "word_gid": "a3t3r2_22-25_57"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_58"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "only",
+                                        "word_gid": "a3t3r2_22-25_59"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_60"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "recently",
+                                        "word_gid": "a3t3r2_22-25_61"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_62"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "made",
+                                        "word_gid": "a3t3r2_22-25_63"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_64"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "permanent",
+                                        "word_gid": "a3t3r2_22-25_65"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_66"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "settlements",
+                                        "word_gid": "a3t3r2_22-25_67"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_68"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "The",
+                                    "word_gid": "a3t3r2_22-25_69"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_70"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "author",
+                                    "word_gid": "a3t3r2_22-25_71"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_72"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "believes",
+                                    "word_gid": "a3t3r2_22-25_73"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_74"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "recent",
+                                    "word_gid": "a3t3r2_22-25_75"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_76"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "discoveries",
+                                    "word_gid": "a3t3r2_22-25_77"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_78"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t3r2_22-25_79"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_80"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t3r2_22-25_81"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_82"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "remains",
+                                    "word_gid": "a3t3r2_22-25_83"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_84"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t3r2_22-25_85"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_86"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "complex",
+                                    "word_gid": "a3t3r2_22-25_87"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_88"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "societies",
+                                    "word_gid": "a3t3r2_22-25_89"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_90"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "in",
+                                    "word_gid": "a3t3r2_22-25_91"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_92"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "Amazonia",
+                                    "word_gid": "a3t3r2_22-25_93"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "are",
+                                        "word_gid": "a3t3r2_22-25_94"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_95"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "evidence",
+                                        "word_gid": "a3t3r2_22-25_96"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_97"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "of",
+                                        "word_gid": "a3t3r2_22-25_98"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_99"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "early",
+                                        "word_gid": "a3t3r2_22-25_100"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_101"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "indigenous",
+                                        "word_gid": "a3t3r2_22-25_102"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_103"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "communities",
+                                        "word_gid": "a3t3r2_22-25_104"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_105"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "are",
+                                        "word_gid": "a3t3r2_22-25_106"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_107"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_108"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_109"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "remains",
+                                        "word_gid": "a3t3r2_22-25_110"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_111"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "of",
+                                        "word_gid": "a3t3r2_22-25_112"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_113"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "settlements",
+                                        "word_gid": "a3t3r2_22-25_114"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_115"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "by",
+                                        "word_gid": "a3t3r2_22-25_116"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_117"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "invaders",
+                                        "word_gid": "a3t3r2_22-25_118"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_119"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "are",
+                                        "word_gid": "a3t3r2_22-25_120"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_121"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_122"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_123"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "ruins",
+                                        "word_gid": "a3t3r2_22-25_124"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_125"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "of",
+                                        "word_gid": "a3t3r2_22-25_126"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_127"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "communities",
+                                        "word_gid": "a3t3r2_22-25_128"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_129"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "established",
+                                        "word_gid": "a3t3r2_22-25_130"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_131"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "since",
+                                        "word_gid": "a3t3r2_22-25_132"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_133"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_134"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_135"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "European",
+                                        "word_gid": "a3t3r2_22-25_136"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_137"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "invasions",
+                                        "word_gid": "a3t3r2_22-25_138"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_139"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "show",
+                                        "word_gid": "a3t3r2_22-25_140"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_141"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_142"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_143"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "region",
+                                        "word_gid": "a3t3r2_22-25_144"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_145"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "has",
+                                        "word_gid": "a3t3r2_22-25_146"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_147"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "only",
+                                        "word_gid": "a3t3r2_22-25_148"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_149"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "relatively",
+                                        "word_gid": "a3t3r2_22-25_150"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_151"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "recently",
+                                        "word_gid": "a3t3r2_22-25_152"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_153"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "been",
+                                        "word_gid": "a3t3r2_22-25_154"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_155"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "covered",
+                                        "word_gid": "a3t3r2_22-25_156"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_157"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "by",
+                                        "word_gid": "a3t3r2_22-25_158"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_159"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "forest",
+                                        "word_gid": "a3t3r2_22-25_160"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_161"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "The",
+                                    "word_gid": "a3t3r2_22-25_162"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_163"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "assumption",
+                                    "word_gid": "a3t3r2_22-25_164"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_165"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "that",
+                                    "word_gid": "a3t3r2_22-25_166"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_167"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t3r2_22-25_168"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_169"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "tropical",
+                                    "word_gid": "a3t3r2_22-25_170"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_171"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "ecosystem",
+                                    "word_gid": "a3t3r2_22-25_172"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_173"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t3r2_22-25_174"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_175"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "Amazonia",
+                                    "word_gid": "a3t3r2_22-25_176"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_177"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "has",
+                                    "word_gid": "a3t3r2_22-25_178"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_179"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "been",
+                                    "word_gid": "a3t3r2_22-25_180"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_181"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "created",
+                                    "word_gid": "a3t3r2_22-25_182"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_183"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "solely",
+                                    "word_gid": "a3t3r2_22-25_184"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_185"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "by",
+                                    "word_gid": "a3t3r2_22-25_186"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_187"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "natural",
+                                    "word_gid": "a3t3r2_22-25_188"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_189"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "forces",
+                                    "word_gid": "a3t3r2_22-25_190"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "has",
+                                        "word_gid": "a3t3r2_22-25_191"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_192"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "often",
+                                        "word_gid": "a3t3r2_22-25_193"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_194"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "been",
+                                        "word_gid": "a3t3r2_22-25_195"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_196"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "questioned",
+                                        "word_gid": "a3t3r2_22-25_197"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_198"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "by",
+                                        "word_gid": "a3t3r2_22-25_199"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_200"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "ecologists",
+                                        "word_gid": "a3t3r2_22-25_201"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_202"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "in",
+                                        "word_gid": "a3t3r2_22-25_203"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_204"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_205"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_206"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "past",
+                                        "word_gid": "a3t3r2_22-25_207"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_208"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "has",
+                                        "word_gid": "a3t3r2_22-25_209"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_210"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "been",
+                                        "word_gid": "a3t3r2_22-25_211"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_212"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "shown",
+                                        "word_gid": "a3t3r2_22-25_213"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_214"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "to",
+                                        "word_gid": "a3t3r2_22-25_215"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_216"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "be",
+                                        "word_gid": "a3t3r2_22-25_217"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_218"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "incorrect",
+                                        "word_gid": "a3t3r2_22-25_219"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_220"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "by",
+                                        "word_gid": "a3t3r2_22-25_221"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_222"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "recent",
+                                        "word_gid": "a3t3r2_22-25_223"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_224"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "research",
+                                        "word_gid": "a3t3r2_22-25_225"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_226"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "was",
+                                        "word_gid": "a3t3r2_22-25_227"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_228"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "made",
+                                        "word_gid": "a3t3r2_22-25_229"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_230"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "by",
+                                        "word_gid": "a3t3r2_22-25_231"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_232"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "Peter",
+                                        "word_gid": "a3t3r2_22-25_233"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_234"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "Feinsinger",
+                                        "word_gid": "a3t3r2_22-25_235"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_236"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "and",
+                                        "word_gid": "a3t3r2_22-25_237"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_238"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "other",
+                                        "word_gid": "a3t3r2_22-25_239"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_240"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "ecologists",
+                                        "word_gid": "a3t3r2_22-25_241"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_242"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "has",
+                                        "word_gid": "a3t3r2_22-25_243"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_244"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "led",
+                                        "word_gid": "a3t3r2_22-25_245"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_246"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "to",
+                                        "word_gid": "a3t3r2_22-25_247"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_248"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "some",
+                                        "word_gid": "a3t3r2_22-25_249"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_250"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "fruitful",
+                                        "word_gid": "a3t3r2_22-25_251"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_252"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "discoveries",
+                                        "word_gid": "a3t3r2_22-25_253"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_254"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "type": "atom",
+                            "blocks": [
+                                {
+                                    "type": "word",
+                                    "content": "The",
+                                    "word_gid": "a3t3r2_22-25_255"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_256"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "application",
+                                    "word_gid": "a3t3r2_22-25_257"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_258"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "of",
+                                    "word_gid": "a3t3r2_22-25_259"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_260"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "our",
+                                    "word_gid": "a3t3r2_22-25_261"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_262"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "new",
+                                    "word_gid": "a3t3r2_22-25_263"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_264"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "insights",
+                                    "word_gid": "a3t3r2_22-25_265"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_266"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "into",
+                                    "word_gid": "a3t3r2_22-25_267"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_268"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "the",
+                                    "word_gid": "a3t3r2_22-25_269"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_270"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "Amazonian",
+                                    "word_gid": "a3t3r2_22-25_271"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_272"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "past",
+                                    "word_gid": "a3t3r2_22-25_273"
+                                },
+                                {
+                                    "type": "",
+                                    "content": " ",
+                                    "word_gid": "a3t3r2_22-25_274"
+                                },
+                                {
+                                    "type": "word",
+                                    "content": "would",
+                                    "word_gid": "a3t3r2_22-25_275"
+                                }
+                            ]
+                        },
+                        "options": [
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "warn",
+                                        "word_gid": "a3t3r2_22-25_276"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_277"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "us",
+                                        "word_gid": "a3t3r2_22-25_278"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_279"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "against",
+                                        "word_gid": "a3t3r2_22-25_280"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_281"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "allowing",
+                                        "word_gid": "a3t3r2_22-25_282"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_283"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "any",
+                                        "word_gid": "a3t3r2_22-25_284"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_285"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "development",
+                                        "word_gid": "a3t3r2_22-25_286"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_287"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "at",
+                                        "word_gid": "a3t3r2_22-25_288"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_289"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "all",
+                                        "word_gid": "a3t3r2_22-25_290"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_291"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "cause",
+                                        "word_gid": "a3t3r2_22-25_292"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_293"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "further",
+                                        "word_gid": "a3t3r2_22-25_294"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_295"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "suffering",
+                                        "word_gid": "a3t3r2_22-25_296"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_297"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "to",
+                                        "word_gid": "a3t3r2_22-25_298"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_299"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_300"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_301"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "Indian",
+                                        "word_gid": "a3t3r2_22-25_302"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_303"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "communities",
+                                        "word_gid": "a3t3r2_22-25_304"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_305"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "change",
+                                        "word_gid": "a3t3r2_22-25_306"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_307"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "present",
+                                        "word_gid": "a3t3r2_22-25_308"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_309"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "policies",
+                                        "word_gid": "a3t3r2_22-25_310"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_311"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "on",
+                                        "word_gid": "a3t3r2_22-25_312"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_313"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "development",
+                                        "word_gid": "a3t3r2_22-25_314"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_315"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "in",
+                                        "word_gid": "a3t3r2_22-25_316"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_317"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_318"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_319"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "region",
+                                        "word_gid": "a3t3r2_22-25_320"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ".",
+                                        "word_gid": "a3t3r2_22-25_321"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "atom",
+                                "blocks": [
+                                    {
+                                        "type": "word",
+                                        "content": "reduce",
+                                        "word_gid": "a3t3r2_22-25_322"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_323"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "the",
+                                        "word_gid": "a3t3r2_22-25_324"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_325"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "amount",
+                                        "word_gid": "a3t3r2_22-25_326"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_327"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "of",
+                                        "word_gid": "a3t3r2_22-25_328"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " ",
+                                        "word_gid": "a3t3r2_22-25_329"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "hunting",
+                                        "word_gid": "a3t3r2_22-25_330"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ", ",
+                                        "word_gid": "a3t3r2_22-25_331"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "fishing",
+                                        "word_gid": "a3t3r2_22-25_332"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": ", ",
+                                        "word_gid": "a3t3r2_22-25_333"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "and",
+                                        "word_gid": "a3t3r2_22-25_334"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": " '",
+                                        "word_gid": "a3t3r2_22-25_335"
+                                    },
+                                    {
+                                        "type": "word",
+                                        "content": "slash-and-burn",
+                                        "word_gid": "a3t3r2_22-25_336"
+                                    },
+                                    {
+                                        "type": "",
+                                        "content": "'.",
+                                        "word_gid": "a3t3r2_22-25_337"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "item_qids": [
+                    22,
+                    23,
+                    24,
+                    25
+                ]
+            }
+        }
+    ]
+}

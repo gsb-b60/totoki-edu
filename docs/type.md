@@ -1,0 +1,17 @@
+checkbox
+input-answer
+input-diagram
+input-flowchart
+input-note
+input-sentence
+input-summary
+input-table
+option-abc
+option-true-false
+option-yes-no
+select-flowchart-given-list
+select-given-diagram
+select-given-list
+select-section
+select-section-given-list
+select-summary-given-list

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
-import 'package:totoki_extract/ui/screens/studymode/speechword/speechwordNoti.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/ui/widget/review_screen.dart' as shared;
+import 'package:totoki_extract/ui/screens/studymode/speechword/speechword_noti.dart';
 import 'package:provider/provider.dart';
 
 class Speechword extends StatefulWidget {
-  final int deck_id;
-  Speechword({super.key, required this.deck_id});
+  const Speechword({super.key, required this.deckId});
+  final int deckId;
   @override
   State<Speechword> createState() => _SpeechwordState();
 }
@@ -15,7 +16,7 @@ class _SpeechwordState extends State<Speechword> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SpeechWordNoti()..getFlashcardList(widget.deck_id),
+      create: (context) => SpeechWordNoti()..getFlashcardList(widget.deckId),
       child: Consumer<SpeechWordNoti>(
         builder: (context, value, child) {
           if (value.isLoading) {
@@ -51,7 +52,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
             color: AppTheme.lightText,
             size: 24,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
           value: provider.value,
@@ -97,8 +98,8 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                         provider.ipa,
                         style: AppTheme.bodyLargeStyle.copyWith(
                           fontSize: 24,
-                          color: AppTheme.lightText.withOpacity(0.7),
-                          fontFamily: 'roboto',
+                          color: AppTheme.lightText.withValues(alpha:0.7),
+
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -124,7 +125,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
                           boxShadow: [
                             if (provider.stt.isListening)
                               BoxShadow(
-                                color: AppTheme.greenPrimary.withOpacity(0.3),
+                                color: AppTheme.greenPrimary.withValues(alpha:0.3),
                                 blurRadius: 16,
                                 spreadRadius: 4,
                               ),
@@ -162,7 +163,7 @@ class _SpeechWordUIState extends State<SpeechWordUI> {
               shared.ReviewScreen(
                 right: provider.right,
                 answer: provider.word,
-                onPressed: () => reader.SetNext(),
+                onPressed: () => reader.setNext(),
               ),
           ],
         ),

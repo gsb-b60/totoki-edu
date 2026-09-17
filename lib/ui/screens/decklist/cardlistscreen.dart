@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/business/flashcard/Deck.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
-import 'package:totoki_extract/ui/screens/decklist/learnModeMenu.dart';
+import 'package:totoki_extract/ui/screens/decklist/learn_mode_menu.dart';
 
 
 import 'package:provider/provider.dart';
@@ -28,6 +29,8 @@ class CardListScreen extends StatefulWidget {
 }
 
 class _CardListScreenState extends State<CardListScreen> {
+  bool _isInitialLoad = true;
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +38,7 @@ class _CardListScreenState extends State<CardListScreen> {
       if (widget.deckId != null) {
         final cardModel = Provider.of<Cardmodel>(context, listen: false);
         cardModel.fetchCards(widget.deckId!);
+        setState(() => _isInitialLoad = false);
       }
     });
   }
@@ -60,9 +64,9 @@ class _CardListScreenState extends State<CardListScreen> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
-          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
+          icon: const Icon(Icons.arrow_back_ios, color: AppTheme.lightText),
         ),
         title: Text(
           displayName,
@@ -104,9 +108,82 @@ class _CardListScreenState extends State<CardListScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
+      body: _buildCardListBody(cardModel, cardWidgets),
+    );
+  }
+
+  Widget _buildCardListBody(Cardmodel cardModel, List<Widget> cardWidgets) {
+    if (_isInitialLoad && cardModel.card.isEmpty && !cardModel.hasError) {
+      return const Center(child: CircularProgressIndicator(color: AppTheme.primaryTeal));
+    }
+
+    if (cardModel.hasError) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+              const SizedBox(height: 16),
+              Text(
+                cardModel.error ?? 'An error occurred',
+                style: const TextStyle(color: AppTheme.lightText),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: () {
+                  if (widget.deckId != null) {
+                    final cm = Provider.of<Cardmodel>(context, listen: false);
+                    cm.fetchCards(widget.deckId!);
+                  }
+                },
+                icon: const Icon(Icons.refresh, color: AppTheme.darkSurface),
+                label: const Text('Retry', style: TextStyle(color: AppTheme.darkSurface)),
+                style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primaryTeal),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (!cardModel.hasError && cardModel.card.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.credit_card_outlined, color: AppTheme.lightText, size: 64),
+              SizedBox(height: 16),
+              Text(
+                'No cards in this deck yet',
+                style: TextStyle(color: AppTheme.lightText, fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Add cards or study a different deck',
+                style: TextStyle(color: AppTheme.lightText, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              final cardModel = Provider.of<Cardmodel>(context, listen: false);
+              if (widget.deckId != null) {
+                await cardModel.fetchCards(widget.deckId!);
+              }
+            },
             child: ListView.builder(
               itemCount: cardWidgets.length,
               itemBuilder: (context, index) {
@@ -114,73 +191,13 @@ class _CardListScreenState extends State<CardListScreen> {
               },
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-class NavPageBtn extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final Widget Function() screenBuilder;
-
-  const NavPageBtn({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.screenBuilder,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      child: InkWell(
-        onTap: () {
-          final cardModel = Provider.of<Cardmodel>(context, listen: false);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider<Cardmodel>.value(
-                value: cardModel,
-                child: screenBuilder(),
-              ),
-            ),
-          );
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppTheme.darkSurface,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, color: color, size: 28),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  label,
-                  style: AppTheme.bodyMediumStyle.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Icon(Icons.chevron_right, color: AppTheme.lightText.withValues(alpha: 0.3)),
-            ],
-          ),
         ),
-      ),
+      ],
     );
   }
 }
+
+
 
 class FlashCardItem extends StatelessWidget {
   final Flashcard card;
@@ -197,7 +214,7 @@ class FlashCardItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.darkSurface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.darkBorder.withOpacity(0.1), width: 1),
+        border: Border.all(color: AppTheme.darkBorder.withValues(alpha: 0.1), width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.4),
@@ -402,7 +419,7 @@ class PictureHolder extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.darkBase,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppTheme.darkBorder.withOpacity(0.3)),
+          border: Border.all(color: AppTheme.darkBorder.withValues(alpha: 0.3)),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
@@ -431,7 +448,7 @@ class SoundTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (value != '' || value.isNotEmpty) {
+    if (value.isNotEmpty) {
       return Column(
         children: [
           IconButton(

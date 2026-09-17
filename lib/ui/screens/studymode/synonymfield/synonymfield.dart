@@ -1,15 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
-import 'package:totoki_extract/ui/screens/studymode/synonymfield/synonymfieldNoti.dart';
+import 'package:go_router/go_router.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
+import 'package:totoki_extract/ui/screens/studymode/synonymfield/synonymfield_noti.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/widget/choiceBtnVertical.dart';
-import 'package:totoki_extract/widget/checkBtnVertical.dart';
-import 'package:totoki_extract/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/choice_btn_vertical.dart';
+import 'package:totoki_extract/ui/widget/check_btn_vertical.dart';
+import 'package:totoki_extract/ui/widget/review_screen.dart' as shared;
 
 class Synonymfield extends StatefulWidget {
-  final int deckID;
-  Synonymfield({super.key, required this.deckID});
+  final int deckId;
+  const Synonymfield({super.key, required this.deckId});
   @override
   State<Synonymfield> createState() => _SynonymfieldState();
 }
@@ -18,7 +19,7 @@ class _SynonymfieldState extends State<Synonymfield> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SynonymfieldNoti()..getFlashcardList(widget.deckID),
+      create: (context) => SynonymfieldNoti()..getFlashcardList(widget.deckId),
       child: Consumer<SynonymfieldNoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {
@@ -44,19 +45,15 @@ class _SynonymfieldUIState extends State<SynonymfieldUI> {
     final provider = context.watch<SynonymfieldNoti>();
     final reader = context.read<SynonymfieldNoti>();
     final options = provider.getOptionList;
-    final states = provider.GetListState();
+    final states = provider.getListState();
     final imagePath = provider.getImagePath();
 
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: AppTheme.lightText,
-            size: 24,
-          ),
-          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText, size: 24),
+          onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
           value: provider.value,
@@ -125,7 +122,7 @@ class _SynonymfieldUIState extends State<SynonymfieldUI> {
               shared.ReviewScreen(
                 right: provider.right,
                 answer: provider.answer,
-                onPressed: () => reader.SetNext(),
+                onPressed: () => reader.setNext(),
               ),
           ],
         ),
@@ -133,6 +130,3 @@ class _SynonymfieldUIState extends State<SynonymfieldUI> {
     );
   }
 }
-
-
-

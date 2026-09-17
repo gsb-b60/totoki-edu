@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:totoki_extract/data/database_helper.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:flutter/foundation.dart';
+import 'package:totoki_extract/data/card_database/database_helper.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
 Flashcard updateCardReview(Flashcard card, int feed) {
   double easeChange;
@@ -50,7 +51,7 @@ Flashcard updateCardReview(Flashcard card, int feed) {
         ? Duration(minutes: (newInterval) * (nowRep) + 5)
         : Duration(days: newInterval);
   }
-  print("${card.word} got due day ${DateTime.now().add(addDue)}");
+  debugPrint("${card.word} got due day ${DateTime.now().add(addDue)}");
   return card.copyWith(
     reps: nowRep,
     lapses: nowLapse,
@@ -68,5 +69,3 @@ class SMNoti {
     _db.updateCard(c);
   }
 }
-
-

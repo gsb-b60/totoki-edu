@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/theme/appTheme.dart';
+import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/business/flashcard/Flashcard.dart';
+import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
-import 'newwayreview.dart';
 
 class BackSide extends StatefulWidget {
   final Flashcard card;
@@ -16,12 +15,20 @@ class BackSide extends StatefulWidget {
 }
 
 class BackSideState extends State<BackSide> {
+  final AudioPlayer _audio = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audio.dispose();
+    super.dispose();
+  }
+
   void playSound(String media, String path) async {
     String soundPath = PathService.getFilePath(media, path);
     try {
-      await audio.play(DeviceFileSource(soundPath));
+      await _audio.play(DeviceFileSource(soundPath));
     } catch (e) {
-      print(e);
+      debugPrint('$e');
     }
   }
 
@@ -78,7 +85,7 @@ class BackSideState extends State<BackSide> {
                             Text(
                               "/${widget.card.ipa!}/",
                               style: AppTheme.bodySmallStyle.copyWith(
-                                color: AppTheme.lightText.withOpacity(0.6),
+                                color: AppTheme.lightText.withValues(alpha:0.6),
                                 fontStyle: FontStyle.italic,
                                 fontSize: 18,
                               ),
@@ -121,7 +128,7 @@ class BackSideState extends State<BackSide> {
                         Text(
                           widget.card.example ?? '',
                           style: AppTheme.bodyMediumStyle.copyWith(
-                            color: AppTheme.lightText.withOpacity(0.9),
+                            color: AppTheme.lightText.withValues(alpha:0.9),
                             fontStyle: FontStyle.italic,
                           ),
                         ),
@@ -183,7 +190,7 @@ class _SoundButton extends StatelessWidget {
         Text(
           label,
           style: AppTheme.bodySmallStyle.copyWith(
-            color: AppTheme.lightText.withOpacity(0.5),
+            color: AppTheme.lightText.withValues(alpha:0.5),
             fontSize: 10,
           ),
         ),
