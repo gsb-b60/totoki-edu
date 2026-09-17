@@ -5,7 +5,7 @@ import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 
-import 'package:totoki_extract/ui/screens/decklist/learnModeMenu.dart';
+import 'package:totoki_extract/ui/screens/decklist/learn_mode_menu.dart';
 
 
 import 'package:provider/provider.dart';

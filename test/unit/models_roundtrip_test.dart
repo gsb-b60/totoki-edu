@@ -3,7 +3,7 @@ import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/user/card_history.dart';
 import 'package:totoki_extract/business/user/daily_usage.dart';
 import 'package:totoki_extract/business/user/history_lesson.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/business/user/user.dart';
 
 void main() {

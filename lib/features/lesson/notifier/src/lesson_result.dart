@@ -15,12 +15,12 @@ mixin LessonResult on LessonNotiBase {
   int totalRep = 0;
   int totalLapse = 0;
   //push information to db
-  void CallQuest(BuildContext context) {
-    final count = SetUpLessonList.map((e) => e["cIdx"]).toSet().length;
-    context.read<Questnoti>().SetToDB(totalRep, totalRep, count);
+  void callQuest(BuildContext context) {
+    final count = setUpLessonList.map((e) => e["cIdx"]).toSet().length;
+    context.read<Questnoti>().setToDB(totalRep, totalRep, count);
   }
 
-  void ResultHandler(bool succ) {
+  void resultHandler(bool succ) {
     if (succ) {
       totalRep++;
       inARow++;
@@ -51,8 +51,8 @@ mixin LessonResult on LessonNotiBase {
     practice = 0;
     speak = 0;
 
-    for (int i = 0; i < SetUpLessonList.length; i++) {
-      switch (SetUpLessonList[i]["mode"]) {
+    for (int i = 0; i < setUpLessonList.length; i++) {
+      switch (setUpLessonList[i]["mode"]) {
         case StudyMode.soundAndSight:
           practice++;
           break;

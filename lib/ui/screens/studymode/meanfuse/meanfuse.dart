@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/screens/studymode/meanfuse/meanfuseNoti.dart';
+import 'package:totoki_extract/ui/screens/studymode/meanfuse/meanfuse_noti.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/ui/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/review_screen.dart' as shared;
 
 // Enum defined in echospellUI might be used here if they were shared, 
-// but Meanfusenoti imports ButtonState from echospellUI.dart.
+// but MeanfuseNoti imports ButtonState from echospellUI.dart.
 // I will keep the imports as they are in the original file to avoid logic changes.
-import 'package:totoki_extract/ui/screens/studymode/echospell/echospellUI.dart' show ButtonState;
+import 'package:totoki_extract/ui/screens/studymode/echospell/echospell_ui.dart' show ButtonState;
 
 class Meanfuse extends StatefulWidget {
-  final int deck_id;
-  Meanfuse({super.key, required this.deck_id});
+  const Meanfuse({super.key, required this.deckId});
+  final int deckId;
 
   @override
   State<Meanfuse> createState() => _MeanfuseState();
@@ -22,8 +22,8 @@ class _MeanfuseState extends State<Meanfuse> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => Meanfusenoti()..getFlashcardList(widget.deck_id),
-      child: Consumer<Meanfusenoti>(
+      create: (context) => MeanfuseNoti()..getFlashcardList(widget.deckId),
+      child: Consumer<MeanfuseNoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -40,11 +40,11 @@ class MeanfuseUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<Meanfusenoti>();
-    final reader = context.read<Meanfusenoti>();
-    final list = provider.SetUpList();
-    final listWord = provider.SetUpListWord();
-    final listState = provider.GetListState();
+    final provider = context.watch<MeanfuseNoti>();
+    final reader = context.read<MeanfuseNoti>();
+    final list = provider.setupList();
+    final listWord = provider.setupListWord();
+    final listState = provider.getListState();
 
     return Scaffold(
       backgroundColor: AppTheme.darkBase,
@@ -149,7 +149,7 @@ class MeanfuseUI extends StatelessWidget {
                         return ChoiceBtn(
                           value: value,
                           state: listState[index],
-                          onChoose: () => reader.CheckAnswer(value, index),
+                          onChoose: () => reader.checkAnswer(value, index),
                         );
                       }),
                     ),
@@ -161,7 +161,7 @@ class MeanfuseUI extends StatelessWidget {
               shared.ReviewScreen(
                 right: true,
                 answer: provider.trueList!.join(""),
-                onPressed: () => reader.SetNext(),
+                onPressed: () => reader.setNext(),
               ),
           ],
         ),

@@ -314,7 +314,7 @@ class Cardmodel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> MediaFile(int deckId) async {
+  Future<String?> mediaFile(int deckId) async {
     final String? result = await _dbhelper.getMediaFile(deckId);
     return result;
   }

@@ -20,13 +20,13 @@ mixin LessonSm2 on LessonNotiBase {
   //sm2
   void updateCard() {
     SMNoti n = SMNoti();
-    for (var c in RateCard) {
+    for (var c in rateCard) {
       int rate = (c["rate"] ?? 3).clamp(0, 5);
       n.updateCardAfterReview(_cards[c["idx"] ?? 0], rate);
     }
   }
 
-  List<Map<String, int>> RateCard = [
+  List<Map<String, int>> rateCard = [
     {"idx": 0, "rate": 3},
     {"idx": 1, "rate": 3},
     {"idx": 2, "rate": 3},
@@ -51,17 +51,17 @@ mixin LessonSm2 on LessonNotiBase {
         break;
     }
 
-    RateCard = List.generate(count, (i) => {"idx": i, "rate": 3});
+    rateCard = List.generate(count, (i) => {"idx": i, "rate": 3});
   }
 
   void updateRateCard(bool rating) {
-    if (SetUpLessonList[currentLessIdx]["mode"] != StudyMode.phonemix &&
-        SetUpLessonList[currentLessIdx]["mode"] != StudyMode.StartScreen &&
-        SetUpLessonList[currentLessIdx]["mode"] != StudyMode.EndScreen &&
-        SetUpLessonList[currentLessIdx]["mode"] != StudyMode.reviewcard) {
+    if (setUpLessonList[currentLessIdx]["mode"] != StudyMode.phonemix &&
+        setUpLessonList[currentLessIdx]["mode"] != StudyMode.startScreen &&
+        setUpLessonList[currentLessIdx]["mode"] != StudyMode.endScreen &&
+        setUpLessonList[currentLessIdx]["mode"] != StudyMode.reviewcard) {
       try {
-        var updateCard = RateCard.firstWhere(
-          (c) => c["idx"] == SetUpLessonList[currentLessIdx]["cIdx"],
+        var updateCard = rateCard.firstWhere(
+          (c) => c["idx"] == setUpLessonList[currentLessIdx]["cIdx"],
         );
         int currentRate = updateCard["rate"] ?? 0;
         updateCard["rate"] = currentRate + (rating ? 1 : -1);

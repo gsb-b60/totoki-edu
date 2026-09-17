@@ -1,4 +1,4 @@
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 
 class LessonStats {
   final LessonType type;

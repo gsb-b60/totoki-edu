@@ -5,20 +5,20 @@ import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
 import 'package:totoki_extract/features/lesson/notifier/quest_noti.dart';
 import 'package:totoki_extract/features/lesson/notifier/timer_noti.dart';
 import 'package:totoki_extract/features/lesson/ui/start_screen.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/echofuseUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/echomathUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/echospellUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/meanfuseUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/mindfieldui.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/neuropickUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/phonemixUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/reviewUI.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/echo_fuse_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/echo_math_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/echo_spell_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/mean_fuse_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/mind_field_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/neuro_pick_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/phone_mix_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/review_ui.dart';
 import 'package:totoki_extract/features/lesson/ui/studymode/sound_and_sight_ui.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/speechwordUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/synonymfeildUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/synonympickUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/wordpulseUI.dart';
-import 'package:totoki_extract/features/lesson/ui/studymode/wordsnapUI.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/speech_word_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/synonym_field_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/synonym_pick_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/word_pulse_ui.dart';
+import 'package:totoki_extract/features/lesson/ui/studymode/word_snap_ui.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ import 'package:provider/provider.dart';
 import 'end_screen.dart';
 
 class Learnlevel extends StatefulWidget {
-  Learnlevel({super.key, required this.level});
+  const Learnlevel({super.key, required this.level});
   final int level;
 
   @override
@@ -112,11 +112,11 @@ class _LearnlevelState extends State<Learnlevel> {
         return PhoneMixUI();
       case StudyMode.wordpulse:
         return WordPulseUI();
-      case StudyMode.EndScreen:
+      case StudyMode.endScreen:
         return EndScreen();
       case StudyMode.meanfuse:
         return MeanfuseUI();
-      case StudyMode.StartScreen:
+      case StudyMode.startScreen:
         return StartScreen();
       case StudyMode.synonympick:
         return SynonympickUI();

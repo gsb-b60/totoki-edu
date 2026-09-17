@@ -15,19 +15,19 @@ mixin LessonOptions on LessonNotiBase, LessonResult {
   }
 
   List<String> genOptionsShuffle() {
-    List<String> re = lessonNotiHelper.genOptionsShuffleHelp(_cards, cardIdx);
+    List<String> re = LessonNotiHelper.genOptionsShuffleHelp(_cards, cardIdx);
     statesBool = List.generate(re.length, (_) => false);
     return re;
   }
 
-  void CheckAnswer(String letter, int index) {
+  void checkAnswer(String letter, int index) {
     if (letter == trueList![currentWordIdx]) {
       states![index] = ButtonState.done;
       listWord![currentWordIdx] = trueList![currentWordIdx];
       notifyListeners();
       currentWordIdx++;
     } else {
-      ResultHandler(false);
+      resultHandler(false);
       inARow = 0;
       states![index] = ButtonState.wrong;
       notifyListeners();
@@ -38,17 +38,17 @@ mixin LessonOptions on LessonNotiBase, LessonResult {
     }
     if (currentWordIdx == list!.length) {
       answered = true;
-      ResultHandler(true);
+      resultHandler(true);
       notifyListeners();
     }
   }
 
-  List<ButtonState> GetListState() {
+  List<ButtonState> getListState() {
     states ??= List.generate(list!.length, (_) => ButtonState.normal);
     return states!;
   }
 
-  List<String> SetUpList() {
+  List<String> setUpList() {
     if (list == null && _cards.isNotEmpty) {
       list = _cards[cardIdx].word?.split("");
       trueList = _cards[cardIdx].word!.split("");
@@ -62,7 +62,7 @@ mixin LessonOptions on LessonNotiBase, LessonResult {
     return list!;
   }
 
-  List<String> SetUpListWord() {
+  List<String> setUpListWord() {
     listWord ??= List.filled(list!.length, "_");
     return listWord!;
   }
@@ -70,12 +70,12 @@ mixin LessonOptions on LessonNotiBase, LessonResult {
   void checkAnswerMC() {
     if (options?[selectedIndex!] == _cards[cardIdx].word) {
       answered = true;
-      ResultHandler(true);
+      resultHandler(true);
       notifyListeners();
     } else {
       answered = true;
       right = false;
-      ResultHandler(false);
+      resultHandler(false);
       inARow = 0;
       notifyListeners();
     }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 
 class LessonProgressBlock extends StatelessWidget {
@@ -66,7 +66,7 @@ class LessonProgressBlock extends StatelessWidget {
               ...LessonType.values.map((type) {
                 final stats = notifier.lessonStats[type];
                 return _buildLessonRow(type, stats);
-              }).toList(),
+              }),
             ],
           ),
         );

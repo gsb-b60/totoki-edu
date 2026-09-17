@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemixNoti.dart';
-import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemixUI.dart';
+import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemix_noti.dart';
+import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemix_ui.dart';
 import 'package:provider/provider.dart';
 
-class PhoneMix extends StatefulWidget {
-  final int deckID;
-  PhoneMix({super.key, required this.deckID});
+class Phonemix extends StatefulWidget {
+  const Phonemix({super.key, required this.deckId});
+  final int deckId;
 
   @override
-  State<PhoneMix> createState() => _PhoneMixState();
+  State<Phonemix> createState() => _PhonemixState();
 }
 
-class _PhoneMixState extends State<PhoneMix> {
+class _PhonemixState extends State<Phonemix> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => phoneMixNoti()..getFlashcardList(widget.deckID),
-      child: Consumer<phoneMixNoti>(
+      create: (context) => PhonemixNoti()..getFlashcardList(widget.deckId),
+      child: Consumer<PhonemixNoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {
             return Center(child: CircularProgressIndicator());
           }
-          return PhoneMixUI();
+          return PhonemixUI();
         },
       ),
     );

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/features/lesson/notifier/lesson_noti.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/widget/choiceBtn4States.dart';
-import 'package:totoki_extract/ui/widget/progressIndicator.dart';
-import 'package:totoki_extract/ui/widget/reviewScreen.dart';
-import 'package:totoki_extract/ui/widget/skipBtn.dart';
+import 'package:totoki_extract/ui/widget/choice_btn_4_states.dart';
+import 'package:totoki_extract/ui/widget/progress_indicator.dart';
+import 'package:totoki_extract/ui/widget/review_screen.dart';
+import 'package:totoki_extract/ui/widget/skip_btn.dart';
 import 'package:provider/provider.dart';
 
 class SoundNSightUI extends StatefulWidget {
@@ -22,9 +22,9 @@ class _SoundNSightUIState extends State<SoundNSightUI> {
     final provider = context.watch<LessonNoti>();
     final reader = context.read<LessonNoti>();
     provider.fetchMedia();
-    List<String> list = provider.SetUpList();
-    List<String> listWord = provider.SetUpListWord();
-    List<ButtonState> listState = provider.GetListState();
+    List<String> list = provider.setUpList();
+    List<String> listWord = provider.setUpListWord();
+    List<ButtonState> listState = provider.getListState();
     String img = provider.getImagePath();
 
     return Scaffold(
@@ -131,7 +131,7 @@ class _SoundNSightUIState extends State<SoundNSightUI> {
                               value: value,
                               state: listState[index],
                               onChoose: () {
-                                reader.CheckAnswer(value, index);
+                                reader.checkAnswer(value, index);
                               },
                             );
                           }),

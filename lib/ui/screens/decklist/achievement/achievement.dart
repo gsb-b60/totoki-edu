@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:totoki_extract/ui/screens/decklist/achievement/achievementNoti.dart';
-import 'package:totoki_extract/ui/screens/decklist/achievement/achievementUI.dart';
+import 'package:totoki_extract/ui/screens/decklist/achievement/achievement_noti.dart';
+import 'package:totoki_extract/ui/screens/decklist/achievement/achievement_ui.dart';
 import 'package:provider/provider.dart';
 
 class Achievement extends StatelessWidget {

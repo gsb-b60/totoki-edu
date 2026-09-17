@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:totoki_extract/business/user/card_history.dart';
 import 'package:totoki_extract/business/user/history_lesson.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 
 void main() {
   group('LessonType', () {

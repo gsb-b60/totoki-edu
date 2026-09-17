@@ -12,14 +12,14 @@ import 'package:totoki_extract/ui/screens/decklist/decklist_screen.dart';
 import 'package:totoki_extract/ui/screens/decklist/cardlistscreen.dart';
 import 'package:totoki_extract/ui/screens/learnmode/learnmodescreen.dart';
 import 'package:totoki_extract/ui/screens/decklist/achievement/achievement.dart';
-import 'package:totoki_extract/ui/screens/decklist/achievement/achievementUI.dart';
+import 'package:totoki_extract/ui/screens/decklist/achievement/achievement_ui.dart';
 import 'package:totoki_extract/ui/screens/dashboard/dashboard.dart';
 import 'package:totoki_extract/ui/screens/ielts/ielts_training.dart';
 import 'package:totoki_extract/ui/screens/analyze/analyze_screen.dart';
 
 import 'package:totoki_extract/ui/screens/studymode/flashcard/newwayreview.dart';
 import 'package:totoki_extract/ui/screens/studymode/blankfill/blankwordscreen.dart';
-import 'package:totoki_extract/ui/screens/studymode/mindfield/mindfeild.dart';
+import 'package:totoki_extract/ui/screens/studymode/mindfield/mindfield.dart';
 import 'package:totoki_extract/ui/screens/studymode/wordsnap/wordsnap.dart';
 import 'package:totoki_extract/ui/screens/studymode/phonemix/phonemix.dart';
 import 'package:totoki_extract/ui/screens/studymode/synonymfield/synonymfield.dart';
@@ -218,21 +218,21 @@ class AppRouter {
 
   static Widget _buildStudyModeScreen(String mode, int deckId) {
     return switch (mode) {
-      'newwayreview' => Newwayreview(deckId: deckId),
-      'blankword' => BlankWordScreen(deck_id: deckId),
-      'mindfield' => MindFeild(deckID: deckId),
-      'wordsnap' => WordSnap(deck_id: deckId),
-      'phonemix' => PhoneMix(deckID: deckId),
-      'synonymfield' => Synonymfield(deckID: deckId),
-      'echospell' => Echospell(deck_id: deckId),
-      'echomatch' => EchoMatch(deck_id: deckId),
-      'echofuse' => EchoFuse(deck_id: deckId),
-      'soundandsight' => SoundNSight(deck_id: deckId),
-      'neuropick' => NeuroPick(deckID: deckId),
-      'wordpulse' => WordPulse(deck_id: deckId),
-      'synonympick' => Synonympick(deckID: deckId),
-      'speechword' => Speechword(deck_id: deckId),
-      _ => const Scaffold(body: Center(child: Text('Unknown mode'))),
+      'newwayreview' => Newwayreview(deckId: deckId) as Widget,
+      'blankword' => BlankWordScreen(deckId: deckId) as Widget,
+      'mindfield' => MindField(deckId: deckId) as Widget,
+      'wordsnap' => WordSnap(deckId: deckId) as Widget,
+      'phonemix' => Phonemix(deckId: deckId) as Widget,
+      'synonymfield' => Synonymfield(deckId: deckId) as Widget,
+      'echospell' => Echospell(deckId: deckId) as Widget,
+      'echomatch' => EchoMatch(deckId: deckId) as Widget,
+      'echofuse' => EchoFuse(deckId: deckId) as Widget,
+      'soundandsight' => SoundNSight(deckId: deckId) as Widget,
+      'neuropick' => NeuroPick(deckId: deckId) as Widget,
+      'wordpulse' => WordPulse(deckId: deckId) as Widget,
+      'synonympick' => Synonympick(deckId: deckId) as Widget,
+      'speechword' => Speechword(deckId: deckId) as Widget,
+      _ => const Scaffold(body: Center(child: Text('Unknown mode'))) as Widget,
     };
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:totoki_extract/business/user/history_lesson.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/data/user_database/history_lesson_dao.dart';
 import 'package:totoki_extract/data/user_database/user_dao.dart';
 import 'package:totoki_extract/data/user_database/user_db_helper.dart';

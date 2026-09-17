@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/features/user/analyze_notifier.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
 
 class WeeklyLessonBlock extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:totoki_extract/data/card_database/flashCard_Mapper.dart';
+import 'package:totoki_extract/data/card_database/flash_card_mapper.dart';
 
 const _sevenFieldModelId = 1470756627995;
 const _eightFieldModelId = 1434531251879;

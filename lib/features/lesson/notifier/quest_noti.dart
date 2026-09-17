@@ -9,7 +9,7 @@ class Questnoti extends ChangeNotifier {
     debugPrint("helloworld");
   }
 
-  Future<void> SetToDB(int rep, int lapse, int cardno) async {
+  Future<void> setToDB(int rep, int lapse, int cardno) async {
     totalReviews += rep;
     totalLapses += lapse;
     totalCards += cardno;

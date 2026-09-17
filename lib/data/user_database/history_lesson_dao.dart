@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/business/user/history_lesson.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
 import 'user_db_helper.dart';

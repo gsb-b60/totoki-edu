@@ -12,7 +12,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:totoki_extract/business/flashcard/deck.dart';
 import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:totoki_extract/business/path_service.dart';
-import 'package:totoki_extract/data/card_database/flashCard_Mapper.dart';
+import 'package:totoki_extract/data/card_database/flash_card_mapper.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();

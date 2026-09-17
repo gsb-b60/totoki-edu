@@ -6,8 +6,8 @@ import 'package:totoki_extract/business/flashcard/flashcard.dart';
 import 'package:provider/provider.dart';
 
 class BlankWordScreen extends StatefulWidget {
-  final int deck_id;
-  const BlankWordScreen({super.key, required this.deck_id});
+  final int deckId;
+  const BlankWordScreen({super.key, required this.deckId});
 
   @override
   State<BlankWordScreen> createState() => _BlankWordScreenState();
@@ -20,7 +20,7 @@ class _BlankWordScreenState extends State<BlankWordScreen> {
   Future<List<Flashcard>> _loadDueCard() async {
     final cardModel = Provider.of<Cardmodel>(context, listen: false);
     media = cardModel.media ?? "";
-    return cardModel.getDueCards(widget.deck_id);
+    return cardModel.getDueCards(widget.deckId);
   }
 
   @override
@@ -75,7 +75,7 @@ class _BlankWordScreenState extends State<BlankWordScreen> {
                 children: [
                   BlankWordQuizz(
                     media: quiz.file,
-                    onComplete: quiz.NextWord,
+                    onComplete: quiz.nextWord,
                     card: quiz.currentCard,
                   ),
                 ],
@@ -96,7 +96,7 @@ class QuizzModel extends ChangeNotifier {
   String get file => media;
   int wordIdx = 0;
   Flashcard get currentCard => list[wordIdx];
-  void NextWord() {
+  void nextWord() {
     wordIdx = (wordIdx + 1) % list.length;
     notifyListeners();
   }

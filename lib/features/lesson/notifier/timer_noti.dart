@@ -21,14 +21,14 @@ class TimerNoti extends ChangeNotifier {
 
   String get getThresholdString {
     Duration elapsed = elapse ?? Duration(seconds: 180);
-    if (elapsed <= ThresholdTime.Super) {
-      return ThresholdTime.SuperStr;
-    } else if (elapsed <= ThresholdTime.Quick) {
-      return ThresholdTime.QuickStr;
-    } else if (elapsed <= ThresholdTime.Moderate) {
-      return ThresholdTime.ModerateStr;
+    if (elapsed <= ThresholdTime.superDuration) {
+      return ThresholdTime.superStr;
+    } else if (elapsed <= ThresholdTime.quick) {
+      return ThresholdTime.quickStr;
+    } else if (elapsed <= ThresholdTime.moderate) {
+      return ThresholdTime.moderateStr;
     } else {
-      return ThresholdTime.SlowStr;
+      return ThresholdTime.slowStr;
     }
   }
 }

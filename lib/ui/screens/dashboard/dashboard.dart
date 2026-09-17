@@ -20,7 +20,9 @@ class _DueDayDashBoardState extends State<DueDayDashBoard> {
     super.initState();
 
     Future.microtask(() {
-      context.read<Cardmodel>().refreshCounts();
+      if (mounted) {
+        context.read<Cardmodel>().refreshCounts();
+      }
     });
   }
 

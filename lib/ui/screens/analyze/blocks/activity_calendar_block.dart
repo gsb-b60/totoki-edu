@@ -141,10 +141,15 @@ class ActivityCalendarBlock extends StatelessWidget {
     
     // Get color based on activity level
     Color barColor;
-    if (fillRatio > 0.7) barColor = AppTheme.greenPrimary;
-    else if (fillRatio > 0.4) barColor = AppTheme.yellowPrimary;
-    else if (fillRatio > 0.1) barColor = AppTheme.bluePrimary;
-    else barColor = Colors.grey[700]!;
+    if (fillRatio > 0.7) {
+      barColor = AppTheme.greenPrimary;
+    } else if (fillRatio > 0.4) {
+      barColor = AppTheme.yellowPrimary;
+    } else if (fillRatio > 0.1) {
+      barColor = AppTheme.bluePrimary;
+    } else {
+      barColor = Colors.grey[700]!;
+    }
 
     return Container(
       width: 70,

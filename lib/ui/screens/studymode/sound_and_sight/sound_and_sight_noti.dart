@@ -22,7 +22,7 @@ class SoundNSightNoti extends ChangeNotifier {
 
   bool answered = false;
 
-  Future<void> SetNext() async {
+  Future<void> setNext() async {
     if (currentCardIdx >= _cards.length - 1) return;
     trueList.clear();
     listWord = null;
@@ -37,7 +37,7 @@ class SoundNSightNoti extends ChangeNotifier {
     notifyListeners();
   }
 
-  void CheckAnswer(String letter, int index) {
+  void checkAnswer(String letter, int index) {
     if (letter == trueList[currentIndex]) {
       listState![index] = ButtonState.done;
       listWord![currentIndex] = trueList[currentIndex];
@@ -57,15 +57,15 @@ class SoundNSightNoti extends ChangeNotifier {
     }
   }
 
-  Future<void> getFlashcardList(int deck_id) async {
+  Future<void> getFlashcardList(int deckId) async {
     isLoading = true;
     notifyListeners();
-    if (deck_id == 0) {
+    if (deckId == 0) {
       final data = await DatabaseHelper.instance.getCardLimit(10);
       _cards.clear();
       _cards.addAll(data);
     } else {
-      final data = await DatabaseHelper.instance.getCardForDeck(deck_id);
+      final data = await DatabaseHelper.instance.getCardForDeck(deckId);
       _cards.clear();
       _cards.addAll(data);
       _cards = _cards

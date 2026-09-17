@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:totoki_extract/data/user_database/history_lesson_dao.dart';
 import 'package:totoki_extract/data/user_database/user_db_helper.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 
 class LessonAnalyticsNotifier extends ChangeNotifier {
   final HistoryLessonDao _dao = HistoryLessonDao(UserDatabaseHelper.instance);

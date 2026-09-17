@@ -22,11 +22,11 @@ enum StudyMode {
   phonemix, //4 ipa
   reviewcard,
 
-  EndScreen,
-  StartScreen,
+  endScreen,
+  startScreen,
 }
 
-enum FetchMode { SM2, testing }
+enum FetchMode { sm2, testing }
 
 class WordIPA {
   final String word;
@@ -36,7 +36,7 @@ class WordIPA {
 
 enum LearnMode { daily, all, sm, shuffle, devMode }
 
-class lessonNotiHelper {
+class LessonNotiHelper {
   static String getAccLine(int acc) {
     if (acc <= ThresholdAcc.excellent) {
       return ThresholdAcc.exStr;
@@ -74,14 +74,14 @@ class lessonNotiHelper {
     StudyMode st,
   ) {
     List<Map<String, dynamic>> re = [
-      {"cIdx": 0, "mode": StudyMode.StartScreen},
+      {"cIdx": 0, "mode": StudyMode.startScreen},
     ];
     re.addAll(List.generate(count, (i) => {"cIdx": i, "mode": st}));
-    re.add({"cIdx": 0, "mode": StudyMode.EndScreen});
+    re.add({"cIdx": 0, "mode": StudyMode.endScreen});
     return re;
   }
 
-  List<Map<String, dynamic>> SetUpLessonList = [
+  List<Map<String, dynamic>> setUpLessonList = [
     {"cIdx": 0, "mode": StudyMode.phonemix},
     {"cIdx": 0, "mode": StudyMode.meanfuse},
     {"cIdx": 0, "mode": StudyMode.mindField},
@@ -96,15 +96,15 @@ class lessonNotiHelper {
     {"cIdx": 3, "mode": StudyMode.echoMatch},
     {"cIdx": 3, "mode": StudyMode.meanfuse},
     {"cIdx": 4, "mode": StudyMode.phonemix},
-    {"cIdx": 4, "mode": StudyMode.EndScreen},
+    {"cIdx": 4, "mode": StudyMode.endScreen},
   ];
 
   static List<Map<String, dynamic>> setUpDevLessonList = [
 
-    {"cIdx": 0, "mode": StudyMode.EndScreen},
+    {"cIdx": 0, "mode": StudyMode.endScreen},
   ];
   static List<Map<String, dynamic>> allMode = [
-    {"cIdx": 0, "mode": StudyMode.StartScreen},
+    {"cIdx": 0, "mode": StudyMode.startScreen},
 
     {"cIdx": 0, "mode": StudyMode.meanfuse},
     {"cIdx": 1, "mode": StudyMode.wordsnap},
@@ -130,10 +130,10 @@ class lessonNotiHelper {
 
     {"cIdx": 4, "mode": StudyMode.reviewcard},
 
-    {"cIdx": 4, "mode": StudyMode.EndScreen},
+    {"cIdx": 4, "mode": StudyMode.endScreen},
   ];
   static List<Map<String, dynamic>> sm2 = [
-    {"cIdx": 0, "mode": StudyMode.StartScreen},
+    {"cIdx": 0, "mode": StudyMode.startScreen},
 
     {"cIdx": 0, "mode": StudyMode.meanfuse},
     {"cIdx": 1, "mode": StudyMode.wordsnap},
@@ -170,7 +170,7 @@ class lessonNotiHelper {
 
     {"cIdx": 4, "mode": StudyMode.reviewcard},
 
-    {"cIdx": 4, "mode": StudyMode.EndScreen},
+    {"cIdx": 4, "mode": StudyMode.endScreen},
   ];
 }
 

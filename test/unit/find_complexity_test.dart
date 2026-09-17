@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:totoki_extract/data/card_database/findComplexity.dart';
+import 'package:totoki_extract/data/card_database/find_complexity.dart';
 
 void main() {
   group('countSyllables', () {

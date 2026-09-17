@@ -701,7 +701,7 @@ class QuestionParser {
       } else if (item is Map) {
         final title = item["title"] as String? ?? "";
         final prefix = item["prefix"] as String? ?? "";
-        final combined = (title + " " + prefix).trim();
+        final combined = "$title $prefix".trim();
         text = combined;
         displayText = combined.replaceAll(_inputRegex, '___').replaceAll(RegExp(r'\s+'), ' ').trim();
       } else {

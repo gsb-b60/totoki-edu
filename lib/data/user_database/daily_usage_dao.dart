@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:totoki_extract/business/user/daily_usage.dart';
 import 'package:totoki_extract/features/user/analytics_models.dart';
-import 'user_DAO.dart';
+import 'user_dao.dart';
 import 'user_db_helper.dart';
 
 class DailyUsageDao {
@@ -39,15 +39,11 @@ class DailyUsageDao {
       return;
     }
 
-    await db.insert(
-      'daily_user_usage',
-      {
-        'user_id': user.id,
-        'date': date,
-        'amount': amount,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    await db.insert('daily_user_usage', {
+      'user_id': user.id,
+      'date': date,
+      'amount': amount,
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<int> upsertDailyUsage(DailyUsage usage) async {
@@ -92,14 +88,15 @@ class DailyUsageDao {
   Future<int> getCurrentStreak(String userId) async {
     final now = DateTime.now();
     int streak = 0;
-    
+
     for (int i = 0; i < 365; i++) {
       final date = now.subtract(Duration(days: i));
       final dateStr = '${date.day}/${date.month}/${date.year}';
       final usage = await getDailyUsage(userId, dateStr);
       if (usage != null && usage.amount > 0) {
         streak++;
-      } else if (i > 0) { // Allow today to be missed
+      } else if (i > 0) {
+        // Allow today to be missed
         break;
       }
     }
@@ -114,19 +111,23 @@ class DailyUsageDao {
       whereArgs: [userId],
       orderBy: 'date ASC',
     );
-    
+
     if (result.isEmpty) return 0;
-    
+
     int longest = 1;
     int current = 1;
     DateTime? prevDate;
-    
+
     for (final row in result) {
       final dateStr = row['date'] as String;
       final parts = dateStr.split('/');
       if (parts.length != 3) continue;
-      final date = DateTime(int.parse(parts[2]), int.parse(parts[1]), int.parse(parts[0]));
-      
+      final date = DateTime(
+        int.parse(parts[2]),
+        int.parse(parts[1]),
+        int.parse(parts[0]),
+      );
+
       if (prevDate != null) {
         final diff = date.difference(prevDate).inDays;
         if (diff == 1) {
@@ -145,34 +146,43 @@ class DailyUsageDao {
     final now = DateTime.now();
     final startOfYear = DateTime(now.year, 1, 1);
     final endOfYear = DateTime(now.year, 12, 31);
-    
-    final startStr = '${startOfYear.day}/${startOfYear.month}/${startOfYear.year}';
+
+    final startStr =
+        '${startOfYear.day}/${startOfYear.month}/${startOfYear.year}';
     final endStr = '${endOfYear.day}/${endOfYear.month}/${endOfYear.year}';
-    
+
     final usages = await getDailyUsageRange(userId, startStr, endStr);
-    
+
     final activity = <DateTime, int>{};
     for (final usage in usages) {
       final parts = usage.date.split('/');
       if (parts.length != 3) continue;
-      final date = DateTime(int.parse(parts[2]), int.parse(parts[1]), int.parse(parts[0]));
+      final date = DateTime(
+        int.parse(parts[2]),
+        int.parse(parts[1]),
+        int.parse(parts[0]),
+      );
       activity[date] = usage.amount;
     }
     return activity;
   }
 
-  Future<List<ActivityMonth>> getMonthlyActivity(String userId, int year) async {
+  Future<List<ActivityMonth>> getMonthlyActivity(
+    String userId,
+    int year,
+  ) async {
     final months = <ActivityMonth>[];
-    
+
     for (int month = 1; month <= 12; month++) {
       final startOfMonth = DateTime(year, month, 1);
       final endOfMonth = DateTime(year, month + 1, 0);
-      
-      final startStr = '${startOfMonth.day}/${startOfMonth.month}/${startOfMonth.year}';
+
+      final startStr =
+          '${startOfMonth.day}/${startOfMonth.month}/${startOfMonth.year}';
       final endStr = '${endOfMonth.day}/${endOfMonth.month}/${endOfMonth.year}';
-      
+
       final usages = await getDailyUsageRange(userId, startStr, endStr);
-      
+
       int activeDays = 0;
       final dayAmounts = <int, int>{};
       for (final usage in usages) {
@@ -182,13 +192,15 @@ class DailyUsageDao {
           dayAmounts[int.parse(parts[0])] = usage.amount;
         }
       }
-      
-      months.add(ActivityMonth(
-        year: year,
-        month: month,
-        activeDays: activeDays,
-        dayAmounts: dayAmounts,
-      ));
+
+      months.add(
+        ActivityMonth(
+          year: year,
+          month: month,
+          activeDays: activeDays,
+          dayAmounts: dayAmounts,
+        ),
+      );
     }
     return months;
   }

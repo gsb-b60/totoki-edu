@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/features/user/user_notifier.dart';
 import 'package:totoki_extract/services/sound_controller.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
@@ -28,7 +28,7 @@ class _EndScreenState extends State<EndScreen> {
       context.read<TimerNoti>().stop();
 
       final lesson = context.read<LessonNoti>();
-      lesson.CallQuest(context);
+      lesson.callQuest(context);
       lesson.updateCard();
       context.read<SoundController>().playFinish();
 

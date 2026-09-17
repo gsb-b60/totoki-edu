@@ -31,7 +31,7 @@ class AppTheme{
   static const redBright = Color.fromRGBO(239, 87, 82, 1);
   static const redMuted = Color.fromRGBO(216, 69, 75, 1);
 
-  static const BlueMuted = Color.fromRGBO(57, 131, 158, 1);
+  static const blueMuted = Color.fromRGBO(57, 131, 158, 1);
   static const blueLight = Color.fromRGBO(69, 192, 249, 1);
   static const bluePrimary = Color.fromRGBO(33, 152, 215, 1);
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totoki_extract/business/user/history_lesson.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/features/user/lesson_history_notifier.dart';
 import 'package:totoki_extract/features/user/user_notifier.dart';
 import 'package:totoki_extract/theme/app_theme.dart';

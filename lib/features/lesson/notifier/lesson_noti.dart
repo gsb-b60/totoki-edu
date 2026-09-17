@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:totoki_extract/business/path_service.dart';
 import 'package:totoki_extract/business/user/history_lesson.dart';
-import 'package:totoki_extract/business/user/lessonType.dart';
+import 'package:totoki_extract/business/user/lesson_type.dart';
 import 'package:totoki_extract/data/user_database/history_lesson_dao.dart';
 import 'package:totoki_extract/data/user_database/user_db_helper.dart';
 import 'package:totoki_extract/features/lesson/models/storage.dart';
@@ -43,11 +43,11 @@ abstract class LessonNotiBase extends ChangeNotifier {
   int currentCardIdx = 0;
   int currentLessIdx = 0;
 
-  int get cardIdx => SetUpLessonList[currentLessIdx]["cIdx"];
+  int get cardIdx => setUpLessonList[currentLessIdx]["cIdx"];
   //data
 
   double get value =>
-      (_cards.isEmpty) ? 0 : currentLessIdx / (SetUpLessonList.length);
+      (_cards.isEmpty) ? 0 : currentLessIdx / (setUpLessonList.length);
   bool get checkable => selectedIndex != null;
   int? selectedIndex;
   int? currentIdx;
@@ -67,8 +67,8 @@ abstract class LessonNotiBase extends ChangeNotifier {
   //lession logic
   StudyMode? mode;
   LearnMode how = LearnMode.daily;
-  List<Map<String, dynamic>> SetUpLessonList = [
-    {"cIdx": 0, "mode": StudyMode.StartScreen},
+  List<Map<String, dynamic>> setUpLessonList = [
+    {"cIdx": 0, "mode": StudyMode.startScreen},
 
     {"cIdx": 0, "mode": StudyMode.meanfuse},
     {"cIdx": 1, "mode": StudyMode.wordsnap},
@@ -94,7 +94,7 @@ abstract class LessonNotiBase extends ChangeNotifier {
 
     {"cIdx": 4, "mode": StudyMode.reviewcard},
 
-    {"cIdx": 4, "mode": StudyMode.EndScreen},
+    {"cIdx": 4, "mode": StudyMode.endScreen},
   ];
 }
 

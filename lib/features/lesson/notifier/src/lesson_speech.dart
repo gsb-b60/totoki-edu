@@ -18,7 +18,7 @@ mixin LessonSpeech on LessonNotiBase, LessonResult {
         debugPrint('STT not available or permission denied');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -35,7 +35,7 @@ mixin LessonSpeech on LessonNotiBase, LessonResult {
 
           timeoutTimer?.cancel();
           stt.stop();
-          CheckAnswerSpeech(re);
+          checkAnswerSpeech(re);
         }
       },
       localeId: "en_US",
@@ -48,20 +48,20 @@ mixin LessonSpeech on LessonNotiBase, LessonResult {
     timeoutTimer = Timer(Duration(seconds: 5), () {
       if (!hasFinal) {
         stt.stop();
-        CheckAnswerSpeech(re);
+        checkAnswerSpeech(re);
       }
     });
   }
 
-  void CheckAnswerSpeech(String re) {
+  void checkAnswerSpeech(String re) {
     re = re.toLowerCase().trim();
     var wordtrim = answer.toLowerCase().trim();
     answered = true;
     if (normalize(re) == normalize(wordtrim)) {
       right = true;
-      ResultHandler(true);
+      resultHandler(true);
     } else {
-      ResultHandler(false);
+      resultHandler(false);
       right = false;
     }
     notifyListeners();

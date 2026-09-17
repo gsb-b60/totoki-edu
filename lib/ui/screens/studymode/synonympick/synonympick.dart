@@ -2,15 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:totoki_extract/theme/app_theme.dart';
-import 'package:totoki_extract/ui/screens/studymode/synonympick/synonympickNoti.dart';
+import 'package:totoki_extract/ui/screens/studymode/synonympick/synonympick_noti.dart';
 import 'package:provider/provider.dart';
-import 'package:totoki_extract/ui/widget/choiceBtnVertical.dart';
-import 'package:totoki_extract/ui/widget/checkBtnVertical.dart';
-import 'package:totoki_extract/ui/widget/reviewScreen.dart' as shared;
+import 'package:totoki_extract/ui/widget/choice_btn_vertical.dart';
+import 'package:totoki_extract/ui/widget/check_btn_vertical.dart';
+import 'package:totoki_extract/ui/widget/review_screen.dart' as shared;
 
 class Synonympick extends StatefulWidget {
-  final int deckID;
-  Synonympick({super.key, required this.deckID});
+  final int deckId;
+  const Synonympick({super.key, required this.deckId});
   @override
   State<Synonympick> createState() => _SynonympickState();
 }
@@ -19,7 +19,7 @@ class _SynonympickState extends State<Synonympick> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SynonympickNoti()..getFlashcardList(widget.deckID),
+      create: (context) => SynonympickNoti()..getFlashcardList(widget.deckId),
       child: Consumer<SynonympickNoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {
@@ -52,11 +52,7 @@ class _SynonympickUIState extends State<SynonympickUI> {
       backgroundColor: AppTheme.darkBase,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: AppTheme.lightText,
-            size: 24,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: AppTheme.lightText, size: 24),
           onPressed: () => context.pop(),
         ),
         title: LinearProgressIndicator(
@@ -134,5 +130,3 @@ class _SynonympickUIState extends State<SynonympickUI> {
     );
   }
 }
-
-

@@ -23,25 +23,25 @@ mixin LessonProgress
     return (10 - limitedAcc) * 10;
   }
 
-  String get accLine => lessonNotiHelper.getAccLine(_acc);
+  String get accLine => LessonNotiHelper.getAccLine(_acc);
 
   Future<void> nextCard() async {
     updateRateCard(right);
-    if (currentLessIdx < SetUpLessonList.length - 1) {
+    if (currentLessIdx < setUpLessonList.length - 1) {
       _resetTaskState();
       currentLessIdx++;
-      mode = SetUpLessonList[currentLessIdx]["mode"];
+      mode = setUpLessonList[currentLessIdx]["mode"];
       await fetchMedia();
       notifyListeners();
     }
   }
 
   Future<void> skipLesson() async {
-    if (currentLessIdx < SetUpLessonList.length - 1) {
+    if (currentLessIdx < setUpLessonList.length - 1) {
       inARow = 0; // Reset streak on skip
       _resetTaskState();
       currentLessIdx++;
-      mode = SetUpLessonList[currentLessIdx]["mode"];
+      mode = setUpLessonList[currentLessIdx]["mode"];
       await fetchMedia();
       notifyListeners();
     }
@@ -76,7 +76,7 @@ mixin LessonProgress
       case LearnMode.sm:
         how = LearnMode.sm;
         data = await LessonNotiBase._dbhelper.getDueCardLimit(10);
-        SetUpLessonList = lessonNotiHelper.sm2;
+        setUpLessonList = LessonNotiHelper.sm2;
         break;
       case LearnMode.daily:
         how = LearnMode.daily;
@@ -85,34 +85,34 @@ mixin LessonProgress
       case LearnMode.all:
         how = LearnMode.all;
         data = await LessonNotiBase._dbhelper.getDueCardLimit(15);
-        SetUpLessonList = lessonNotiHelper.allMode;
+        setUpLessonList = LessonNotiHelper.allMode;
         break;
       case LearnMode.shuffle:
         how = LearnMode.shuffle;
         data = await LessonNotiBase._dbhelper.getDueCardLimit(15);
-        SetUpLessonList = lessonNotiHelper.allMode;
-        final start = SetUpLessonList.first;
-        final end = SetUpLessonList.last;
+        setUpLessonList = LessonNotiHelper.allMode;
+        final start = setUpLessonList.first;
+        final end = setUpLessonList.last;
 
         // copy pháº§n giá»¯a
-        final middle = SetUpLessonList.sublist(1, SetUpLessonList.length - 1);
+        final middle = setUpLessonList.sublist(1, setUpLessonList.length - 1);
 
         // shuffle pháº§n giá»¯a
         middle.shuffle();
 
         // ghÃ©p láº¡i
-        SetUpLessonList = [start, ...middle, end];
+        setUpLessonList = [start, ...middle, end];
         break;
       case LearnMode.devMode:
         how = LearnMode.devMode;
         data = await LessonNotiBase._dbhelper.getDueCardLimit(10);
-        SetUpLessonList = lessonNotiHelper.setUpDevLessonList;
+        setUpLessonList = LessonNotiHelper.setUpDevLessonList;
         break;
     }
 
     _cards.clear();
     _cards.addAll(data);
-    mode = SetUpLessonList[currentLessIdx]["mode"];
+    mode = setUpLessonList[currentLessIdx]["mode"];
     for (var c in _cards) {
       debugPrint("${c.word} - ${c.due}");
     }
@@ -134,7 +134,7 @@ mixin LessonProgress
       debugPrint("${c.word} - ${c.due}");
     }
     await fetchMedia();
-    mode = SetUpLessonList[currentLessIdx]["mode"];
+    mode = setUpLessonList[currentLessIdx]["mode"];
     isLoading = false;
     createRateCard();
     notifyListeners();
@@ -152,8 +152,8 @@ mixin LessonProgress
       debugPrint("${c.word} - ${c.due}");
     }
     await fetchMedia();
-    SetUpLessonList = lessonNotiHelper.createListForLevel(14, st);
-    mode = SetUpLessonList[currentLessIdx]["mode"];
+    setUpLessonList = LessonNotiHelper.createListForLevel(14, st);
+    mode = setUpLessonList[currentLessIdx]["mode"];
     isLoading = false;
     createRateCard();
     notifyListeners();

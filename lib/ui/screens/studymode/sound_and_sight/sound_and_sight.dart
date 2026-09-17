@@ -4,8 +4,8 @@ import 'package:totoki_extract/ui/screens/studymode/sound_and_sight/sound_and_si
 import 'package:provider/provider.dart';
 
 class SoundNSight extends StatefulWidget {
-  SoundNSight({super.key, required this.deck_id});
-  final int deck_id;
+  const SoundNSight({super.key, required this.deckId});
+  final int deckId;
   @override
   State<SoundNSight> createState() => _SoundNSightState();
 }
@@ -14,7 +14,7 @@ class _SoundNSightState extends State<SoundNSight> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SoundNSightNoti()..getFlashcardList(widget.deck_id),
+      create: (context) => SoundNSightNoti()..getFlashcardList(widget.deckId),
       child: Consumer<SoundNSightNoti>(
         builder: (context, provider, _) {
           if (provider.isLoading) {

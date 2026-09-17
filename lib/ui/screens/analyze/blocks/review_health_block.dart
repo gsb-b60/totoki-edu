@@ -143,8 +143,7 @@ class ReviewHealthBlock extends StatelessWidget {
                 ),
                 const SizedBox(height: 12.0),
                 ...notifier.leechCards
-                    .map((card) => _buildLeechCard(card))
-                    .toList(),
+                    .map((card) => _buildLeechCard(card)),
               ],
             ],
           ),
